@@ -12,13 +12,15 @@ public class MovementController : MonoBehaviour
     {
         
     }
-
+    
     // Update is called once per frame
     void Update()
     {
+        rb.velocity = Vector2.zero;
         float v = Input.GetAxis("Vertical");
         float h = Input.GetAxis("Horizontal");
-        speed = new Vector2(h * multiplier, v * multiplier).normalized;
-        rb.velocity = speed;
+        speed = new Vector2(h , v ).normalized;
+
+        rb.MovePosition(rb.position + speed * multiplier * Time.fixedDeltaTime);
     }
 }
