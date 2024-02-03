@@ -6,9 +6,20 @@ using TMPro;
 
 public class ToolsItems : MonoBehaviour
 {
-    [SerializeField] private Gradient HpGrad;
-    private int corn;
-    private int gold;
+    [SerializeField] private Gradient MiningGrad;
+    private int corn=0;
+    private int maxCorn = 20;
+    private int gold=0;
+    private int seeds=5;
+    private int goldSeeds=0;
+    private bool sharpener = false;
+    private int lighter=0;
+    private int turret=0;
+    private bool cornBag=false;
+    private int healthPot=0;
+    private bool cornCounter = false;
+
+    
     private bool mining = false;
     [SerializeField] private float resetMiningTime;
     private float miningTimer;
@@ -49,7 +60,7 @@ public class ToolsItems : MonoBehaviour
         target = (resetMiningTime - miningTimer) / resetMiningTime;
         currentFillGold = goldProgress.fillAmount;
         goldProgress.fillAmount = Mathf.Lerp(currentFillGold, target, Time.deltaTime * 10);
-        goldProgress.color = HpGrad.Evaluate(goldProgress.fillAmount);
+        goldProgress.color = MiningGrad.Evaluate(goldProgress.fillAmount);
     }
     private void SwitchTool()
     {
