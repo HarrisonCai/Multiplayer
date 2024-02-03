@@ -8,6 +8,7 @@ public class MovementController : MonoBehaviour
     [SerializeField] [Range(0.3f,100)]private float multiplier;
     private Vector2 speed;
     private float sin, cos;
+    [SerializeField] private ToolsItems tools;
     // Start is called before the first frame update
     void Start()
     {
@@ -34,7 +35,10 @@ public class MovementController : MonoBehaviour
         {
             speed = Vector2.zero; 
         }
-        Debug.Log(speed);
+        if (/*tools.Pickaxe && */tools.Mining && Input.GetMouseButton(0))
+        {
+            speed *= 0.33f;
+        }
 
         rb.velocity = speed * multiplier;
         

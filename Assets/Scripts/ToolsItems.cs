@@ -25,7 +25,10 @@ public class ToolsItems : MonoBehaviour
     private float miningTimer;
     [SerializeField] private Image goldProgress;
     private float target, currentFillGold;
+
+    //private bool scythe = false;
     //private bool pickaxe = false;
+    //private bool shovel = false;
     
     void Start()
     {
@@ -76,4 +79,19 @@ public class ToolsItems : MonoBehaviour
         get { return mining; }
         set { mining = value; }
     }
+    /*public bool Scythe
+    {
+        get { return scythe; }
+        set { scythe = value; }
+    }
+    public bool Pickaxe
+    {
+        get { return pickaxe; }
+        set { pickaxe = value; }
+    }
+    public bool Shovel
+    {
+        get { return shovel; }
+        set { shovel = value; }
+    }*/
 }
