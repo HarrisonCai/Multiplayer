@@ -28,7 +28,7 @@ public class MovementController : MonoBehaviour
             
             sin = Mathf.Abs(v / (Mathf.Sqrt(Mathf.Pow(v, 2) + Mathf.Pow(h, 2))));
             cos = Mathf.Abs(h / (Mathf.Sqrt(Mathf.Pow(v, 2) + Mathf.Pow(h, 2))));
-            Debug.Log(v + " : " + h + " : " + sin + " : " + cos);
+            
             speed = new Vector2(h * cos, v * sin);
         }
         else
