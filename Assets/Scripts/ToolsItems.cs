@@ -48,7 +48,7 @@ public class ToolsItems : MonoBehaviour
         //PICKAXE CODE
         goldProgress.fillAmount = (resetMiningTime - miningTimer) / resetMiningTime;
         UpdateProgress();
-        if (/*pickaxe && */mining && Input.GetMouseButton(0))
+        if (pickaxe && mining && Input.GetMouseButton(0))
         {
             miningTimer -= Time.deltaTime;
         }

@@ -35,7 +35,7 @@ public class MovementController : MonoBehaviour
         {
             speed = Vector2.zero; 
         }
-        if (/*tools.Pickaxe && */tools.Mining && Input.GetMouseButton(0))
+        if (tools.Pickaxe && tools.Mining && Input.GetMouseButton(0))
         {
             speed *= 0.33f;
         }
