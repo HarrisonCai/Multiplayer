@@ -5,15 +5,16 @@ TagManager:
   serializedVersion: 2
   tags:
   - Gold Mine
+  - PlantingUnit
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Player
   - Water
   - UI
   - Planting
-  - 
+  - Non-Player Attachment
   - 
   - 
   - 

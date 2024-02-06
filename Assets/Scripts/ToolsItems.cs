@@ -6,13 +6,13 @@ using TMPro;
 
 public class ToolsItems : MonoBehaviour
 {
-    [SerializeField] private Gradient MiningGrad;
+    
     [SerializeField] private RectTransform hotBarIndex;
     private int corn=0;
     private int maxCorn = 20;
     private int gold=0;
     private int seeds=5;
-    private int goldSeeds=0;
+    private int goldSeeds=2;
     private bool sharpener = false;
     private int lighter=0;
     private int turret=0;
@@ -21,40 +21,91 @@ public class ToolsItems : MonoBehaviour
     private bool cornCounter = false;
     private int hotbarLocation = 1;
 
-    
+
+    private bool planting = false;
+    [SerializeField] private float resetPlanting;
+    private float plantingTimer;
+    private bool plantingState;
+    private bool donePlanting;
+
     private bool mining = false;
     [SerializeField] private float resetMiningTime;
     private float miningTimer;
-    [SerializeField] private Image goldProgress;
-    private float target, currentFillGold;
+    private bool miningState;
+
+    [SerializeField] private Image Progress;
+    [SerializeField] private Gradient ProgressGrad;
+    private float target, currentFill;
 
     private bool scythe = false;
     private bool pickaxe = false;
     private bool shovel = false;
     private bool lighterItem = false;
     private bool turretItem = false;
+    private bool seed, goldSeed;
+    private int typeSeed = 0;
     
     void Start()
     {
         miningTimer = resetMiningTime;
-        goldProgress.fillAmount = 0;
+        Progress.fillAmount = 0;
     }
-
     
+
     void Update()
     {
         
         SwitchTool();
+        //PLANTING CODE
+
+        if (seed && seeds > 0 && planting && Input.GetKey(KeyCode.X))
+        {
+            plantingTimer -= Time.deltaTime;
+            UpdatePlantProgress();
+            plantingState = true;
+        }
+
+        else if (goldSeed && goldSeeds > 0 && planting && Input.GetKey(KeyCode.X))
+        {
+            plantingTimer -= Time.deltaTime;
+            UpdatePlantProgress();
+            plantingState = true;
+
+        }
+        else
+        {
+            plantingTimer = resetPlanting;
+            if (plantingState)
+            {
+                Progress.fillAmount = 0;
+            }
+            plantingState = false;
+        }
+        
+        if (plantingTimer <= 0)
+        {
+            donePlanting = true;
+            plantingTimer = resetPlanting;
+            
+        }
+
         //PICKAXE CODE
-        goldProgress.fillAmount = (resetMiningTime - miningTimer) / resetMiningTime;
-        UpdateProgress();
+
+
         if (pickaxe && mining && Input.GetMouseButton(0))
         {
             miningTimer -= Time.deltaTime;
+            UpdateGoldProgress();
+            miningState = true;
         }
         else
         {
             miningTimer = resetMiningTime;
+            if (miningState)
+            {
+                Progress.fillAmount = 0;
+            }
+            miningState = false;
         }
         if (miningTimer <= 0)
         {
@@ -63,12 +114,19 @@ public class ToolsItems : MonoBehaviour
         }
         //----------------------------------------
     }
-    private void UpdateProgress()
+    private void UpdatePlantProgress()
+    {
+        target = (resetPlanting - plantingTimer) / resetPlanting;
+        currentFill = Progress.fillAmount;
+        Progress.fillAmount = Mathf.Lerp(currentFill, target, Time.deltaTime * 10);
+        Progress.color = ProgressGrad.Evaluate(Progress.fillAmount);
+    }
+    private void UpdateGoldProgress()
     {
         target = (resetMiningTime - miningTimer) / resetMiningTime;
-        currentFillGold = goldProgress.fillAmount;
-        goldProgress.fillAmount = Mathf.Lerp(currentFillGold, target, Time.deltaTime * 10);
-        goldProgress.color = MiningGrad.Evaluate(goldProgress.fillAmount);
+        currentFill = Progress.fillAmount;
+        Progress.fillAmount = Mathf.Lerp(currentFill, target, Time.deltaTime * 10);
+        Progress.color = ProgressGrad.Evaluate(Progress.fillAmount);
     }
     private void SwitchTool()
     {
@@ -91,6 +149,22 @@ public class ToolsItems : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha5))
         {
             hotbarLocation = 5;
+        }
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            typeSeed++;
+            typeSeed %= 2;
+            plantingTimer = resetPlanting;
+        }
+        if (typeSeed == 0)
+        {
+            seed = true;
+            goldSeed = false;
+        }
+        else
+        {
+            seed = false;
+            goldSeed = true;
         }
         float pos = -100 + (hotbarLocation-1 )* 50;
 
@@ -141,6 +215,14 @@ public class ToolsItems : MonoBehaviour
     private void OnGUI()
     {
         GUI.Box(new Rect(200, 10, 180, 25), "Gold : " + (gold));
+        if (seed)
+        {
+            GUI.Box(new Rect(400, 10, 180, 25), "Seeds : " + (seeds));
+        }
+        if (goldSeed)
+        {
+            GUI.Box(new Rect(400, 10, 180, 25), "GoldSeeds : " + (goldSeeds));
+        }
     }
     public bool Mining
     {
@@ -173,5 +255,40 @@ public class ToolsItems : MonoBehaviour
     {
         get { return turretItem; }
     }
-
+    public bool Planting
+    {
+        get { return planting; }
+        set { planting = value; }
+    }
+    public bool MiningState
+    {
+        get { return miningState; }
+    }
+    public bool PlantingState
+    {
+        get { return plantingState; }
+    }
+    public bool DonePlanting
+    {
+        get { return donePlanting; }
+        set { donePlanting = value; }
+    }
+    public bool Seed
+    {
+        get { return seed; }
+    }
+    public bool GoldSeed
+    {
+        get { return goldSeed; }
+    }
+    public int Seeds
+    {
+        get { return seeds; }
+        set { seeds = value; }
+    }
+    public int GoldenSeeds
+    {
+        get { return goldSeeds; }
+        set { goldSeeds = value; }
+    }
 }

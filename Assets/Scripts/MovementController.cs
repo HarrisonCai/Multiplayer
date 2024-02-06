@@ -14,30 +14,34 @@ public class MovementController : MonoBehaviour
     {
         
     }
-    
+
     // Update is called once per frame
     void Update()
     {
 
-        
+
         float v = Input.GetAxis("Vertical");
         float h = Input.GetAxis("Horizontal");
 
         if (v != 0 || h != 0)
         {
-            
+
             sin = Mathf.Abs(v / (Mathf.Sqrt(Mathf.Pow(v, 2) + Mathf.Pow(h, 2))));
             cos = Mathf.Abs(h / (Mathf.Sqrt(Mathf.Pow(v, 2) + Mathf.Pow(h, 2))));
-            
+
             speed = new Vector2(h * cos, v * sin);
         }
         else
         {
-            speed = Vector2.zero; 
+            speed = Vector2.zero;
         }
-        if (tools.Pickaxe && tools.Mining && Input.GetMouseButton(0))
+        if (tools.MiningState)
         {
             speed *= 0.33f;
+        }
+        if (tools.PlantingState)
+        {
+            speed = Vector2.zero;
         }
 
         rb.velocity = speed * multiplier;
