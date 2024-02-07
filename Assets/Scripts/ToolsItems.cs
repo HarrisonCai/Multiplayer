@@ -6,6 +6,7 @@ using TMPro;
 
 public class ToolsItems : MonoBehaviour
 {
+    private int playerID;
     
     [SerializeField] private RectTransform hotBarIndex;
     private int corn=0;
