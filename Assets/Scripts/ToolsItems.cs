@@ -55,6 +55,10 @@ public class ToolsItems : NetworkBehaviour
 
     void Update()
     {
+        if (!IsOwner)
+        {
+            return;
+        }
         
         SwitchTool();
         //PLANTING CODE
