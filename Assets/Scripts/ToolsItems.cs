@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-
-public class ToolsItems : MonoBehaviour
+using Unity.Netcode;
+public class ToolsItems : NetworkBehaviour
 {
-    private int playerID;
+    private NetworkVariable<int> playerId = new NetworkVariable<int>();
     
     [SerializeField] private RectTransform hotBarIndex;
     private int corn=0;
