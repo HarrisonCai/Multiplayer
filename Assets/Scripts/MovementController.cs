@@ -10,10 +10,14 @@ public class MovementController : NetworkBehaviour
     private Vector2 speed;
     private float sin, cos;
     [SerializeField] private ToolsItems tools;
+    [SerializeField] private GameObject playerUI;
     // Start is called before the first frame update
     void Start()
     {
-        
+        if (IsLocalPlayer)
+        {
+            playerUI.SetActive(true);
+        }
     }
 
     // Update is called once per frame

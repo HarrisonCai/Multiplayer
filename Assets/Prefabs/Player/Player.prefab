@@ -390,7 +390,7 @@ GameObject:
   - component: {fileID: 7257681772675166762}
   - component: {fileID: 9159863862754702644}
   m_Layer: 3
-  m_Name: GoldMiningProgress
+  m_Name: MiningProgress
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -800,6 +800,7 @@ MonoBehaviour:
   rb: {fileID: 6438894297023676174}
   multiplier: 10
   tools: {fileID: 7611345650532316863}
+  playerUI: {fileID: 7051531297865476862}
 --- !u!114 &7611345650532316863
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -914,8 +915,9 @@ GameObject:
   - component: {fileID: 4759708201942510532}
   - component: {fileID: 6485079703671150387}
   - component: {fileID: 2360380139885828908}
+  - component: {fileID: 2696025287370909660}
   m_Layer: 3
-  m_Name: MiningBar
+  m_Name: ProgressBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -978,6 +980,27 @@ MonoBehaviour:
   m_FillOrigin: 1
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &2696025287370909660
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6181732413847336017}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 250134906
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  AlwaysReplicateAsRoot: 1
+  SynchronizeTransform: 0
+  ActiveSceneSynchronization: 1
+  SceneMigrationSynchronization: 1
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
 --- !u!1 &7051531297865476862
 GameObject:
   m_ObjectHideFlags: 0
@@ -996,7 +1019,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2341173033614955417
 RectTransform:
   m_ObjectHideFlags: 0

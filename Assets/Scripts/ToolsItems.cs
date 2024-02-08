@@ -36,7 +36,7 @@ public class ToolsItems : NetworkBehaviour
 
     [SerializeField] private Image Progress;
     [SerializeField] private Gradient ProgressGrad;
-    private float target, currentFill;
+    private float target;
 
     private bool scythe = false;
     private bool pickaxe = false;
@@ -82,7 +82,7 @@ public class ToolsItems : NetworkBehaviour
             plantingTimer = resetPlanting;
             if (plantingState)
             {
-                Progress.fillAmount = 0;
+                UpdatePlantProgress();
             }
             plantingState = false;
         }
@@ -108,7 +108,7 @@ public class ToolsItems : NetworkBehaviour
             miningTimer = resetMiningTime;
             if (miningState)
             {
-                Progress.fillAmount = 0;
+                UpdateGoldProgress();
             }
             miningState = false;
         }
@@ -119,19 +119,19 @@ public class ToolsItems : NetworkBehaviour
         }
         //----------------------------------------
     }
+    
     private void UpdatePlantProgress()
     {
         target = (resetPlanting - plantingTimer) / resetPlanting;
-        currentFill = Progress.fillAmount;
-        Progress.fillAmount = Mathf.Lerp(currentFill, target, Time.deltaTime * 10);
-        Progress.color = ProgressGrad.Evaluate(Progress.fillAmount);
+        Progress.fillAmount = target;
+        Progress.color = ProgressGrad.Evaluate(target);
     }
+    
     private void UpdateGoldProgress()
     {
         target = (resetMiningTime - miningTimer) / resetMiningTime;
-        currentFill = Progress.fillAmount;
-        Progress.fillAmount = Mathf.Lerp(currentFill, target, Time.deltaTime * 10);
-        Progress.color = ProgressGrad.Evaluate(Progress.fillAmount);
+        Progress.fillAmount = target;
+        Progress.color = ProgressGrad.Evaluate(target);
     }
     private void SwitchTool()
     {
@@ -219,6 +219,7 @@ public class ToolsItems : NetworkBehaviour
     //OnGUI will be temporary (will replace with canvas because those look nicer)
     private void OnGUI()
     {
+        if (!IsOwner) { return; }
         GUI.Box(new Rect(200, 10, 180, 25), "Gold : " + (gold));
         if (seed)
         {
