@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.Netcode;
 
-public class MovementController : MonoBehaviour
+public class MovementController : NetworkBehaviour
 {
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] [Range(0.3f,100)]private float multiplier;
@@ -18,6 +19,12 @@ public class MovementController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //DO NOT TOUCH THIS
+        if (!IsOwner)
+        {
+            return;
+        }
+        //----------------------------
 
 
         float v = Input.GetAxis("Vertical");
