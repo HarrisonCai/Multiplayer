@@ -36,7 +36,7 @@ public class ToolsItems : NetworkBehaviour
 
     [SerializeField] private Image Progress;
     [SerializeField] private Gradient ProgressGrad;
-    private float target;
+    private NetworkVariable<float> target= new NetworkVariable<float>(0, NetworkVariableReadPermission.Everyone,NetworkVariableWritePermission.Owner);
 
     private bool scythe = false;
     private bool pickaxe = false;
@@ -118,20 +118,21 @@ public class ToolsItems : NetworkBehaviour
             miningTimer = resetMiningTime;
         }
         //----------------------------------------
+        Debug.Log(target.Value);
     }
     
     private void UpdatePlantProgress()
     {
-        target = (resetPlanting - plantingTimer) / resetPlanting;
-        Progress.fillAmount = target;
-        Progress.color = ProgressGrad.Evaluate(target);
+        target.Value = (resetPlanting - plantingTimer) / resetPlanting;
+        Progress.fillAmount = target.Value;
+        Progress.color = ProgressGrad.Evaluate(target.Value);
     }
     
     private void UpdateGoldProgress()
     {
-        target = (resetMiningTime - miningTimer) / resetMiningTime;
-        Progress.fillAmount = target;
-        Progress.color = ProgressGrad.Evaluate(target);
+        target.Value = (resetMiningTime - miningTimer) / resetMiningTime;
+        Progress.fillAmount = target.Value;
+        Progress.color = ProgressGrad.Evaluate(target.Value);
     }
     private void SwitchTool()
     {

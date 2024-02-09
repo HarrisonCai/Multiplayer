@@ -5,9 +5,9 @@ using Unity.Netcode;
 
 public class PlantedCorn : NetworkBehaviour
 {
-    private NetworkVariable<bool> isPlanted = new NetworkVariable<bool>();
-    private NetworkVariable<bool> corn = new NetworkVariable<bool>();
-    private NetworkVariable<bool> goldenCorn = new NetworkVariable<bool>();
+    private NetworkVariable<bool> isPlanted = new NetworkVariable<bool>(false,NetworkVariableReadPermission.Everyone,NetworkVariableWritePermission.Owner);
+    private NetworkVariable<bool> corn = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+    private NetworkVariable<bool> goldenCorn = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
     [SerializeField] private float cornTimeToGrow;
     [SerializeField] private float goldenCornTimeToGrow;
     private float timer;
