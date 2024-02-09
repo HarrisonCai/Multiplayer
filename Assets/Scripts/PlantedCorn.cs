@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.Netcode;
 
-public class PlantedCorn : MonoBehaviour
+public class PlantedCorn : NetworkBehaviour
 {
-    private bool isPlanted = false;
-    private bool corn;
-    private bool goldenCorn;
+    private NetworkVariable<bool> isPlanted = new NetworkVariable<bool>();
+    private NetworkVariable<bool> corn = new NetworkVariable<bool>();
+    private NetworkVariable<bool> goldenCorn = new NetworkVariable<bool>();
     [SerializeField] private float cornTimeToGrow;
     [SerializeField] private float goldenCornTimeToGrow;
     private float timer;
@@ -20,28 +21,28 @@ public class PlantedCorn : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (corn)
+        if (corn.Value)
         {
             cornIMG.SetActive(true);
         }
-        if (goldenCorn)
+        if (goldenCorn.Value)
         {
             goldenCornIMG.SetActive(true);
         }
     }
     public bool IsPlanted
     {
-        get { return isPlanted; }
-        set { isPlanted = value; }
+        get { return isPlanted.Value; }
+        set { isPlanted.Value = value; }
     }
     public bool Corn
     {
-        get { return corn; }
-        set { corn = value; }
+        get { return corn.Value; }
+        set { corn.Value = value; }
     }
     public bool GoldenCorn
     {
-        get { return goldenCorn; }
-        set { goldenCorn = value; }
+        get { return goldenCorn.Value; }
+        set { goldenCorn.Value = value; }
     }
 }

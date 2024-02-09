@@ -1,15 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class PlantingUnit : MonoBehaviour
+using Unity.Netcode;
+public class PlantingUnit : NetworkBehaviour
 {
 
     [SerializeField] private ToolsItems plantState;
     private Collider2D Unit;
     // Update is called once per frame
     void Update()
-    {   
+    {
+        if (!IsOwner)
+        {
+            return;
+        }
         if (Unit != null)
         {
             if (!Unit.gameObject.GetComponent<PlantedCorn>().IsPlanted && plantState.DonePlanting)
@@ -34,6 +38,10 @@ public class PlantingUnit : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (!IsOwner)
+        {
+            return;
+        }
         if (collision.gameObject.CompareTag("PlantingUnit"))
         {
             Debug.Log("enter");
