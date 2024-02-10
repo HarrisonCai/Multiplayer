@@ -55,35 +55,44 @@ public class ToolsItems : NetworkBehaviour
 
     void Update()
     {
+        if (plantingState)
+        {
+            UpdatePlantProgress();
+        }
+        if (miningState)
+        {
+            UpdateGoldProgress();
+        }
+        if (!(plantingState || miningState))
+        {
+            Progress.fillAmount = 0;
+        }
         if (!IsOwner)
         {
             return;
         }
-        
+        Debug.Log(target.Value);
         SwitchTool();
         //PLANTING CODE
 
         if (seed && seeds > 0 && planting && Input.GetKey(KeyCode.X))
         {
             plantingTimer -= Time.deltaTime;
-            UpdatePlantProgress();
+            
             plantingState = true;
         }
 
         else if (goldSeed && goldSeeds > 0 && planting && Input.GetKey(KeyCode.X))
         {
             plantingTimer -= Time.deltaTime;
-            UpdatePlantProgress();
+            
             plantingState = true;
 
         }
         else
         {
             plantingTimer = resetPlanting;
-            if (plantingState)
-            {
-                UpdatePlantProgress();
-            }
+            
             plantingState = false;
         }
         
@@ -100,16 +109,13 @@ public class ToolsItems : NetworkBehaviour
         if (pickaxe && mining && Input.GetMouseButton(0))
         {
             miningTimer -= Time.deltaTime;
-            UpdateGoldProgress();
+            
             miningState = true;
         }
         else
         {
             miningTimer = resetMiningTime;
-            if (miningState)
-            {
-                UpdateGoldProgress();
-            }
+            
             miningState = false;
         }
         if (miningTimer <= 0)
