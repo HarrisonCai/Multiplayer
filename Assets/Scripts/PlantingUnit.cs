@@ -77,6 +77,7 @@ public class PlantingUnit : NetworkBehaviour
     }*/
     private void OnTriggerExit2D(Collider2D collision)
     {
+        if (!IsOwner) { return; }
         if (collision.gameObject.CompareTag("PlantingUnit"))
         {
             Debug.Log("leave");
