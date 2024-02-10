@@ -10,10 +10,12 @@ public class PlantingUnit : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
+
         if (!IsOwner)
         {
             return;
         }
+        
         if (Unit != null)
         {
             if (!Unit.gameObject.GetComponent<PlantedCorn>().IsPlanted && plantState.DonePlanting)

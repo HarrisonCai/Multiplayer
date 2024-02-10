@@ -55,6 +55,7 @@ public class ToolsItems : NetworkBehaviour
 
     void Update()
     {
+        
         if (plantingState)
         {
             UpdatePlantProgress();
@@ -67,11 +68,12 @@ public class ToolsItems : NetworkBehaviour
         {
             Progress.fillAmount = 0;
         }
+        
         if (!IsOwner)
         {
             return;
         }
-        Debug.Log(target.Value);
+        
         SwitchTool();
         //PLANTING CODE
 
