@@ -118,7 +118,7 @@ public class ToolsItems : NetworkBehaviour
             miningTimer = resetMiningTime;
         }
         //----------------------------------------
-        Debug.Log(target.Value);
+        
     }
     
     private void UpdatePlantProgress()

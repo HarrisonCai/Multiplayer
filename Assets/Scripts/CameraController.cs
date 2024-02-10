@@ -22,6 +22,7 @@ public class CameraController : NetworkBehaviour
         else
         {
             vc.Priority = 0;
+            listener.enabled = false;
         }
     }
     // Update is called once per frame
