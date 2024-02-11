@@ -25,6 +25,7 @@ public class CameraController : NetworkBehaviour
             listener.enabled = false;
         }
     }
+    
     // Update is called once per frame
     void Update()
     {

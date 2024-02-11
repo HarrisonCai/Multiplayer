@@ -22,16 +22,15 @@ public class PlantingUnit : NetworkBehaviour
             {
                 plantState.Planting = false;
                 plantState.DonePlanting = false;
-                Unit.gameObject.GetComponent<PlantedCorn>().IsPlanted = true;
                 if (plantState.Seed)
                 {
-                    Unit.gameObject.GetComponent<PlantedCorn>().Corn = true;
+                    Unit.gameObject.GetComponent<PlantedCorn>().CornServerRpc();
                     plantState.Seeds--;
                 }
                 if (plantState.GoldSeed)
                 {
 
-                    Unit.gameObject.GetComponent<PlantedCorn>().GoldenCorn = true;
+                    Unit.gameObject.GetComponent<PlantedCorn>().GoldenCornServerRpc();
                     plantState.GoldenSeeds--;
                 }
             }

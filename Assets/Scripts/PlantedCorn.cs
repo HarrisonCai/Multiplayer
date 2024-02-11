@@ -30,19 +30,43 @@ public class PlantedCorn : NetworkBehaviour
             goldenCornIMG.SetActive(true);
         }
     }
+    [ServerRpc(RequireOwnership =false)]
+    public void CornServerRpc()
+    {
+        CornClientRpc();
+    }
+    [ClientRpc]
+    public void CornClientRpc()
+    {
+        cornIMG.SetActive(true);
+        isPlanted.Value = true;
+        corn.Value = true;
+    }
+    [ServerRpc(RequireOwnership = false)]
+    public void GoldenCornServerRpc()
+    {
+        GoldenCornClientRpc();
+    }
+    [ClientRpc]
+    public void GoldenCornClientRpc()
+    {
+        cornIMG.SetActive(true);
+        isPlanted.Value = true;
+        goldenCorn.Value = true;
+    }
     public bool IsPlanted
     {
         get { return isPlanted.Value; }
-        set { isPlanted.Value = value; }
+        
     }
     public bool Corn
     {
         get { return corn.Value; }
-        set { corn.Value = value; }
+        
     }
     public bool GoldenCorn
     {
         get { return goldenCorn.Value; }
-        set { goldenCorn.Value = value; }
+        
     }
 }
