@@ -26,13 +26,13 @@ public class ToolsItems : NetworkBehaviour
     private bool planting = false;
     [SerializeField] private float resetPlanting;
     private float plantingTimer;
-    private bool plantingState;
+    private NetworkVariable<bool> plantingState= new NetworkVariable<bool>(false,NetworkVariableReadPermission.Everyone,NetworkVariableWritePermission.Owner);
     private bool donePlanting;
 
     private bool mining = false;
     [SerializeField] private float resetMiningTime;
     private float miningTimer;
-    private bool miningState;
+    private NetworkVariable<bool> miningState = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
 
     [SerializeField] private Image Progress;
     [SerializeField] private Gradient ProgressGrad;
@@ -56,21 +56,22 @@ public class ToolsItems : NetworkBehaviour
     void Update()
     {
         
-        if (plantingState)
+        if (plantingState.Value)
         {
             UpdatePlantProgress();
         }
-        if (miningState)
+        if (miningState.Value)
         {
             UpdateGoldProgress();
         }
-        if (!(plantingState || miningState))
+        if (!(plantingState.Value || miningState.Value))
         {
             Progress.fillAmount = 0;
         }
         
         if (!IsOwner)
         {
+            
             return;
         }
         
@@ -80,22 +81,22 @@ public class ToolsItems : NetworkBehaviour
         if (seed && seeds > 0 && planting && Input.GetKey(KeyCode.X))
         {
             plantingTimer -= Time.deltaTime;
-            
-            plantingState = true;
+
+            ChangePlantStateTrueServerRpc();
         }
 
         else if (goldSeed && goldSeeds > 0 && planting && Input.GetKey(KeyCode.X))
         {
             plantingTimer -= Time.deltaTime;
-            
-            plantingState = true;
+
+            ChangePlantStateTrueServerRpc();
 
         }
         else
         {
             plantingTimer = resetPlanting;
-            
-            plantingState = false;
+
+            ChangePlantStateFalseServerRpc();
         }
         
         if (plantingTimer <= 0)
@@ -111,14 +112,14 @@ public class ToolsItems : NetworkBehaviour
         if (pickaxe && mining && Input.GetMouseButton(0))
         {
             miningTimer -= Time.deltaTime;
-            
-            miningState = true;
+
+            ChangeGoldStateTrueServerRpc();
         }
         else
         {
             miningTimer = resetMiningTime;
-            
-            miningState = false;
+
+            ChangeGoldStateFalseServerRpc();
         }
         if (miningTimer <= 0)
         {
@@ -128,19 +129,80 @@ public class ToolsItems : NetworkBehaviour
         //----------------------------------------
         
     }
-    
+    [ServerRpc(RequireOwnership =false)]
+    private void ChangePlantStateTrueServerRpc()
+    {
+        ChangePlantStateTrueClientRpc();
+    }
+    [ClientRpc(RequireOwnership = false)]
+    private void ChangePlantStateTrueClientRpc()
+    {
+        plantingState.Value = true;
+    }
+    [ServerRpc(RequireOwnership = false)]
+    private void ChangePlantStateFalseServerRpc()
+    {
+        ChangePlantStateFalseClientRpc();
+    }
+    [ClientRpc(RequireOwnership = false)]
+    private void ChangePlantStateFalseClientRpc()
+    {
+        plantingState.Value = false;
+    }
+    [ServerRpc(RequireOwnership = false)]
+    private void ChangeGoldStateTrueServerRpc()
+    {
+        ChangeGoldStateTrueClientRpc();
+    }
+    [ClientRpc(RequireOwnership = false)]
+    private void ChangeGoldStateTrueClientRpc()
+    {
+        miningState.Value = true;
+    }
+    [ServerRpc(RequireOwnership = false)]
+    private void ChangeGoldStateFalseServerRpc()
+    {
+        ChangeGoldStateFalseClientRpc();
+    }
+    [ClientRpc(RequireOwnership = false)]
+    private void ChangeGoldStateFalseClientRpc()
+    {
+        miningState.Value = false;
+    }
     private void UpdatePlantProgress()
     {
-        target.Value = (resetPlanting - plantingTimer) / resetPlanting;
+
+        UpdatePlantProgressServerRpc();
+        
         Progress.fillAmount = target.Value;
         Progress.color = ProgressGrad.Evaluate(target.Value);
+    }
+    [ServerRpc(RequireOwnership =false)]
+    private void UpdatePlantProgressServerRpc()
+    {
+        UpdatePlantProgressClientRpc();
+    }
+    [ClientRpc(RequireOwnership = false)]
+    private void UpdatePlantProgressClientRpc()
+    {
+        target.Value = (resetPlanting - plantingTimer) / resetPlanting;
     }
     
     private void UpdateGoldProgress()
     {
-        target.Value = (resetMiningTime - miningTimer) / resetMiningTime;
+        UpdateGoldProgressServerRpc();
         Progress.fillAmount = target.Value;
         Progress.color = ProgressGrad.Evaluate(target.Value);
+    }
+    [ServerRpc(RequireOwnership =false)]
+    private void UpdateGoldProgressServerRpc()
+    {
+        UpdateGoldProgressClientRpc();
+    }
+    [ClientRpc(RequireOwnership =false)]
+    private void UpdateGoldProgressClientRpc()
+    {
+        target.Value = (resetMiningTime - miningTimer) / resetMiningTime;
     }
     private void SwitchTool()
     {
@@ -277,11 +339,11 @@ public class ToolsItems : NetworkBehaviour
     }
     public bool MiningState
     {
-        get { return miningState; }
+        get { return miningState.Value; }
     }
     public bool PlantingState
     {
-        get { return plantingState; }
+        get { return plantingState.Value; }
     }
     public bool DonePlanting
     {

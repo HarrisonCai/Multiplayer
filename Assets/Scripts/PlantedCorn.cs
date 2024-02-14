@@ -35,7 +35,7 @@ public class PlantedCorn : NetworkBehaviour
     {
         CornClientRpc();
     }
-    [ClientRpc]
+    [ClientRpc(RequireOwnership = false)]
     public void CornClientRpc()
     {
         cornIMG.SetActive(true);
@@ -47,7 +47,7 @@ public class PlantedCorn : NetworkBehaviour
     {
         GoldenCornClientRpc();
     }
-    [ClientRpc]
+    [ClientRpc(RequireOwnership = false)]
     public void GoldenCornClientRpc()
     {
         cornIMG.SetActive(true);
