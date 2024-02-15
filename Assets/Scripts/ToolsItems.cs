@@ -82,21 +82,21 @@ public class ToolsItems : NetworkBehaviour
         {
             plantingTimer -= Time.deltaTime;
 
-            ChangePlantStateTrueServerRpc();
+            ChangePlantStateServerRpc(true);
         }
 
         else if (goldSeed && goldSeeds > 0 && planting && Input.GetKey(KeyCode.X))
         {
             plantingTimer -= Time.deltaTime;
 
-            ChangePlantStateTrueServerRpc();
+            ChangePlantStateServerRpc(true);
 
         }
         else
         {
             plantingTimer = resetPlanting;
 
-            ChangePlantStateFalseServerRpc();
+            ChangePlantStateServerRpc(false);
         }
         
         if (plantingTimer <= 0)
@@ -113,13 +113,13 @@ public class ToolsItems : NetworkBehaviour
         {
             miningTimer -= Time.deltaTime;
 
-            ChangeGoldStateTrueServerRpc();
+            ChangeGoldStateServerRpc(true);
         }
         else
         {
             miningTimer = resetMiningTime;
 
-            ChangeGoldStateFalseServerRpc();
+            ChangeGoldStateServerRpc(false);
         }
         if (miningTimer <= 0)
         {
@@ -130,45 +130,27 @@ public class ToolsItems : NetworkBehaviour
         
     }
     [ServerRpc(RequireOwnership =false)]
-    private void ChangePlantStateTrueServerRpc()
+    private void ChangePlantStateServerRpc(bool state)
     {
-        ChangePlantStateTrueClientRpc();
+        ChangePlantStateClientRpc(state);
     }
     [ClientRpc(RequireOwnership = false)]
-    private void ChangePlantStateTrueClientRpc()
+    private void ChangePlantStateClientRpc(bool state)
     {
-        plantingState.Value = true;
+        plantingState.Value = state;
     }
+    
     [ServerRpc(RequireOwnership = false)]
-    private void ChangePlantStateFalseServerRpc()
+    private void ChangeGoldStateServerRpc(bool state)
     {
-        ChangePlantStateFalseClientRpc();
+        ChangeGoldStateClientRpc(state);
     }
     [ClientRpc(RequireOwnership = false)]
-    private void ChangePlantStateFalseClientRpc()
+    private void ChangeGoldStateClientRpc(bool state)
     {
-        plantingState.Value = false;
+        miningState.Value = state;
     }
-    [ServerRpc(RequireOwnership = false)]
-    private void ChangeGoldStateTrueServerRpc()
-    {
-        ChangeGoldStateTrueClientRpc();
-    }
-    [ClientRpc(RequireOwnership = false)]
-    private void ChangeGoldStateTrueClientRpc()
-    {
-        miningState.Value = true;
-    }
-    [ServerRpc(RequireOwnership = false)]
-    private void ChangeGoldStateFalseServerRpc()
-    {
-        ChangeGoldStateFalseClientRpc();
-    }
-    [ClientRpc(RequireOwnership = false)]
-    private void ChangeGoldStateFalseClientRpc()
-    {
-        miningState.Value = false;
-    }
+    
     private void UpdatePlantProgress()
     {
 
