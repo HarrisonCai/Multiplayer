@@ -35,6 +35,7 @@ public class TomatoGunShoot : NetworkBehaviour
     {
         GameObject tomato = Instantiate(tomatoPrefab, transform.position+transform.right,this.transform.rotation);
         tomato.GetComponent<Rigidbody2D>().velocity = transform.right;
+        tomato.GetComponent<TomatoBulletDetect>().ClientID = OwnerClientId;
         //NetworkObject instanceNetworkObject = tomato.GetComponent<NetworkObject>();
         //instanceNetworkObject.Spawn();
         
