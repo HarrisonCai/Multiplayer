@@ -1,14 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class Health : MonoBehaviour
+using Unity.Netcode;
+public class Health : NetworkBehaviour
 {
     [SerializeField] private float maxhp;
-    private float hp;
+    private NetworkVariable<float> hp=new NetworkVariable<float>();
     void Start()
     {
-        hp = maxhp;
+        hp.Value = maxhp;
     }
 
     // Update is called once per frame
@@ -16,10 +16,20 @@ public class Health : MonoBehaviour
     {
         
     }
+    [ServerRpc(RequireOwnership =false)]
+    public void ChangeHPServerRpc(float val)
+    {
+        ChangeHPClientRpc(val);
+    }
+    [ClientRpc(RequireOwnership =false)]
+    public void ChangeHPClientRpc(float val)
+    {
+        hp.Value -= val;
+    }
     public float HP
     {
-        get { return hp; }
-        set { hp = value; }
+        get { return hp.Value; }
+        
     }
     public float MaxHP
     {

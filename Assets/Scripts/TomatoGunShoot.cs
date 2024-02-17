@@ -8,6 +8,7 @@ public class TomatoGunShoot : NetworkBehaviour
     [SerializeField] private GameObject tomatoPrefab;
     [SerializeField] private float cooldown;
     private float reload;
+    private GameObject tomato;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,6 +22,10 @@ public class TomatoGunShoot : NetworkBehaviour
         reload -= Time.deltaTime;
         if (Input.GetMouseButtonDown(0) && reload<=0)
         {
+            //FireTomatoServerRpc();
+            
+            
+            
             FireTomatoServerRpc();
             reload = cooldown;
         }
@@ -28,19 +33,11 @@ public class TomatoGunShoot : NetworkBehaviour
     [ServerRpc(RequireOwnership =false)]
     private void FireTomatoServerRpc()
     {
-        FireTomatoClientRpc();
+        NetworkObject instanceNetworkObject = Instantiate(tomatoPrefab, transform.position + transform.right, this.transform.rotation).GetComponent<NetworkObject>();
+        instanceNetworkObject.SpawnWithOwnership(OwnerClientId);
+        instanceNetworkObject.GetComponent<TomatoBulletDetect>().ClientID = OwnerClientId;
     }
-    [ClientRpc(RequireOwnership =false)]
-    private void FireTomatoClientRpc()
-    {
-        GameObject tomato = Instantiate(tomatoPrefab, transform.position+transform.right,this.transform.rotation);
-        tomato.GetComponent<Rigidbody2D>().velocity = transform.right;
-        tomato.GetComponent<TomatoBulletDetect>().ClientID = OwnerClientId;
-        //NetworkObject instanceNetworkObject = tomato.GetComponent<NetworkObject>();
-        //instanceNetworkObject.Spawn();
-        
-        //NetworkManager.SpawnManager.InstantiateAndSpawn(tomatoPrefab.GetComponent<NetworkObject>(), OwnerClientId,false,false,false,transform.position+transform.right, transform.rotation ).gameObject.GetComponent<Rigidbody2D>().velocity = transform.right;
-    }
+    
 
 
 }
