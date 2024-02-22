@@ -20,7 +20,8 @@ public class TomatoBulletDetect : NetworkBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         
-        //if (!IsServer) { return; }
+        if (!IsServer) { return; }
+        Debug.Log("run");
         if (collision.gameObject.CompareTag("Player") && collision.gameObject.GetComponent<NetworkObject>().OwnerClientId != OwnerClientId)
         {
             Debug.Log("hit");

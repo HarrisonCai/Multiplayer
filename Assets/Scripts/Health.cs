@@ -5,7 +5,7 @@ using Unity.Netcode;
 public class Health : NetworkBehaviour
 {
     [SerializeField] private float maxhp;
-    private NetworkVariable<float> hp=new NetworkVariable<float>();
+    private NetworkVariable<float> hp=new NetworkVariable<float>(0,NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
     void Start()
     {
         hp.Value = maxhp;

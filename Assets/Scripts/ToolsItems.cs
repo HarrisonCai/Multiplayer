@@ -17,6 +17,7 @@ public class ToolsItems : NetworkBehaviour
     private bool sharpener = false;
     private int lighter=0;
     private int turret=0;
+    private int tomato = 0;
     private bool cornBag=false;
     private int healthPot=0;
     private bool cornCounter = false;
@@ -41,11 +42,12 @@ public class ToolsItems : NetworkBehaviour
     private bool scythe = false;
     private bool pickaxe = false;
     private bool shovel = false;
-    private bool lighterItem = false;
+    private NetworkVariable<bool> tomatoGun = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone,NetworkVariableWritePermission.Owner);
     private bool turretItem = false;
     private bool seed, goldSeed;
     private int typeSeed = 0;
-    
+
+    [SerializeField] GameObject tomatoGunObj;
     void Start()
     {
         miningTimer = resetMiningTime;
@@ -68,7 +70,14 @@ public class ToolsItems : NetworkBehaviour
         {
             Progress.fillAmount = 0;
         }
-        
+        if (tomatoGun.Value)
+        {
+            tomatoGunObj.SetActive(true);
+        }
+        else
+        {
+            tomatoGunObj.SetActive(false);
+        }
         if (!IsOwner)
         {
             
@@ -126,7 +135,8 @@ public class ToolsItems : NetworkBehaviour
             gold++;
             miningTimer = resetMiningTime;
         }
-        //----------------------------------------
+        // TOMATO GUN STUFF (THIS ISN'T IN ORDER)
+
         
     }
     [ServerRpc(RequireOwnership =false)]
@@ -232,7 +242,7 @@ public class ToolsItems : NetworkBehaviour
             scythe = true;
             pickaxe = false;
             shovel = false;
-            lighterItem = false;
+            SetTomatoGunServerRpc(false);
             turretItem = false;
         }
         if (hotbarLocation == 2)
@@ -240,7 +250,7 @@ public class ToolsItems : NetworkBehaviour
             scythe = false;
             pickaxe = true;
             shovel = false;
-            lighterItem = false;
+            SetTomatoGunServerRpc(false);
             turretItem = false;
         }
         if (hotbarLocation == 3)
@@ -248,7 +258,7 @@ public class ToolsItems : NetworkBehaviour
             scythe = false;
             pickaxe = false;
             shovel = true;
-            lighterItem = false;
+            SetTomatoGunServerRpc(false);
             turretItem = false;
         }
         if (hotbarLocation == 4)
@@ -256,7 +266,7 @@ public class ToolsItems : NetworkBehaviour
             scythe = false;
             pickaxe = false;
             shovel = false;
-            lighterItem = true;
+            SetTomatoGunServerRpc(true);
             turretItem = false;
         }
         if (hotbarLocation == 5)
@@ -264,10 +274,20 @@ public class ToolsItems : NetworkBehaviour
             scythe = false;
             pickaxe = false;
             shovel = false;
-            lighterItem = false;
+            SetTomatoGunServerRpc(false);
             turretItem = true;
         }
 
+    }
+    [ServerRpc(RequireOwnership =false)]
+    private void SetTomatoGunServerRpc(bool state)
+    {
+        SetTomatoGunClientRpc(state);
+    }
+    [ClientRpc(RequireOwnership =false)]
+    private void SetTomatoGunClientRpc(bool state)
+    {
+        tomatoGun.Value = state;
     }
     //OnGUI will be temporary (will replace with canvas because those look nicer)
     private void OnGUI()
@@ -306,9 +326,9 @@ public class ToolsItems : NetworkBehaviour
         get { return shovel; }
         
     }
-    public bool Lighter
+    public bool TomatoGun
     {
-        get { return lighterItem; }
+        get { return tomatoGun.Value; }
     }
     public bool Turret
     {
