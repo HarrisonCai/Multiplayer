@@ -39,15 +39,20 @@ public class ToolsItems : NetworkBehaviour
     [SerializeField] private Gradient ProgressGrad;
     private NetworkVariable<float> target= new NetworkVariable<float>(0, NetworkVariableReadPermission.Everyone,NetworkVariableWritePermission.Owner);
 
-    private bool scythe = false;
-    private bool pickaxe = false;
-    private bool shovel = false;
+    private NetworkVariable<bool> scythe = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+    private NetworkVariable<bool> pickaxe = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+    private NetworkVariable<bool> shovel = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
     private NetworkVariable<bool> tomatoGun = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone,NetworkVariableWritePermission.Owner);
-    private bool turretItem = false;
-    private bool seed, goldSeed;
+    private NetworkVariable<bool> turretItem = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+    private NetworkVariable<bool> seed = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+    private NetworkVariable<bool> goldSeed = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
     private int typeSeed = 0;
 
-    [SerializeField] GameObject tomatoGunObj;
+    [SerializeField] GameObject scytheObj, tomatoGunObj;
+
+    private NetworkVariable<bool> swinging = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+    private bool canSwing = true;
+    private float swingTimer, resetswingTimer;
     void Start()
     {
         miningTimer = resetMiningTime;
@@ -57,7 +62,7 @@ public class ToolsItems : NetworkBehaviour
 
     void Update()
     {
-        
+        //Visual Updates
         if (plantingState.Value)
         {
             UpdatePlantProgress();
@@ -78,6 +83,15 @@ public class ToolsItems : NetworkBehaviour
         {
             tomatoGunObj.SetActive(false);
         }
+        if (scythe.Value)
+        {
+            scytheObj.SetActive(true);
+        }
+        else
+        {
+            scytheObj.SetActive(false);
+        }
+        //---------------
         if (!IsOwner)
         {
             
@@ -85,16 +99,35 @@ public class ToolsItems : NetworkBehaviour
         }
         
         SwitchTool();
+        //Scythe Code
+        
+        swingTimer -= Time.deltaTime;
+        resetswingTimer -= Time.deltaTime;
+        if (scythe.Value && canSwing && Input.GetMouseButtonDown(0))
+        {
+            swinging.Value = true;
+            canSwing = false;
+            swingTimer = 0.3f;
+            resetswingTimer = 1.1f;
+        }
+        if (swingTimer <= 0)
+        {
+            swinging.Value = false;
+        }
+        if (resetswingTimer <= 0)
+        {
+            canSwing = true;
+        }
         //PLANTING CODE
 
-        if (seed && seeds > 0 && planting && Input.GetKey(KeyCode.X))
+        if (seed.Value && seeds > 0 && planting && Input.GetKey(KeyCode.X))
         {
             plantingTimer -= Time.deltaTime;
 
             ChangePlantStateServerRpc(true);
         }
 
-        else if (goldSeed && goldSeeds > 0 && planting && Input.GetKey(KeyCode.X))
+        else if (goldSeed.Value && goldSeeds > 0 && planting && Input.GetKey(KeyCode.X))
         {
             plantingTimer -= Time.deltaTime;
 
@@ -118,7 +151,7 @@ public class ToolsItems : NetworkBehaviour
         //PICKAXE CODE
 
 
-        if (pickaxe && mining && Input.GetMouseButton(0))
+        if (pickaxe.Value && mining && Input.GetMouseButton(0))
         {
             miningTimer -= Time.deltaTime;
 
@@ -139,6 +172,8 @@ public class ToolsItems : NetworkBehaviour
 
         
     }
+    
+    
     [ServerRpc(RequireOwnership =false)]
     private void ChangePlantStateServerRpc(bool state)
     {
@@ -226,56 +261,56 @@ public class ToolsItems : NetworkBehaviour
         }
         if (typeSeed == 0)
         {
-            seed = true;
-            goldSeed = false;
+            seed.Value = true;
+            goldSeed.Value = false;
         }
         else
         {
-            seed = false;
-            goldSeed = true;
+            seed.Value = false;
+            goldSeed.Value = true;
         }
         float pos = -100 + (hotbarLocation-1 )* 50;
 
         hotBarIndex.localPosition = new Vector3(pos, hotBarIndex.localPosition.y, hotBarIndex.localPosition.z);
         if (hotbarLocation == 1)
         {
-            scythe = true;
-            pickaxe = false;
-            shovel = false;
+            scythe.Value = true;
+            pickaxe.Value = false;
+            shovel.Value = false;
             SetTomatoGunServerRpc(false);
-            turretItem = false;
+            turretItem.Value = false;
         }
         if (hotbarLocation == 2)
         {
-            scythe = false;
-            pickaxe = true;
-            shovel = false;
+            scythe.Value = false;
+            pickaxe.Value = true;
+            shovel.Value = false;
             SetTomatoGunServerRpc(false);
-            turretItem = false;
+            turretItem.Value = false;
         }
         if (hotbarLocation == 3)
         {
-            scythe = false;
-            pickaxe = false;
-            shovel = true;
+            scythe.Value = false;
+            pickaxe.Value = false;
+            shovel.Value = true;
             SetTomatoGunServerRpc(false);
-            turretItem = false;
+            turretItem.Value = false;
         }
         if (hotbarLocation == 4)
         {
-            scythe = false;
-            pickaxe = false;
-            shovel = false;
+            scythe.Value = false;
+            pickaxe.Value = false;
+            shovel.Value = false;
             SetTomatoGunServerRpc(true);
-            turretItem = false;
+            turretItem.Value = false;
         }
         if (hotbarLocation == 5)
         {
-            scythe = false;
-            pickaxe = false;
-            shovel = false;
+            scythe.Value = false;
+            pickaxe.Value = false;
+            shovel.Value = false;
             SetTomatoGunServerRpc(false);
-            turretItem = true;
+            turretItem.Value = true;
         }
 
     }
@@ -294,11 +329,11 @@ public class ToolsItems : NetworkBehaviour
     {
         if (!IsOwner) { return; }
         GUI.Box(new Rect(200, 10, 180, 25), "Gold : " + (gold));
-        if (seed)
+        if (seed.Value)
         {
             GUI.Box(new Rect(400, 10, 180, 25), "Seeds : " + (seeds));
         }
-        if (goldSeed)
+        if (goldSeed.Value)
         {
             GUI.Box(new Rect(400, 10, 180, 25), "GoldSeeds : " + (goldSeeds));
         }
@@ -313,17 +348,17 @@ public class ToolsItems : NetworkBehaviour
     //idk this might be important later :( 
     public bool Scythe
     {
-        get { return scythe; }
+        get { return scythe.Value; }
         
     }
     public bool Pickaxe
     {
-        get { return pickaxe; }
+        get { return pickaxe.Value; }
         
     }
     public bool Shovel
     {
-        get { return shovel; }
+        get { return shovel.Value; }
         
     }
     public bool TomatoGun
@@ -332,7 +367,7 @@ public class ToolsItems : NetworkBehaviour
     }
     public bool Turret
     {
-        get { return turretItem; }
+        get { return turretItem.Value; }
     }
     public bool Planting
     {
@@ -354,11 +389,11 @@ public class ToolsItems : NetworkBehaviour
     }
     public bool Seed
     {
-        get { return seed; }
+        get { return seed.Value; }
     }
     public bool GoldSeed
     {
-        get { return goldSeed; }
+        get { return goldSeed.Value; }
     }
     public int Seeds
     {
@@ -370,4 +405,10 @@ public class ToolsItems : NetworkBehaviour
         get { return goldSeeds; }
         set { goldSeeds = value; }
     }
+    public bool Swinging
+    {
+        get { return swinging.Value; }
+        set { swinging.Value = value; }
+    }
+    
 }

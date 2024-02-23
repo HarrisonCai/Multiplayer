@@ -35,7 +35,7 @@ public class TomatoGunShoot : NetworkBehaviour
     {
         NetworkObject instanceNetworkObject = Instantiate(tomatoPrefab, transform.position + transform.right, this.transform.rotation).GetComponent<NetworkObject>();
         instanceNetworkObject.SpawnWithOwnership(OwnerClientId);
-        instanceNetworkObject.GetComponent<TomatoBulletDetect>().ClientID = OwnerClientId;
+        
     }
     
 

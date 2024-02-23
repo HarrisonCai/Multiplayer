@@ -10,9 +10,15 @@ public class PlantedCorn : NetworkBehaviour
     private NetworkVariable<bool> goldenCorn = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
     [SerializeField] private float cornTimeToGrow;
     [SerializeField] private float goldenCornTimeToGrow;
-    private float timer;
+    private NetworkVariable<float> timer = new NetworkVariable<float>(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
     [SerializeField] private GameObject cornIMG, goldenCornIMG;
+    private NetworkVariable<ulong> clientId = new NetworkVariable<ulong>(6000, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
     // Start is called before the first frame update
+    [ServerRpc(RequireOwnership = false)]
+    public void SetClientServerRpc(ulong num)
+    {
+        clientId.Value = num;
+    }
     void Start()
     {
         

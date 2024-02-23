@@ -33,6 +33,7 @@ public class PlantingUnit : NetworkBehaviour
                     Unit.gameObject.GetComponent<PlantedCorn>().GoldenCornServerRpc();
                     plantState.GoldenSeeds--;
                 }
+                Unit.gameObject.GetComponent<PlantedCorn>().SetClientServerRpc(OwnerClientId);
             }
         }
        
