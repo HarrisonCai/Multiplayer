@@ -23,15 +23,7 @@ public class ScytheHitbox : NetworkBehaviour
 
         if (!IsOwner || !scytheState.Scythe || !scytheState.Swinging) { return; }
         
-        if (collision.gameObject.CompareTag("Player") && collision.gameObject.GetComponent<NetworkObject>().OwnerClientId != OwnerClientId)
-        {
-            
-
-            player = collision;
-
-            player.gameObject.GetComponent<Health>().ChangeHPServerRpc(20);
-            scytheState.Swinging = false;
-        }
+        
         if (collision.gameObject.CompareTag("PlantingUnit") && collision.gameObject.GetComponent<PlantedCorn>().ClientID==OwnerClientId && collision.gameObject.GetComponent<PlantedCorn>().Grow && scytheState.Corn<scytheState.MaxCorn)
         {
             PlantedCorn Unit= collision.gameObject.GetComponent<PlantedCorn>();
@@ -53,6 +45,15 @@ public class ScytheHitbox : NetworkBehaviour
             }
             
             Unit.DisableGrowingServerRpc();
+        }
+        if (collision.gameObject.CompareTag("Player") && collision.gameObject.GetComponent<NetworkObject>().OwnerClientId != OwnerClientId)
+        {
+
+
+            player = collision;
+
+            player.gameObject.GetComponent<Health>().ChangeHPServerRpc(20);
+            scytheState.Swinging = false;
         }
     }
     private void ResetCorn()
