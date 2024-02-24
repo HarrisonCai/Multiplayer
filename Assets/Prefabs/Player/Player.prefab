@@ -1286,7 +1286,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hotBarIndex: {fileID: 9035870416806910266}
-  resetPlanting: 0
+  resetPlanting: 0.01
   resetMiningTime: 3
   Progress: {fileID: 2360380139885828908}
   ProgressGrad:
