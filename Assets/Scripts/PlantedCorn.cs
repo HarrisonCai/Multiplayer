@@ -37,6 +37,10 @@ public class PlantedCorn : NetworkBehaviour
         TimerServerRpc();
         if (corn.Value)
         {
+            if (timer.Value > 5)
+            {
+                cornStage1.SetActive(true);
+            }
             if (timer.Value<=5 && timer.Value > 0)
             {
                 cornStage1.SetActive(false);
@@ -51,7 +55,11 @@ public class PlantedCorn : NetworkBehaviour
         }
         if (goldenCorn.Value)
         {
-            if (timer.Value <= 5 && timer.Value > 0)
+            if (timer.Value > 10)
+            {
+                goldenCornStage1.SetActive(true);
+            }
+            if (timer.Value <= 10 && timer.Value > 0)
             {
                 goldenCornStage1.SetActive(false);
                 goldenCornStage2.SetActive(true);
