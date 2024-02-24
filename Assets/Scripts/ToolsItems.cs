@@ -9,9 +9,9 @@ public class ToolsItems : NetworkBehaviour
     private NetworkVariable<int> playerId = new NetworkVariable<int>();
     
     [SerializeField] private RectTransform hotBarIndex;
-    private int corn=0;
+    private NetworkVariable<int> corn= new NetworkVariable<int>(0,NetworkVariableReadPermission.Everyone,NetworkVariableWritePermission.Owner);
     private int maxCorn = 20;
-    private int gold=0;
+    private NetworkVariable<int> gold= new NetworkVariable<int>(0,NetworkVariableReadPermission.Everyone,NetworkVariableWritePermission.Owner);
     private int seeds=5;
     private int goldSeeds=2;
     private bool sharpener = false;
@@ -97,7 +97,10 @@ public class ToolsItems : NetworkBehaviour
             
             return;
         }
-        
+        if (maxCorn == 20 && cornBag)
+        {
+            maxCorn = 50;
+        }
         SwitchTool();
         //Scythe Code
         
@@ -107,8 +110,8 @@ public class ToolsItems : NetworkBehaviour
         {
             swinging.Value = true;
             canSwing = false;
-            swingTimer = 0.3f;
-            resetswingTimer = 1.1f;
+            swingTimer = 0.2f;
+            resetswingTimer = 0.7f;
         }
         if (swingTimer <= 0)
         {
@@ -165,7 +168,7 @@ public class ToolsItems : NetworkBehaviour
         }
         if (miningTimer <= 0)
         {
-            gold++;
+            gold.Value++;
             miningTimer = resetMiningTime;
         }
         // TOMATO GUN STUFF (THIS ISN'T IN ORDER)
@@ -328,7 +331,7 @@ public class ToolsItems : NetworkBehaviour
     private void OnGUI()
     {
         if (!IsOwner) { return; }
-        GUI.Box(new Rect(200, 10, 180, 25), "Gold : " + (gold));
+        GUI.Box(new Rect(200, 10, 180, 25), "Gold : " + (gold.Value));
         if (seed.Value)
         {
             GUI.Box(new Rect(400, 10, 180, 25), "Seeds : " + (seeds));
@@ -337,6 +340,7 @@ public class ToolsItems : NetworkBehaviour
         {
             GUI.Box(new Rect(400, 10, 180, 25), "GoldSeeds : " + (goldSeeds));
         }
+        GUI.Box(new Rect(600, 10, 180, 25), "Corn : " + (corn.Value));
     }
     public bool Mining
     {
@@ -390,10 +394,12 @@ public class ToolsItems : NetworkBehaviour
     public bool Seed
     {
         get { return seed.Value; }
+        
     }
     public bool GoldSeed
     {
         get { return goldSeed.Value; }
+        
     }
     public int Seeds
     {
@@ -410,5 +416,13 @@ public class ToolsItems : NetworkBehaviour
         get { return swinging.Value; }
         set { swinging.Value = value; }
     }
-    
+    public int Corn
+    {
+        get { return corn.Value; }
+        set { corn.Value = value; }
+    }
+    public int MaxCorn
+    {
+        get { return maxCorn; }
+    }
 }

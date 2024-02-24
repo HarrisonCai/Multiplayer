@@ -1248,7 +1248,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 250134906
+  GlobalObjectIdHash: 3352964296
   InScenePlacedSourceGlobalObjectIdHash: 3352964296
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
@@ -1286,7 +1286,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hotBarIndex: {fileID: 9035870416806910266}
-  resetPlanting: 1
+  resetPlanting: 0
   resetMiningTime: 3
   Progress: {fileID: 2360380139885828908}
   ProgressGrad:
@@ -1478,7 +1478,7 @@ GameObject:
   - component: {fileID: 2807194828730057793}
   - component: {fileID: 3455326124859397530}
   - component: {fileID: 4681032358087802602}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: ScytheHitbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
