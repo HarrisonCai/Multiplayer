@@ -11,7 +11,7 @@ public class MovementController : NetworkBehaviour
     private float sin, cos;
     [SerializeField] private ToolsItems tools;
     [SerializeField] private GameObject playerUI;
-    private bool move;
+    private bool move=true;
     // Start is called before the first frame update
     void Start()
     {

@@ -16,7 +16,8 @@ public class ToolsItems : NetworkBehaviour
     private int goldSeeds=2;
     private bool sharpener = false;
     //private int lighter=0;
-    private int turret=0;
+    private int turret=1;
+    private int turretsPlaced;
     private int tomato = 0;
     private bool cornBag=false;
     private int healthPot=0;
@@ -62,14 +63,9 @@ public class ToolsItems : NetworkBehaviour
 
     private bool move;
 
-    public void Chat()
-    {
-        move = false;
-    }
-    public void unChat()
-    {
-        move = true;
-    }
+    [SerializeField] private GameObject turretPrefab;
+    private NetworkObject instanceNetworkObject;
+    
     void Start()
     {
         miningTimer = resetMiningTime;
@@ -80,6 +76,7 @@ public class ToolsItems : NetworkBehaviour
 
     void Update()
     {
+        
         //Visual Updates
         if (plantingState.Value)
         {
@@ -114,7 +111,7 @@ public class ToolsItems : NetworkBehaviour
             scytheObj.SetActive(false);
         }
         //-----------------------------------
-        if (!IsOwner || !move)
+        if (!IsOwner)
         {
             
             return;
@@ -123,6 +120,7 @@ public class ToolsItems : NetworkBehaviour
         {
             maxCorn = 50;
         }
+        
         SwitchTool();
         //Scythe Code
         
@@ -213,9 +211,29 @@ public class ToolsItems : NetworkBehaviour
             shovelTimer = resetShovelTimer;
 
         }
+        //TURRET PLACING CODE
+        if (turretItem.Value && turret>0 && turretsPlaced < 5 && Input.GetKeyDown(KeyCode.C))
+        {
+            turret--;
+            turretsPlaced++;
+            PlaceTurretServerRpc();
+            
+        }
     }
-    
+
     //=======================================================================================================================
+    [ServerRpc(RequireOwnership = false)]
+    private void PlaceTurretServerRpc()
+    {
+        instanceNetworkObject = Instantiate(turretPrefab, transform.position, this.transform.rotation).GetComponent<NetworkObject>();
+        instanceNetworkObject.SpawnWithOwnership(OwnerClientId);
+        PlaceTurretClientRpc();
+    }
+    [ClientRpc(RequireOwnership =false)]
+    private void PlaceTurretClientRpc()
+    {
+        //instanceNetworkObject.gameObject.GetComponent<TurretFiring>().Owner = this.gameObject.GetComponent<ToolsItems>();
+    }
     [ServerRpc(RequireOwnership =false)]
     private void ChangePlantStateServerRpc(bool state)
     {
@@ -320,8 +338,10 @@ public class ToolsItems : NetworkBehaviour
             typeSeed %= 2;
             plantingTimer = resetPlanting;
         }
+       
         if (typeSeed == 0)
         {
+            
             seed.Value = true;
             goldSeed.Value = false;
         }
@@ -389,6 +409,7 @@ public class ToolsItems : NetworkBehaviour
     private void OnGUI()
     {
         if (!IsOwner) { return; }
+        
         GUI.Box(new Rect(200, 10, 180, 25), "Gold : " + (gold.Value));
         if (seed.Value)
         {
@@ -399,6 +420,8 @@ public class ToolsItems : NetworkBehaviour
             GUI.Box(new Rect(400, 10, 180, 25), "GoldSeeds : " + (goldSeeds));
         }
         GUI.Box(new Rect(600, 10, 180, 25), "Corn : " + (corn.Value));
+        GUI.Box(new Rect(200, 40, 180, 25), "Turret : " + (turret));
+        GUI.Box(new Rect(400, 40, 180, 25), "TurretsPlaced : " + (TurretsPlaced));
     }
     public bool Mining
     {
@@ -496,5 +519,10 @@ public class ToolsItems : NetworkBehaviour
     public bool ShovelingState
     {
         get { return shovelingState.Value; }
+    }
+    public int TurretsPlaced
+    {
+        get { return turretsPlaced; }
+        set { turretsPlaced = value; }
     }
 }
