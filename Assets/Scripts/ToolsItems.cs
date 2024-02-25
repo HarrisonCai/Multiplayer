@@ -15,7 +15,7 @@ public class ToolsItems : NetworkBehaviour
     private int seeds=5;
     private int goldSeeds=2;
     private bool sharpener = false;
-    private int lighter=0;
+    //private int lighter=0;
     private int turret=0;
     private int tomato = 0;
     private bool cornBag=false;
@@ -53,9 +53,27 @@ public class ToolsItems : NetworkBehaviour
     private NetworkVariable<bool> swinging = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
     private bool canSwing = true;
     private float swingTimer, resetswingTimer;
+
+    private bool unitPlanted=false;
+    private bool removed=false;
+    [SerializeField] private float resetShovelTimer;
+    private float shovelTimer;
+    private NetworkVariable<bool> shovelingState = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+
+    private bool move;
+
+    public void Chat()
+    {
+        move = false;
+    }
+    public void unChat()
+    {
+        move = true;
+    }
     void Start()
     {
         miningTimer = resetMiningTime;
+        shovelTimer = resetShovelTimer;
         Progress.fillAmount = 0;
     }
     
@@ -71,7 +89,11 @@ public class ToolsItems : NetworkBehaviour
         {
             UpdateGoldProgress();
         }
-        if (!(plantingState.Value || miningState.Value))
+        if (shovelingState.Value)
+        {
+            UpdateShovelProgress();
+        }
+        if (!(plantingState.Value || miningState.Value || shovelingState.Value))
         {
             Progress.fillAmount = 0;
         }
@@ -91,8 +113,8 @@ public class ToolsItems : NetworkBehaviour
         {
             scytheObj.SetActive(false);
         }
-        //---------------
-        if (!IsOwner)
+        //-----------------------------------
+        if (!IsOwner || !move)
         {
             
             return;
@@ -110,8 +132,8 @@ public class ToolsItems : NetworkBehaviour
         {
             swinging.Value = true;
             canSwing = false;
-            swingTimer = 0.2f;
-            resetswingTimer = 0.7f;
+            swingTimer = 0.3f;
+            resetswingTimer = 1.1f;
         }
         if (swingTimer <= 0)
         {
@@ -122,15 +144,15 @@ public class ToolsItems : NetworkBehaviour
             canSwing = true;
         }
         //PLANTING CODE
-
-        if (seed.Value && seeds > 0 && planting && Input.GetKey(KeyCode.X))
+        
+        if (!unitPlanted && seed.Value && seeds > 0 && planting && Input.GetKey(KeyCode.X))
         {
             plantingTimer -= Time.deltaTime;
 
             ChangePlantStateServerRpc(true);
         }
 
-        else if (goldSeed.Value && goldSeeds > 0 && planting && Input.GetKey(KeyCode.X))
+        else if (!unitPlanted && goldSeed.Value && goldSeeds > 0 && planting && Input.GetKey(KeyCode.X))
         {
             plantingTimer -= Time.deltaTime;
 
@@ -171,12 +193,29 @@ public class ToolsItems : NetworkBehaviour
             gold.Value++;
             miningTimer = resetMiningTime;
         }
-        // TOMATO GUN STUFF (THIS ISN'T IN ORDER)
+        //SHOVEL CODE
+       
+        if (shovel.Value && unitPlanted && Input.GetMouseButton(0))
+        {
+            shovelTimer -= Time.deltaTime;
 
-        
+            shovelingState.Value = true;
+        }
+        else
+        {
+            shovelingState.Value = false;
+            shovelTimer = resetShovelTimer;
+        }
+
+        if (shovelTimer <= 0)
+        {
+            removed = true;
+            shovelTimer = resetShovelTimer;
+
+        }
     }
     
-    
+    //=======================================================================================================================
     [ServerRpc(RequireOwnership =false)]
     private void ChangePlantStateServerRpc(bool state)
     {
@@ -234,6 +273,25 @@ public class ToolsItems : NetworkBehaviour
     {
         target.Value = (resetMiningTime - miningTimer) / resetMiningTime;
     }
+    private void UpdateShovelProgress()
+    {
+
+        UpdateShovelProgressServerRpc();
+
+        Progress.fillAmount = target.Value;
+        Progress.color = ProgressGrad.Evaluate(target.Value);
+    }
+    [ServerRpc(RequireOwnership = false)]
+    private void UpdateShovelProgressServerRpc()
+    {
+        UpdateShovelProgressClientRpc();
+    }
+    [ClientRpc(RequireOwnership = false)]
+    private void UpdateShovelProgressClientRpc()
+    {
+        target.Value = (resetShovelTimer - shovelTimer) / resetShovelTimer;
+    }
+
     private void SwitchTool()
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
@@ -424,5 +482,19 @@ public class ToolsItems : NetworkBehaviour
     public int MaxCorn
     {
         get { return maxCorn; }
+    }
+    public bool Removed
+    {
+        get { return removed; }
+        set { removed = value; }
+    }
+    public bool UnitPlanted
+    {
+        get { return unitPlanted; }
+        set { unitPlanted = value; }
+    }
+    public bool ShovelingState
+    {
+        get { return shovelingState.Value; }
     }
 }

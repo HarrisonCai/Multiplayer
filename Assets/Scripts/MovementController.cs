@@ -11,6 +11,7 @@ public class MovementController : NetworkBehaviour
     private float sin, cos;
     [SerializeField] private ToolsItems tools;
     [SerializeField] private GameObject playerUI;
+    private bool move;
     // Start is called before the first frame update
     void Start()
     {
@@ -24,7 +25,7 @@ public class MovementController : NetworkBehaviour
     void Update()
     {
         //DO NOT TOUCH THIS
-        if (!IsOwner)
+        if (!IsOwner || !move)
         {
             return;
         }
@@ -50,7 +51,7 @@ public class MovementController : NetworkBehaviour
         {
             speed *= 0.33f;
         }
-        if (tools.PlantingState)
+        if (tools.PlantingState || tools.ShovelingState)
         {
             speed = Vector2.zero;
         }
@@ -58,5 +59,13 @@ public class MovementController : NetworkBehaviour
         rb.velocity = speed * multiplier;
         
         
+    }
+    public void Chat()
+    {
+        move = false;
+    }
+    public void unChat()
+    {
+        move = true;
     }
 }

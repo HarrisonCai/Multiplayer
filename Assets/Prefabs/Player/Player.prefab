@@ -1162,7 +1162,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 10
   m_Sprite: {fileID: 21300000, guid: a86cf2781c3bd48439db259e0dcc64ed, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -1286,7 +1286,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hotBarIndex: {fileID: 9035870416806910266}
-  resetPlanting: 0.01
+  resetPlanting: 1
   resetMiningTime: 3
   Progress: {fileID: 2360380139885828908}
   ProgressGrad:
@@ -1321,6 +1321,7 @@ MonoBehaviour:
     m_NumAlphaKeys: 2
   scytheObj: {fileID: 810671849106159920}
   tomatoGunObj: {fileID: 4860580188546178022}
+  resetShovelTimer: 2
 --- !u!114 &-3617074031927437098
 MonoBehaviour:
   m_ObjectHideFlags: 0

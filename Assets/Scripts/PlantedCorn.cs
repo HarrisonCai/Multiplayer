@@ -34,14 +34,15 @@ public class PlantedCorn : NetworkBehaviour
             goldenCornStage2.SetActive(false);
             goldenCornStage3.SetActive(false);
         }
-        TimerServerRpc();
+
+        if (IsServer) { TimerServerRpc(); }
         if (corn.Value)
         {
-            if (timer.Value > 5)
+            if (timer.Value > cornTimeToGrow/2)
             {
                 cornStage1.SetActive(true);
             }
-            if (timer.Value<=5 && timer.Value > 0)
+            if (timer.Value<= cornTimeToGrow / 2 && timer.Value > 0)
             {
                 cornStage1.SetActive(false);
                 cornStage2.SetActive(true);
@@ -55,11 +56,11 @@ public class PlantedCorn : NetworkBehaviour
         }
         if (goldenCorn.Value)
         {
-            if (timer.Value > 10)
+            if (timer.Value > goldenCornTimeToGrow/2)
             {
                 goldenCornStage1.SetActive(true);
             }
-            if (timer.Value <= 10 && timer.Value > 0)
+            if (timer.Value <= goldenCornTimeToGrow / 2 && timer.Value > 0)
             {
                 goldenCornStage1.SetActive(false);
                 goldenCornStage2.SetActive(true);
@@ -76,8 +77,6 @@ public class PlantedCorn : NetworkBehaviour
     public void GrowStateServerRpc(bool state)
     {
         doneGrowing.Value = state;
-        
-
     }
     [ServerRpc(RequireOwnership =false)]
     public void TimerServerRpc()
@@ -121,8 +120,13 @@ public class PlantedCorn : NetworkBehaviour
         isPlanted.Value = false;
         goldenCorn.Value = false;
         corn.Value = false;
+        cornStage1.SetActive(false);
+        cornStage2.SetActive(false);
         cornStage3.SetActive(false);
+        goldenCornStage1.SetActive(false);
+        goldenCornStage2.SetActive(false);
         goldenCornStage3.SetActive(false);
+        clientId.Value = 6000;
     }
     public bool IsPlanted
     {

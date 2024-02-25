@@ -18,9 +18,18 @@ public class PlantingUnit : NetworkBehaviour
         
         if (Unit != null)
         {
+            
+            plantState.UnitPlanted = Unit.gameObject.GetComponent<PlantedCorn>().IsPlanted;
+            if (plantState.Removed && Unit.gameObject.GetComponent<PlantedCorn>().IsPlanted)
+            {
+                plantState.Removed = false;
+                plantState.UnitPlanted = false;
+                Unit.gameObject.GetComponent<PlantedCorn>().GrowStateServerRpc(false);
+                Unit.gameObject.GetComponent<PlantedCorn>().DisableGrowingServerRpc();
+            }
             if (!Unit.gameObject.GetComponent<PlantedCorn>().IsPlanted && plantState.DonePlanting)
             {
-                plantState.Planting = false;
+                
                 plantState.DonePlanting = false;
                 if (plantState.Seed)
                 {
@@ -47,11 +56,11 @@ public class PlantingUnit : NetworkBehaviour
         if (collision.gameObject.CompareTag("PlantingUnit"))
         {
             Debug.Log("enter");
-            if (!collision.gameObject.GetComponent<PlantedCorn>().IsPlanted)
-            {
-                plantState.Planting = true;
-                Unit = collision;
-            }
+            
+            plantState.Planting = true;
+                
+            
+            Unit = collision;
         }
     }
     /*private void OnTriggerStay2D(Collider2D collision)
@@ -85,6 +94,7 @@ public class PlantingUnit : NetworkBehaviour
             Debug.Log("leave");
             Unit = null;
             plantState.Planting = false;
+            plantState.UnitPlanted = false;
         }
     }
 }

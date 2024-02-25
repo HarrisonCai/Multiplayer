@@ -6,17 +6,17 @@ public class ScytheHitbox : NetworkBehaviour
 {
     // Start is called before the first frame update
     private Collider2D player;
+    private List<Collider2D> Objs = new List<Collider2D>();
     [SerializeField] ToolsItems scytheState;
-    private bool done = false;
-    void Start()
-    {
-        
-    }
+
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (Objs.Count!=0 && !scytheState.Swinging)
+        {
+            Objs.Clear();
+        }
     }
     private void OnTriggerStay2D(Collider2D collision)
     {
@@ -24,40 +24,38 @@ public class ScytheHitbox : NetworkBehaviour
         if (!IsOwner || !scytheState.Scythe || !scytheState.Swinging) { return; }
         
         
-        if (collision.gameObject.CompareTag("PlantingUnit") && collision.gameObject.GetComponent<PlantedCorn>().ClientID==OwnerClientId && collision.gameObject.GetComponent<PlantedCorn>().Grow && scytheState.Corn<scytheState.MaxCorn)
+        if (!Objs.Contains(collision) && collision.gameObject.CompareTag("PlantingUnit") && collision.gameObject.GetComponent<PlantedCorn>().ClientID==OwnerClientId && collision.gameObject.GetComponent<PlantedCorn>().Grow && scytheState.Corn<scytheState.MaxCorn)
         {
+            Objs.Add(collision);
             PlantedCorn Unit= collision.gameObject.GetComponent<PlantedCorn>();
             Unit.GrowStateServerRpc(false);
             
-            if (Unit.Corn && !done)
+            if (Unit.Corn )
             {
                 scytheState.Corn+=3;
                 scytheState.Seeds++;
-                done = true;
-                Invoke(nameof(ResetCorn), 0.3f);
+                
+                
             }
-            if (Unit.GoldenCorn && !done)
+            if (Unit.GoldenCorn)
             {
                 scytheState.Corn += 15;
                 scytheState.GoldenSeeds++;
-                done = true;
-                Invoke(nameof(ResetCorn), 0.3f);
+
+                
             }
             
             Unit.DisableGrowingServerRpc();
         }
-        if (collision.gameObject.CompareTag("Player") && collision.gameObject.GetComponent<NetworkObject>().OwnerClientId != OwnerClientId)
+        if (!Objs.Contains(collision) && collision.gameObject.CompareTag("Player") && collision.gameObject.GetComponent<NetworkObject>().OwnerClientId != OwnerClientId)
         {
-
+            Objs.Add(collision);
 
             player = collision;
 
             player.gameObject.GetComponent<Health>().ChangeHPServerRpc(20);
-            scytheState.Swinging = false;
+            
         }
     }
-    private void ResetCorn()
-    {
-        done = false;
-    }
+    
 }
