@@ -6,7 +6,7 @@ using TMPro;
 using Unity.Netcode;
 public class ToolsItems : NetworkBehaviour
 {
-    private NetworkVariable<int> playerId = new NetworkVariable<int>();
+    
     
     [SerializeField] private RectTransform hotBarIndex;
     private NetworkVariable<int> corn= new NetworkVariable<int>(0,NetworkVariableReadPermission.Everyone,NetworkVariableWritePermission.Owner);
