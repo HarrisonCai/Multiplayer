@@ -712,3 +712,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   turretHead: {fileID: 2937584265058702782}
+  resetFireTimer: 0.8

@@ -4,10 +4,11 @@ using UnityEngine;
 using Unity.Netcode;
 public class DestroyAtk : NetworkBehaviour
 {
+    [SerializeField] private float timer;
     // Start is called before the first frame update
     void Start()
     {
-        Invoke(nameof(TimedDestroy), 2);
+        Invoke(nameof(TimedDestroy), timer);
         //something
     }
     private void TimedDestroy()

@@ -5,6 +5,7 @@ using Unity.Netcode;
 public class TomatoBulletDetect : NetworkBehaviour
 {
     private Collider2D player;
+    [SerializeField] private float damage;
     // Start is called before the first frame update
     void Start()
     {
@@ -27,7 +28,7 @@ public class TomatoBulletDetect : NetworkBehaviour
             
             player = collision;
             
-            player.gameObject.GetComponent<Health>().ChangeHPServerRpc(20);
+            player.gameObject.GetComponent<Health>().ChangeHPServerRpc(damage);
             Destroy(this.gameObject);
         }
         
