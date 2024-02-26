@@ -33,7 +33,7 @@ public class TomatoGunShoot : NetworkBehaviour
     [ServerRpc(RequireOwnership =false)]
     private void FireTomatoServerRpc()
     {
-        NetworkObject instanceNetworkObject = Instantiate(tomatoPrefab, transform.position + transform.right, this.transform.rotation).GetComponent<NetworkObject>();
+        NetworkObject instanceNetworkObject = Instantiate(tomatoPrefab, transform.position + transform.right*0.2f, this.transform.rotation).GetComponent<NetworkObject>();
         instanceNetworkObject.SpawnWithOwnership(OwnerClientId);
         
     }

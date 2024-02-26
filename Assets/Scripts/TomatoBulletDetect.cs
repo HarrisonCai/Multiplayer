@@ -8,7 +8,7 @@ public class TomatoBulletDetect : NetworkBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        GetComponent<Rigidbody2D>().velocity = transform.right;
+        GetComponent<Rigidbody2D>().velocity = transform.right*5f;
     }
     
     // Update is called once per frame
