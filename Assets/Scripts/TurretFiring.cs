@@ -9,7 +9,8 @@ public class TurretFiring : NetworkBehaviour
     private ToolsItems owner;
     private float timer,fireTimer;
     [SerializeField] private float resetFireTimer;
-    private float minDistanceIndex, minDistance;
+    private int minDistanceIndex;
+    private float minDistance;
     private void Start()
     {
         fireTimer = 2f;
@@ -22,9 +23,9 @@ public class TurretFiring : NetworkBehaviour
         {
             players.Clear();
         }
-        if (players.Count>0 && fireTimer <= 0)
+        if (players.Count>0)
         {
-            fireTimer = resetFireTimer;
+            
             TurretFire();
         }
     }
@@ -36,13 +37,13 @@ public class TurretFiring : NetworkBehaviour
             timer = 0.5f;
             players.Add(collision);
         }
-        
+        Debug.Log(players.Count);
     }
     private void TurretFire()
     {
         minDistance = Vector2.Distance(turretHead.transform.position, players[0].transform.position);
         minDistanceIndex = 0;
-        for(int i = 1; i < players.Count; i++)
+        for(int i = 0; i < players.Count; i++)
         {
             if(Vector2.Distance(turretHead.transform.position, players[i].transform.position) < minDistance)
             {
@@ -50,7 +51,21 @@ public class TurretFiring : NetworkBehaviour
                 minDistanceIndex = i;
             }
         }
-        //turretHead.rotate;
+        Vector2 rotate = turretHead.transform.position - players[minDistanceIndex].gameObject.transform.position;
+        float rot = Mathf.Atan2(rotate.y, rotate.x) * Mathf.Rad2Deg;
+        turretHead.transform.rotation = Quaternion.Euler(0, 0, rot + 180);
+        if (fireTimer <= 0)
+        {
+            fireTimer = resetFireTimer;
+            TurretFireServerRpc();
+        }
+    }
+    [ServerRpc(RequireOwnership =false)]
+    private void TurretFireServerRpc()
+    {
+        
+        NetworkObject instanceNetworkObject = Instantiate(arrowPrefab, turretHead.transform.position + turretHead.transform.right * 0.2f, turretHead.transform.rotation).GetComponent<NetworkObject>();
+        instanceNetworkObject.SpawnWithOwnership(OwnerClientId);
     }
     public ToolsItems Owner
     {
