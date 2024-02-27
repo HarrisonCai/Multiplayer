@@ -13,10 +13,12 @@ public class TurretFiring : NetworkBehaviour
     private float minDistance;
     private void Start()
     {
+        if (!IsOwner) { return; }
         fireTimer = 2f;
     }
     private void Update()
     {
+        if (!IsOwner) { return; }
         fireTimer -= Time.deltaTime;
         
         if (players.Count>0)
