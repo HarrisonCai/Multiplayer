@@ -103,7 +103,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 2901882488
+  GlobalObjectIdHash: 2842483771
   InScenePlacedSourceGlobalObjectIdHash: 337947487
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
@@ -195,6 +195,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 5
+  bullspeed: 10
 --- !u!61 &3283084332656294950
 BoxCollider2D:
   m_ObjectHideFlags: 0
