@@ -713,4 +713,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   turretHead: {fileID: 2937584265058702782}
   arrowPrefab: {fileID: 7837745516819818069, guid: 5d91d45d519f70940b5cc2b221cc20bd, type: 3}
-  resetFireTimer: 0.8
+  resetFireTimer: 0.5
