@@ -1104,10 +1104,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1622449612}
-  - component: {fileID: 1622449616}
   - component: {fileID: 1622449615}
   - component: {fileID: 1622449614}
   - component: {fileID: 1622449613}
+  - component: {fileID: 1622449616}
   m_Layer: 5
   m_Name: Chat Content
   m_TagString: Untagged
@@ -1145,7 +1145,7 @@ CanvasGroup:
   m_Alpha: 1
   m_Interactable: 1
   m_BlocksRaycasts: 1
-  m_IgnoreParentGroups: 0
+  m_IgnoreParentGroups: 1
 --- !u!114 &1622449614
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1177,7 +1177,7 @@ MonoBehaviour:
   m_MinHeight: 200
   m_PreferredWidth: -1
   m_PreferredHeight: -1
-  m_FlexibleWidth: 1
+  m_FlexibleWidth: 100
   m_FlexibleHeight: 5
   m_LayoutPriority: 1
 --- !u!114 &1622449616
@@ -1189,21 +1189,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 1622449611}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a8695521f0d02e499659fee002a26c2, type: 3}
+  m_Script: {fileID: 11500000, guid: 59f8146938fff824cb5fd77236b75775, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
     m_Left: 0
     m_Right: 0
-    m_Top: 0
-    m_Bottom: 0
-  m_ChildAlignment: 6
-  m_StartCorner: 0
-  m_StartAxis: 1
-  m_CellSize: {x: 370, y: 20}
-  m_Spacing: {x: 0, y: 1}
-  m_Constraint: 0
-  m_ConstraintCount: 1
+    m_Top: 20
+    m_Bottom: 20
+  m_ChildAlignment: 0
+  m_Spacing: 20
+  m_ChildForceExpandWidth: 1
+  m_ChildForceExpandHeight: 0
+  m_ChildControlWidth: 1
+  m_ChildControlHeight: 0
+  m_ChildScaleWidth: 1
+  m_ChildScaleHeight: 0
+  m_ReverseArrangement: 0
 --- !u!1 &1660596495
 GameObject:
   m_ObjectHideFlags: 0
