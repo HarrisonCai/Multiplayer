@@ -644,7 +644,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 185.245, y: 144}
+  m_AnchoredPosition: {x: 185.245, y: 145}
   m_SizeDelta: {x: 370.49, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &523764655
@@ -666,7 +666,7 @@ MonoBehaviour:
   m_Elasticity: 0.1
   m_Inertia: 1
   m_DecelerationRate: 0.135
-  m_ScrollSensitivity: 1
+  m_ScrollSensitivity: 10
   m_Viewport: {fileID: 2035955602}
   m_HorizontalScrollbar: {fileID: 0}
   m_VerticalScrollbar: {fileID: 1475423477}
@@ -1178,7 +1178,7 @@ MonoBehaviour:
   m_PreferredWidth: -1
   m_PreferredHeight: -1
   m_FlexibleWidth: 1
-  m_FlexibleHeight: 1
+  m_FlexibleHeight: 5
   m_LayoutPriority: 1
 --- !u!114 &1622449616
 MonoBehaviour:
@@ -1197,12 +1197,12 @@ MonoBehaviour:
     m_Right: 0
     m_Top: 0
     m_Bottom: 0
-  m_ChildAlignment: 7
+  m_ChildAlignment: 6
   m_StartCorner: 0
   m_StartAxis: 1
   m_CellSize: {x: 370, y: 20}
-  m_Spacing: {x: 0, y: 0}
-  m_Constraint: 1
+  m_Spacing: {x: 0, y: 1}
+  m_Constraint: 0
   m_ConstraintCount: 1
 --- !u!1 &1660596495
 GameObject:
