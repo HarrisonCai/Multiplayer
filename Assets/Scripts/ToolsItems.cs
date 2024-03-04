@@ -61,6 +61,13 @@ public class ToolsItems : NetworkBehaviour
     private float shovelTimer;
     private NetworkVariable<bool> shovelingState = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
 
+    private bool storageHouse;
+    private NetworkVariable<bool> storageState = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
+    [SerializeField] private float resetStorage;
+    private float storageTimer;
+    private bool stored = false;
+
+
     private bool move;
 
     [SerializeField] private GameObject turretPrefab;
@@ -525,5 +532,10 @@ public class ToolsItems : NetworkBehaviour
     {
         get { return turretsPlaced; }
         set { turretsPlaced = value; }
+    }
+    public bool StoragHouse
+    {
+        get { return storageHouse; }
+        set { storageHouse = value; }
     }
 }
