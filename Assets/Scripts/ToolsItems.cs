@@ -6,7 +6,7 @@ using TMPro;
 using Unity.Netcode;
 public class ToolsItems : NetworkBehaviour
 {
-    
+    [SerializeField] private TextMeshProUGUI cornTextVal, goldTextVal;
     
     [SerializeField] private RectTransform hotBarIndex;
     private NetworkVariable<int> corn= new NetworkVariable<int>(0,NetworkVariableReadPermission.Everyone,NetworkVariableWritePermission.Owner);
@@ -76,7 +76,8 @@ public class ToolsItems : NetworkBehaviour
 
     void Update()
     {
-        
+        cornTextVal.text = ""+corn.Value;
+        goldTextVal.text = "" + gold.Value;
         //Visual Updates
         if (plantingState.Value)
         {
