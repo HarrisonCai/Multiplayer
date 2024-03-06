@@ -2,11 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Unity.Netcode;
+using TMPro;
+using UnityEngine.UI;
 public class StorageHouse : NetworkBehaviour
 {
     [SerializeField] private ulong clientID;
     private Collider2D player;
-    private NetworkVariable<float> corn = new NetworkVariable<float>(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
+    private ToolsItems tools;
+    private NetworkVariable<int> corn = new NetworkVariable<int>(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
+    [SerializeField] private TextMeshProUGUI cornText;
     // Start is called before the first frame update
     void Start()
     {
@@ -16,22 +20,44 @@ public class StorageHouse : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!IsServer) { return; }
         
+        if (player != null)
+        {
+            tools = player.gameObject.GetComponent<ToolsItems>();
+            
+            if (tools.Stored && tools.StoragHouse)
+            {
+                tools.ChangeStoredStateServerRpc(false);
+                ChangeCornValServerRpc(tools.Corn);
+                tools.ResetCornClientRpc();
+            }
+        }
+        cornText.text = ""+corn.Value;
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        
+        if (!IsServer) { return; }
         if (collision.gameObject.CompareTag("Player")&& collision.gameObject.GetComponent<NetworkObject>().OwnerClientId==clientID)
         {
+            
             player = collision;
             collision.gameObject.GetComponent<ToolsItems>().StoragHouse=true;
         }
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
+        if (!IsServer) { return; }
         if (collision.gameObject.CompareTag("Player") && collision.gameObject.GetComponent<NetworkObject>().OwnerClientId == clientID)
         {
             player = collision;
             collision.gameObject.GetComponent<ToolsItems>().StoragHouse = false;
         }
+    }
+    [ServerRpc(RequireOwnership =false)]
+    public void ChangeCornValServerRpc(int val)
+    {
+        corn.Value += val;
     }
 }

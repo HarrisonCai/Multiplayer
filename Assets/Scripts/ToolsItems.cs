@@ -65,7 +65,7 @@ public class ToolsItems : NetworkBehaviour
     private NetworkVariable<bool> storageState = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
     [SerializeField] private float resetStorage;
     private float storageTimer;
-    private bool stored = false;
+    private NetworkVariable<bool> stored = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
 
 
     private bool move;
@@ -98,7 +98,11 @@ public class ToolsItems : NetworkBehaviour
         {
             UpdateShovelProgress();
         }
-        if (!(plantingState.Value || miningState.Value || shovelingState.Value))
+        if (storageState.Value)
+        {
+            UpdateStorageProgress();
+        }
+        if (!(plantingState.Value || miningState.Value || shovelingState.Value || storageState.Value))
         {
             Progress.fillAmount = 0;
         }
@@ -227,9 +231,38 @@ public class ToolsItems : NetworkBehaviour
             PlaceTurretServerRpc();
             
         }
+        //STORAGE
+        if (storageHouse && corn.Value > 0 && Input.GetMouseButton(0))
+        {
+            storageTimer -= Time.deltaTime;
+            Debug.Log("hehehehaw");
+            ChangeStorageValStateServerRpc(true);
+        }
+        else
+        {
+            ChangeStorageValStateServerRpc(false);
+            storageTimer = resetStorage;
+        }
+
+        if (storageTimer <= 0)
+        {
+            ChangeStoredStateServerRpc(true);
+            storageTimer = resetStorage;
+
+        }
     }
 
-    //=======================================================================================================================
+    //=======================================================================================================================]
+    [ServerRpc(RequireOwnership=false)]
+    public void ChangeStoredStateServerRpc(bool state)
+    {
+        stored.Value = state;
+    }
+    [ServerRpc(RequireOwnership =false)]
+    public void ChangeStorageValStateServerRpc(bool state)
+    {
+        storageState.Value = state;
+    }
     [ServerRpc(RequireOwnership = false)]
     private void PlaceTurretServerRpc()
     {
@@ -316,6 +349,24 @@ public class ToolsItems : NetworkBehaviour
     private void UpdateShovelProgressClientRpc()
     {
         target.Value = (resetShovelTimer - shovelTimer) / resetShovelTimer;
+    }
+    private void UpdateStorageProgress()
+    {
+
+        UpdateStorageProgressServerRpc();
+
+        Progress.fillAmount = target.Value;
+        Progress.color = ProgressGrad.Evaluate(target.Value);
+    }
+    [ServerRpc(RequireOwnership = false)]
+    private void UpdateStorageProgressServerRpc()
+    {
+        UpdateStorageProgressClientRpc();
+    }
+    [ClientRpc(RequireOwnership = false)]
+    private void UpdateStorageProgressClientRpc()
+    {
+        target.Value = (resetStorage - storageTimer) / resetStorage;
     }
 
     private void SwitchTool()
@@ -412,6 +463,11 @@ public class ToolsItems : NetworkBehaviour
     private void SetTomatoGunClientRpc(bool state)
     {
         tomatoGun.Value = state;
+    }
+    [ClientRpc(RequireOwnership =false)]
+    public void ResetCornClientRpc()
+    {
+        corn.Value = 0;
     }
     //OnGUI will be temporary (will replace with canvas because those look nicer)
     private void OnGUI()
@@ -537,5 +593,13 @@ public class ToolsItems : NetworkBehaviour
     {
         get { return storageHouse; }
         set { storageHouse = value; }
+    }
+    public bool Stored
+    {
+        get { return stored.Value; }
+    }
+    public bool StoragState
+    {
+        get { return storageState.Value; }
     }
 }
