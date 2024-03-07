@@ -20,6 +20,7 @@ public class StorageHouse : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
+        cornText.text = "" + corn.Value;
         if (!IsServer) { return; }
         
         if (player != null)
@@ -33,7 +34,7 @@ public class StorageHouse : NetworkBehaviour
                 tools.ResetCornClientRpc();
             }
         }
-        cornText.text = ""+corn.Value;
+        
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {

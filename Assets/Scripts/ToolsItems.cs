@@ -10,7 +10,7 @@ public class ToolsItems : NetworkBehaviour
     
     [SerializeField] private RectTransform hotBarIndex;
     private NetworkVariable<int> corn= new NetworkVariable<int>(0,NetworkVariableReadPermission.Everyone,NetworkVariableWritePermission.Owner);
-    private int maxCorn = 20;
+    private int maxCorn = 30;
     private NetworkVariable<int> gold= new NetworkVariable<int>(0,NetworkVariableReadPermission.Everyone,NetworkVariableWritePermission.Owner);
     private int seeds=5;
     private int goldSeeds=2;
@@ -128,9 +128,13 @@ public class ToolsItems : NetworkBehaviour
             
             return;
         }
-        if (maxCorn == 20 && cornBag)
+        if (corn.Value > maxCorn)
         {
-            maxCorn = 50;
+            corn.Value = maxCorn;
+        }
+        if (maxCorn == 30 && cornBag)
+        {
+            maxCorn = 60;
         }
         
         SwitchTool();
