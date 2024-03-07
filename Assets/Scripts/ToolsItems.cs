@@ -6,6 +6,7 @@ using TMPro;
 using Unity.Netcode;
 public class ToolsItems : NetworkBehaviour
 {
+    [SerializeField] private GameObject shopCan;
     [SerializeField] private TextMeshProUGUI cornTextVal, goldTextVal;
     
     [SerializeField] private RectTransform hotBarIndex;
@@ -67,6 +68,8 @@ public class ToolsItems : NetworkBehaviour
     private float storageTimer;
     private NetworkVariable<bool> stored = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
 
+    private bool shoppingState;
+    private bool shop;
 
     private bool move;
 
@@ -254,6 +257,16 @@ public class ToolsItems : NetworkBehaviour
             storageTimer = resetStorage;
 
         }
+        //SHOPPING
+        if(shop && !shoppingState && Input.GetKeyDown(KeyCode.E))
+        {
+            shoppingState = true;
+        }
+        if (shoppingState && Input.GetKeyDown(KeyCode.Escape))
+        {
+            shoppingState = false;
+        }
+        shopCan.SetActive(shoppingState);
     }
 
     //=======================================================================================================================]
@@ -605,5 +618,14 @@ public class ToolsItems : NetworkBehaviour
     public bool StoragState
     {
         get { return storageState.Value; }
+    }
+    public bool ShoppingState
+    {
+        get { return shoppingState; }
+    }
+    public bool Shop
+    {
+        get { return shop; }
+        set { shop = value; }
     }
 }

@@ -47,11 +47,11 @@ public class MovementController : NetworkBehaviour
         {
             speed = Vector2.zero;
         }
-        if (tools.MiningState|| tools.StoragState)
+        if (tools.MiningState|| tools.StoragState )
         {
             speed *= 0.33f;
         }
-        if (tools.PlantingState || tools.ShovelingState )
+        if (tools.PlantingState || tools.ShovelingState || tools.ShoppingState)
         {
             speed = Vector2.zero;
         }
