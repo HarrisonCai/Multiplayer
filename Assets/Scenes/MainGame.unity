@@ -508,7 +508,9 @@ MonoBehaviour:
   chatMessagePrefab: {fileID: 3105236472809020981, guid: 12fa37919d9766f4c8dfbac9b7569b76, type: 3}
   chatContent: {fileID: 1622449613}
   chatInput: {fileID: 1918543822}
+  scrollBar: {fileID: 1475423477}
   playerName: Player
+  debugScrollBar: 0
 --- !u!1 &363801502
 GameObject:
   m_ObjectHideFlags: 0
@@ -1255,8 +1257,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1681897759}
   m_HandleRect: {fileID: 1681897758}
   m_Direction: 2
-  m_Value: 0
-  m_Size: 1
+  m_Value: 1
+  m_Size: 0.99999994
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
