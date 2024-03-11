@@ -1811,8 +1811,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c42fcb23979d3644099fed95d54e3a6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TomatoGunButton: {fileID: 0}
-  SharpeningButton: {fileID: 0}
+  TomatoGunButton: {fileID: 3202862087038037470}
+  SharpeningButton: {fileID: 9212869224861805824}
   shopCan: {fileID: 1664711079646919091}
   cornTextVal: {fileID: 7561251439800923984}
   goldTextVal: {fileID: 1241705517196170079}
@@ -2871,8 +2871,30 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 7778608098856845911, guid: eb565c636541cc84e9c3cf579987d130, type: 3}
   m_PrefabInstance: {fileID: 9000750835123370980}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &3202862087038037470 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5808461729212126778, guid: eb565c636541cc84e9c3cf579987d130, type: 3}
+  m_PrefabInstance: {fileID: 9000750835123370980}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &5635170005266758057 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3665141133258277453, guid: eb565c636541cc84e9c3cf579987d130, type: 3}
   m_PrefabInstance: {fileID: 9000750835123370980}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &9212869224861805824 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 230730925033395940, guid: eb565c636541cc84e9c3cf579987d130, type: 3}
+  m_PrefabInstance: {fileID: 9000750835123370980}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
