@@ -143,7 +143,16 @@ public class ToolsItems : NetworkBehaviour
         {
             maxCorn = 60;
         }
-        
+        //SHOPPING
+        if (shop && !shoppingState && Input.GetKeyDown(KeyCode.E))
+        {
+            shoppingState = true;
+        }
+        if (shoppingState && Input.GetKeyDown(KeyCode.Escape))
+        {
+            shoppingState = false;
+        }
+        shopCan.SetActive(shoppingState);
         SwitchTool();
         //Scythe Code
         
@@ -261,16 +270,7 @@ public class ToolsItems : NetworkBehaviour
             storageTimer = resetStorage;
 
         }
-        //SHOPPING
-        if(shop && !shoppingState && Input.GetKeyDown(KeyCode.E))
-        {
-            shoppingState = true;
-        }
-        if (shoppingState && Input.GetKeyDown(KeyCode.Escape))
-        {
-            shoppingState = false;
-        }
-        shopCan.SetActive(shoppingState);
+        
         //0-------
         if (Input.GetKeyDown(KeyCode.F))
         {
