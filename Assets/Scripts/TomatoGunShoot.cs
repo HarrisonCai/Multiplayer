@@ -20,12 +20,12 @@ public class TomatoGunShoot : NetworkBehaviour
     {
         if (!IsOwner || !gunState.TomatoGun) { return; }
         reload -= Time.deltaTime;
-        if (Input.GetMouseButtonDown(0) && reload<=0)
+        if (Input.GetMouseButtonDown(0) && reload<=0 &&gunState.Tomato>0)
         {
             //FireTomatoServerRpc();
-            
-            
-            
+
+
+            gunState.Tomato--;
             FireTomatoServerRpc();
             reload = cooldown;
         }

@@ -6,6 +6,7 @@ using TMPro;
 using Unity.Netcode;
 public class ToolsItems : NetworkBehaviour
 {
+    [SerializeField] private Button TomatoGunButton, SharpeningButton;
     [SerializeField] private GameObject shopCan;
     [SerializeField] private TextMeshProUGUI cornTextVal, goldTextVal;
     
@@ -14,11 +15,14 @@ public class ToolsItems : NetworkBehaviour
     private int maxCorn = 30;
     private NetworkVariable<int> gold= new NetworkVariable<int>(0,NetworkVariableReadPermission.Everyone,NetworkVariableWritePermission.Owner);
     private int seeds=5;
-    private int goldSeeds=2;
+    private int goldSeeds=0;
     private bool sharpener = false;
     //private int lighter=0;
-    private int turret=1;
-    
+    private int turret = 1;
+    private bool hasTomatoGun = false;
+    private NetworkVariable<float> damage = new NetworkVariable<float>(20, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+
+
     private int tomato = 0;
     private bool cornBag=false;
     private int healthPot=0;
@@ -458,7 +462,7 @@ public class ToolsItems : NetworkBehaviour
             SetTomatoGunServerRpc(false);
             turretItem.Value = false;
         }
-        if (hotbarLocation == 4)
+        if (hotbarLocation == 4 && hasTomatoGun)
         {
             scythe.Value = false;
             pickaxe.Value = false;
@@ -629,12 +633,55 @@ public class ToolsItems : NetworkBehaviour
         get { return shop; }
         set { shop = value; }
     }
+    public int Tomato
+    {
+        get { return tomato; }
+        set { tomato = value; }
+    }
+    public float Damage
+    {
+        get { return damage.Value; }
+    }
     public void AddCornSeed()
     {
         if (gold.Value >= 1)
         {
             gold.Value--;
             seeds++;
+        }
+    }
+    public void AddGoldCornSeed()
+    {
+        if (gold.Value >= 5)
+        {
+            gold.Value-=5;
+            goldSeeds++;
+        }
+    }
+    public void GetTomatoGun()
+    {
+        if (gold.Value >= 15)
+        {
+            gold.Value -= 15;
+            hasTomatoGun=true;
+            TomatoGunButton.enabled = false;
+        }
+    }
+    public void Sharpening()
+    {
+        if (gold.Value >= 20)
+        {
+            gold.Value -= 20;
+            damage.Value=32;
+            SharpeningButton.enabled = false;
+        }
+    }
+    public void AddTomatoes()
+    {
+        if (gold.Value >= 3)
+        {
+            gold.Value -= 3;
+            tomato += 10;
         }
     }
 }

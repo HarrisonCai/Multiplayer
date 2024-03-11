@@ -1811,6 +1811,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c42fcb23979d3644099fed95d54e3a6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TomatoGunButton: {fileID: 0}
   shopCan: {fileID: 1664711079646919091}
   cornTextVal: {fileID: 7561251439800923984}
   goldTextVal: {fileID: 1241705517196170079}
@@ -2631,6 +2632,34 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5808461729212126778, guid: eb565c636541cc84e9c3cf579987d130, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5808461729212126778, guid: eb565c636541cc84e9c3cf579987d130, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5808461729212126778, guid: eb565c636541cc84e9c3cf579987d130, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 7611345650532316863}
+    - target: {fileID: 5808461729212126778, guid: eb565c636541cc84e9c3cf579987d130, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5808461729212126778, guid: eb565c636541cc84e9c3cf579987d130, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: GetTomatoGun
+      objectReference: {fileID: 0}
+    - target: {fileID: 5808461729212126778, guid: eb565c636541cc84e9c3cf579987d130, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: ToolsItems, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 5808461729212126778, guid: eb565c636541cc84e9c3cf579987d130, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 5965806445146289868, guid: eb565c636541cc84e9c3cf579987d130, type: 3}
       propertyPath: m_Spacing
       value: 0
@@ -2746,6 +2775,34 @@ PrefabInstance:
     - target: {fileID: 8698884289964562842, guid: eb565c636541cc84e9c3cf579987d130, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -450
+      objectReference: {fileID: 0}
+    - target: {fileID: 8934520561596090414, guid: eb565c636541cc84e9c3cf579987d130, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8934520561596090414, guid: eb565c636541cc84e9c3cf579987d130, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8934520561596090414, guid: eb565c636541cc84e9c3cf579987d130, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 7611345650532316863}
+    - target: {fileID: 8934520561596090414, guid: eb565c636541cc84e9c3cf579987d130, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8934520561596090414, guid: eb565c636541cc84e9c3cf579987d130, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: AddGoldCornSeed
+      objectReference: {fileID: 0}
+    - target: {fileID: 8934520561596090414, guid: eb565c636541cc84e9c3cf579987d130, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: ToolsItems, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 8934520561596090414, guid: eb565c636541cc84e9c3cf579987d130, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
