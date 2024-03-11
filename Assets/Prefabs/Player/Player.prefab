@@ -1812,6 +1812,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TomatoGunButton: {fileID: 0}
+  SharpeningButton: {fileID: 0}
   shopCan: {fileID: 1664711079646919091}
   cornTextVal: {fileID: 7561251439800923984}
   goldTextVal: {fileID: 1241705517196170079}
@@ -2392,6 +2393,34 @@ PrefabInstance:
       propertyPath: m_Name
       value: GoldCornSeed
       objectReference: {fileID: 0}
+    - target: {fileID: 230730925033395940, guid: eb565c636541cc84e9c3cf579987d130, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 230730925033395940, guid: eb565c636541cc84e9c3cf579987d130, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 230730925033395940, guid: eb565c636541cc84e9c3cf579987d130, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 7611345650532316863}
+    - target: {fileID: 230730925033395940, guid: eb565c636541cc84e9c3cf579987d130, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 230730925033395940, guid: eb565c636541cc84e9c3cf579987d130, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Sharpening
+      objectReference: {fileID: 0}
+    - target: {fileID: 230730925033395940, guid: eb565c636541cc84e9c3cf579987d130, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: ToolsItems, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 230730925033395940, guid: eb565c636541cc84e9c3cf579987d130, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 611277758129147499, guid: eb565c636541cc84e9c3cf579987d130, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -2595,6 +2624,34 @@ PrefabInstance:
     - target: {fileID: 4455805700742974591, guid: eb565c636541cc84e9c3cf579987d130, type: 3}
       propertyPath: m_Name
       value: SharpeningStone
+      objectReference: {fileID: 0}
+    - target: {fileID: 4916021958084425115, guid: eb565c636541cc84e9c3cf579987d130, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4916021958084425115, guid: eb565c636541cc84e9c3cf579987d130, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4916021958084425115, guid: eb565c636541cc84e9c3cf579987d130, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 7611345650532316863}
+    - target: {fileID: 4916021958084425115, guid: eb565c636541cc84e9c3cf579987d130, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4916021958084425115, guid: eb565c636541cc84e9c3cf579987d130, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: AddTomatoes
+      objectReference: {fileID: 0}
+    - target: {fileID: 4916021958084425115, guid: eb565c636541cc84e9c3cf579987d130, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: ToolsItems, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 4916021958084425115, guid: eb565c636541cc84e9c3cf579987d130, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 5352325740625932291, guid: eb565c636541cc84e9c3cf579987d130, type: 3}
       propertyPath: m_Text
