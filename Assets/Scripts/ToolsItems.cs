@@ -631,7 +631,7 @@ public class ToolsItems : NetworkBehaviour
     }
     public void AddCornSeed()
     {
-        if (gold.Value > 1)
+        if (gold.Value >= 1)
         {
             gold.Value--;
             seeds++;
