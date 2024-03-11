@@ -18,7 +18,7 @@ public class ToolsItems : NetworkBehaviour
     private bool sharpener = false;
     //private int lighter=0;
     private int turret=1;
-    private int turretsPlaced;
+    
     private int tomato = 0;
     private bool cornBag=false;
     private int healthPot=0;
@@ -231,10 +231,10 @@ public class ToolsItems : NetworkBehaviour
 
         }
         //TURRET PLACING CODE
-        if (turretItem.Value && turret>0 && turretsPlaced < 5 && Input.GetKeyDown(KeyCode.C))
+        if (turretItem.Value && turret>0 && Input.GetKeyDown(KeyCode.C))
         {
             turret--;
-            turretsPlaced++;
+            
             PlaceTurretServerRpc();
             
         }
@@ -267,6 +267,11 @@ public class ToolsItems : NetworkBehaviour
             shoppingState = false;
         }
         shopCan.SetActive(shoppingState);
+        //0-------
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            gold.Value++;
+        }
     }
 
     //=======================================================================================================================]
@@ -502,7 +507,7 @@ public class ToolsItems : NetworkBehaviour
         }
         GUI.Box(new Rect(600, 10, 180, 25), "Corn : " + (corn.Value));
         GUI.Box(new Rect(200, 40, 180, 25), "Turret : " + (turret));
-        GUI.Box(new Rect(400, 40, 180, 25), "TurretsPlaced : " + (TurretsPlaced));
+        
     }
     public bool Mining
     {
@@ -601,11 +606,7 @@ public class ToolsItems : NetworkBehaviour
     {
         get { return shovelingState.Value; }
     }
-    public int TurretsPlaced
-    {
-        get { return turretsPlaced; }
-        set { turretsPlaced = value; }
-    }
+    
     public bool StoragHouse
     {
         get { return storageHouse; }
@@ -627,5 +628,13 @@ public class ToolsItems : NetworkBehaviour
     {
         get { return shop; }
         set { shop = value; }
+    }
+    public void AddCornSeed()
+    {
+        if (gold.Value > 1)
+        {
+            gold.Value--;
+            seeds++;
+        }
     }
 }

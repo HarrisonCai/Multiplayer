@@ -8,7 +8,7 @@ public class ScytheHitbox : NetworkBehaviour
     private Collider2D player;
     private List<Collider2D> Objs = new List<Collider2D>();
     [SerializeField] ToolsItems scytheState;
-
+    private NetworkVariable<float> damage = new NetworkVariable<float>(20, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
 
     // Update is called once per frame
     void Update()
@@ -53,7 +53,7 @@ public class ScytheHitbox : NetworkBehaviour
 
             player = collision;
 
-            player.gameObject.GetComponent<Health>().ChangeHPServerRpc(20);
+            player.gameObject.GetComponent<Health>().ChangeHPServerRpc(damage.Value);
             
         }
     }
