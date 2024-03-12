@@ -14,7 +14,10 @@ public class Health : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if(hp.Value > 100)
+        {
+            ChangeHPServerRpc(hp.Value - 100);
+        }
     }
     [ServerRpc(RequireOwnership =false)]
     public void ChangeHPServerRpc(float val)

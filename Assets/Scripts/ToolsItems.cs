@@ -6,17 +6,17 @@ using TMPro;
 using Unity.Netcode;
 public class ToolsItems : NetworkBehaviour
 {
-    [SerializeField] private Button TomatoGunButton, SharpeningButton;
+    [SerializeField] private GameObject TomatoGunButton, SharpeningButton, GoldenCornBagButton;
     [SerializeField] private GameObject shopCan;
     [SerializeField] private TextMeshProUGUI cornTextVal, goldTextVal;
-    
+    [SerializeField] private Health hp;
     [SerializeField] private RectTransform hotBarIndex;
     private NetworkVariable<int> corn= new NetworkVariable<int>(0,NetworkVariableReadPermission.Everyone,NetworkVariableWritePermission.Owner);
     private int maxCorn = 30;
     private NetworkVariable<int> gold= new NetworkVariable<int>(0,NetworkVariableReadPermission.Everyone,NetworkVariableWritePermission.Owner);
     private int seeds=5;
     private int goldSeeds=0;
-    private bool sharpener = false;
+    
     //private int lighter=0;
     private int turret = 1;
     private bool hasTomatoGun = false;
@@ -26,7 +26,6 @@ public class ToolsItems : NetworkBehaviour
     private int tomato = 0;
     private bool cornBag=false;
     private int healthPot=0;
-    private bool cornCounter = false;
     private int hotbarLocation = 1;
 
 
@@ -269,6 +268,12 @@ public class ToolsItems : NetworkBehaviour
             ChangeStoredStateServerRpc(true);
             storageTimer = resetStorage;
 
+        }
+        //HEALTH
+        if (healthPot>0 && Input.GetKeyDown(KeyCode.C))
+        {
+            healthPot--;
+            hp.ChangeHPServerRpc(-20);
         }
         
         //0-------
@@ -664,7 +669,7 @@ public class ToolsItems : NetworkBehaviour
         {
             gold.Value -= 15;
             hasTomatoGun=true;
-            TomatoGunButton.enabled = false;
+            TomatoGunButton.SetActive(false);
         }
     }
     public void Sharpening()
@@ -673,7 +678,7 @@ public class ToolsItems : NetworkBehaviour
         {
             gold.Value -= 20;
             damage.Value=32;
-            SharpeningButton.enabled = false;
+            SharpeningButton.SetActive(false);
         }
     }
     public void AddTomatoes()
@@ -682,6 +687,23 @@ public class ToolsItems : NetworkBehaviour
         {
             gold.Value -= 3;
             tomato += 10;
+        }
+    }
+    public void AddPotion()
+    {
+        if (gold.Value >= 2)
+        {
+            gold.Value -= 2;
+            healthPot++;
+        }
+    }
+    public void GoldenCornBag()
+    {
+        if (gold.Value >= 5)
+        {
+            gold.Value -= 5;
+            cornBag = true;
+            GoldenCornBagButton.SetActive(false);
         }
     }
 }
