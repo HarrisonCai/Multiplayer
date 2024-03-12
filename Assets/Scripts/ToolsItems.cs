@@ -467,12 +467,15 @@ public class ToolsItems : NetworkBehaviour
             SetTomatoGunServerRpc(false);
             turretItem.Value = false;
         }
-        if (hotbarLocation == 4 && hasTomatoGun)
+        if (hotbarLocation == 4)
         {
             scythe.Value = false;
             pickaxe.Value = false;
             shovel.Value = false;
-            SetTomatoGunServerRpc(true);
+            if (hasTomatoGun)
+            {
+                SetTomatoGunServerRpc(true);
+            }
             turretItem.Value = false;
         }
         if (hotbarLocation == 5)
