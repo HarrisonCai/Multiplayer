@@ -6,9 +6,9 @@ using TMPro;
 using Unity.Netcode;
 public class ToolsItems : NetworkBehaviour
 {
-    [SerializeField] private GameObject TomatoGunButton, SharpeningButton, GoldenCornBagButton;
+    [SerializeField] private GameObject TomatoGunButton, SharpeningButton, GoldenCornBagButton,CornBagImage,GoldenCornbagImage;
     [SerializeField] private GameObject shopCan;
-    [SerializeField] private TextMeshProUGUI cornTextVal, goldTextVal;
+    [SerializeField] private TextMeshProUGUI cornTextVal, goldTextVal, seedText, goldSeedText, tomatoText, healthPotText, GoldCornBagText;
     [SerializeField] private Health hp;
     [SerializeField] private RectTransform hotBarIndex;
     private NetworkVariable<int> corn= new NetworkVariable<int>(0,NetworkVariableReadPermission.Everyone,NetworkVariableWritePermission.Owner);
@@ -140,8 +140,15 @@ public class ToolsItems : NetworkBehaviour
         }
         if (maxCorn == 30 && cornBag)
         {
+            GoldenCornbagImage.SetActive(true);
+            CornBagImage.SetActive(false);
             maxCorn = 60;
         }
+        seedText.text = ""+seeds;
+        goldSeedText.text = "" + goldSeeds;
+        tomatoText.text = "" + tomato;
+        healthPotText.text = "" + healthPot;
+        GoldCornBagText.text = "" + corn.Value + "/" + maxCorn;
         //SHOPPING
         if (shop && !shoppingState && Input.GetKeyDown(KeyCode.E))
         {
@@ -152,6 +159,8 @@ public class ToolsItems : NetworkBehaviour
             shoppingState = false;
         }
         shopCan.SetActive(shoppingState);
+
+        if (shoppingState) { return; }
         SwitchTool();
         //Scythe Code
         
