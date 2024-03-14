@@ -8,9 +8,9 @@ public class ToolsItems : NetworkBehaviour
 {
     [SerializeField] private GameObject TomatoGunButton, SharpeningButton, GoldenCornBagButton,CornBagImage,GoldenCornbagImage;
     [SerializeField] private GameObject shopCan;
-    [SerializeField] private TextMeshProUGUI cornTextVal, goldTextVal, seedText, goldSeedText, tomatoText, healthPotText, GoldCornBagText;
+    [SerializeField] private TextMeshProUGUI cornTextVal, goldTextVal, seedText, goldSeedText, tomatoText, healthPotText, goldCornBagText, turretText;
     [SerializeField] private Health hp;
-    [SerializeField] private RectTransform hotBarIndex;
+    [SerializeField] private RectTransform hotBarIndex, seedArrowIndex, swapButton;
     private NetworkVariable<int> corn= new NetworkVariable<int>(0,NetworkVariableReadPermission.Everyone,NetworkVariableWritePermission.Owner);
     private int maxCorn = 30;
     private NetworkVariable<int> gold= new NetworkVariable<int>(0,NetworkVariableReadPermission.Everyone,NetworkVariableWritePermission.Owner);
@@ -148,7 +148,8 @@ public class ToolsItems : NetworkBehaviour
         goldSeedText.text = "" + goldSeeds;
         tomatoText.text = "" + tomato;
         healthPotText.text = "" + healthPot;
-        GoldCornBagText.text = "" + corn.Value + "/" + maxCorn;
+        goldCornBagText.text = "" + corn.Value + "/" + maxCorn;
+        turretText.text = "" + turret;
         //SHOPPING
         if (shop && !shoppingState && Input.GetKeyDown(KeyCode.E))
         {
@@ -440,12 +441,15 @@ public class ToolsItems : NetworkBehaviour
        
         if (typeSeed == 0)
         {
-            
+            seedArrowIndex.localPosition = new Vector3(seedArrowIndex.localPosition.x, 160, hotBarIndex.localPosition.z);
+            swapButton.localPosition = new Vector3(swapButton.localPosition.x, 125, swapButton.localPosition.z);
             seed.Value = true;
             goldSeed.Value = false;
         }
         else
         {
+            seedArrowIndex.localPosition = new Vector3(seedArrowIndex.localPosition.x, 125, hotBarIndex.localPosition.z);
+            swapButton.localPosition = new Vector3(swapButton.localPosition.x, 160, swapButton.localPosition.z);
             seed.Value = false;
             goldSeed.Value = true;
         }
@@ -513,7 +517,7 @@ public class ToolsItems : NetworkBehaviour
         corn.Value = 0;
     }
     //OnGUI will be temporary (will replace with canvas because those look nicer)
-    private void OnGUI()
+    /*private void OnGUI()
     {
         if (!IsOwner) { return; }
         
@@ -529,7 +533,7 @@ public class ToolsItems : NetworkBehaviour
         GUI.Box(new Rect(600, 10, 180, 25), "Corn : " + (corn.Value));
         GUI.Box(new Rect(200, 40, 180, 25), "Turret : " + (turret));
         
-    }
+    }*/
     public bool Mining
     {
         get { return mining; }
@@ -669,9 +673,9 @@ public class ToolsItems : NetworkBehaviour
     }
     public void AddGoldCornSeed()
     {
-        if (gold.Value >= 5)
+        if (gold.Value >= 10)
         {
-            gold.Value-=5;
+            gold.Value-=10;
             goldSeeds++;
         }
     }
@@ -716,6 +720,14 @@ public class ToolsItems : NetworkBehaviour
             gold.Value -= 5;
             cornBag = true;
             GoldenCornBagButton.SetActive(false);
+        }
+    }
+    public void AddTurret()
+    {
+        if(gold.Value >= 5)
+        {
+            gold.Value -= 5;
+            turret++;
         }
     }
 }
