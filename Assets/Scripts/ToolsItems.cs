@@ -253,7 +253,7 @@ public class ToolsItems : NetworkBehaviour
 
         }
         //TURRET PLACING CODE
-        if (turretItem.Value && turret>0 && Input.GetKeyDown(KeyCode.C))
+        if (turretItem.Value && turret>0 && Input.GetKeyDown(KeyCode.Z))
         {
             turret--;
             
@@ -264,7 +264,7 @@ public class ToolsItems : NetworkBehaviour
         if (storageHouse && corn.Value > 0 && Input.GetMouseButton(0))
         {
             storageTimer -= Time.deltaTime;
-            Debug.Log("hehehehaw");
+            
             ChangeStorageValStateServerRpc(true);
         }
         else
@@ -286,7 +286,7 @@ public class ToolsItems : NetworkBehaviour
             hp.ChangeHPServerRpc(-20);
         }
         
-        //0-------
+        //DEVKEY TESTING REMOVE LATER U BOZO
         if (Input.GetKeyDown(KeyCode.F))
         {
             gold.Value++;
