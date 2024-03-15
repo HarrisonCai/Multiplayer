@@ -15,6 +15,7 @@ public class CornCounter : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!IsOwner) { return; }
         if (corn != null)
         {
             counter.fillAmount = ((float)(corn.Corn)) / winCorn;
@@ -27,6 +28,7 @@ public class CornCounter : NetworkBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (!IsOwner) { return; }
         if (corn==null && collision.gameObject.CompareTag("Storage") && collision.gameObject.GetComponent<StorageHouse>().ClientID == OwnerClientId)
         {
 

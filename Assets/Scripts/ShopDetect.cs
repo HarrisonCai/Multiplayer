@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.Netcode;
 
-public class ShopDetect : MonoBehaviour
+public class ShopDetect : NetworkBehaviour
 {
     [SerializeField] private ToolsItems chickenbutt;
     // Start is called before the first frame update
@@ -18,6 +19,7 @@ public class ShopDetect : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (!IsOwner) { return; }
         if (collision.gameObject.CompareTag("Villager"))
         {
             chickenbutt.Shop = true;
@@ -25,6 +27,10 @@ public class ShopDetect : MonoBehaviour
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
+        if (!IsOwner)
+        {
+            return;
+        }
         if (collision.gameObject.CompareTag("Villager"))
         {
             chickenbutt.Shop = false;
