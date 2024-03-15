@@ -15,14 +15,22 @@ public class CornCounter : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
-        counter.fillAmount = ((float)(corn.Corn)) / winCorn;
-        text.text = "" + corn.Corn + "/" + winCorn;
+        if (corn != null)
+        {
+            counter.fillAmount = ((float)(corn.Corn)) / winCorn;
+            text.text = "" + corn.Corn + "/" + winCorn;
+        }
+        else
+        {
+            counter.fillAmount = 0;
+        }
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (corn==null && collision.gameObject.CompareTag("Storage") && collision.gameObject.GetComponent<StorageHouse>().ClientID == OwnerClientId)
         {
-            collision.gameObject.GetComponent<StorageHouse>();
+
+            corn = collision.gameObject.GetComponent<StorageHouse>();
         }
     }
 }
