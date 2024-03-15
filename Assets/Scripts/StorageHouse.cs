@@ -61,4 +61,12 @@ public class StorageHouse : NetworkBehaviour
     {
         corn.Value += val;
     }
+    public ulong ClientID
+    {
+        get { return clientID; }
+    }
+    public int Corn
+    {
+        get { return corn.Value; }
+    }
 }

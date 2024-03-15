@@ -7,6 +7,7 @@ TagManager:
   - Gold Mine
   - PlantingUnit
   - Villager
+  - Storage
   layers:
   - Default
   - TransparentFX
