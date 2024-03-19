@@ -5,6 +5,7 @@ using Unity.Netcode;
 
 public class MovementController : NetworkBehaviour
 {
+    [SerializeField] private Health hp;
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] [Range(0.3f,100)]private float multiplier;
     private Vector2 speed;
@@ -25,7 +26,7 @@ public class MovementController : NetworkBehaviour
     void Update()
     {
         //DO NOT TOUCH THIS
-        if (!IsOwner || !move)
+        if (!IsOwner || !move || hp.Dead)
         {
             return;
         }

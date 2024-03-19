@@ -7,6 +7,7 @@ public class CameraController : NetworkBehaviour
 {
     [SerializeField] private CinemachineVirtualCamera vc;
     [SerializeField] private AudioListener listener;
+    [SerializeField] private Health hp;
     // Start is called before the first frame update
     void Start()
     {
@@ -17,7 +18,14 @@ public class CameraController : NetworkBehaviour
         if (IsOwner)
         {
             listener.enabled = true;
-            vc.Priority = 1;
+            if (hp.Dead)
+            {
+                vc.Priority = 0;
+            }
+            else
+            {
+                vc.Priority = 1;
+            }
         }
         else
         {

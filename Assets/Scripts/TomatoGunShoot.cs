@@ -8,6 +8,7 @@ public class TomatoGunShoot : NetworkBehaviour
     [SerializeField] private GameObject tomatoPrefab;
     [SerializeField] private float cooldown;
     private float reload;
+    [SerializeField] private Health hp;
     [SerializeField] private ToolsItems gunState;
     // Start is called before the first frame update
     void Start()
@@ -18,7 +19,7 @@ public class TomatoGunShoot : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!IsOwner || !gunState.TomatoGun) { return; }
+        if (!IsOwner || !gunState.TomatoGun || gunState.ShoppingState || hp.Dead) { return; }
         reload -= Time.deltaTime;
         if (Input.GetMouseButtonDown(0) && reload<=0 &&gunState.Tomato>0)
         {

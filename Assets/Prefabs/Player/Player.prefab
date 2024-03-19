@@ -2765,7 +2765,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 250134906
+  GlobalObjectIdHash: 3352964296
   InScenePlacedSourceGlobalObjectIdHash: 3352964296
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
@@ -2786,6 +2786,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de3827967d37d6d4389bdfcb3fe97ba1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hp: {fileID: 8605046572679765878}
   rb: {fileID: 6438894297023676174}
   multiplier: 6
   tools: {fileID: 7611345650532316863}
@@ -2915,6 +2916,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   vc: {fileID: 5654507244494804746}
   listener: {fileID: 2786782932114832570}
+  hp: {fileID: 8605046572679765878}
 --- !u!114 &8605046572679765878
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2928,6 +2930,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxhp: 100
+  IsTurret: 0
+  respawnTimer: 10
+  spawnPoint0: {x: 15, y: 15, z: 0}
+  spawnPoint1: {x: -15, y: 15, z: 0}
+  spawnPoint2: {x: -15, y: -15, z: 0}
+  spawnPoint3: {x: 15, y: -15, z: 0}
+  voidZone: {x: 100, y: 100, z: 0}
 --- !u!114 &6578241966987337098
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3884,6 +3893,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tomatoPrefab: {fileID: 7329848059792226407, guid: 4e4f97520fbf32443a3fbaeefe98d930, type: 3}
   cooldown: 0.001
+  hp: {fileID: 8605046572679765878}
   gunState: {fileID: 7611345650532316863}
 --- !u!1 &8141333969310297656
 GameObject:

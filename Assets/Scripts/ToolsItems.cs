@@ -6,6 +6,7 @@ using TMPro;
 using Unity.Netcode;
 public class ToolsItems : NetworkBehaviour
 {
+
     [SerializeField] private GameObject TomatoGunButton, SharpeningButton, GoldenCornBagButton,CornBagImage,GoldenCornbagImage;
     [SerializeField] private GameObject shopCan;
     [SerializeField] private TextMeshProUGUI cornTextVal, goldTextVal, seedText, goldSeedText, tomatoText, healthPotText, goldCornBagText, turretText;
@@ -89,6 +90,7 @@ public class ToolsItems : NetworkBehaviour
 
     void Update()
     {
+        if (hp.Dead) { return; }
         cornTextVal.text = ""+corn.Value;
         goldTextVal.text = "" + gold.Value;
         //Visual Updates
