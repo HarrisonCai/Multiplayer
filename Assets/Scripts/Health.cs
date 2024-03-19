@@ -32,7 +32,13 @@ public class Health : NetworkBehaviour
             Destroy(this.gameObject);
         }
         if (!IsOwner) { return; }
-        if (!IsTurret && hp.Value <= 0)
+
+        //krill your shelf button
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            hp.Value -= 10;
+        }
+        if (!IsTurret && hp.Value <= 0 && !dead)
         {
             dead = true;
             timer = respawnTimer;
