@@ -7,8 +7,8 @@ public class ScytheHitbox : NetworkBehaviour
     // Start is called before the first frame update
     private Collider2D player;
     private List<Collider2D> Objs = new List<Collider2D>();
-    [SerializeField] ToolsItems scytheState;
-    
+    [SerializeField] private ToolsItems scytheState;
+    [SerializeField] private Health self;
 
     // Update is called once per frame
     void Update()
@@ -54,11 +54,14 @@ public class ScytheHitbox : NetworkBehaviour
             player = collision;
 
             player.gameObject.GetComponent<Health>().ChangeHPServerRpc(scytheState.Damage);
-            if (player.gameObject.GetComponent<Health>().Dead)
-            {
-                this.gameObject.GetComponent<ToolsItems>().CornAddClientRpc(player.gameObject.GetComponent<ToolsItems>().Corn, player.gameObject.GetComponent<ToolsItems>().Gold);
-            }
+
+            SetFinalHitClientRpc();
+           
         }
     }
-    
+    [ClientRpc(RequireOwnership = false)]
+    public void SetFinalHitClientRpc()
+    {
+        player.gameObject.GetComponent<Health>().Player = self;
+    }
 }

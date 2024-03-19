@@ -2917,6 +2917,7 @@ MonoBehaviour:
   vc: {fileID: 5654507244494804746}
   listener: {fileID: 2786782932114832570}
   hp: {fileID: 8605046572679765878}
+  deathPosition: {x: 0, y: 0, z: 0}
   cameraHolder: {fileID: 133051034784228176}
 --- !u!114 &8605046572679765878
 MonoBehaviour:
@@ -2933,6 +2934,7 @@ MonoBehaviour:
   maxhp: 100
   IsTurret: 0
   respawnTimer: 10
+  cornGold: {fileID: 7611345650532316863}
   spawnPoint0: {x: 15, y: 15, z: 0}
   spawnPoint1: {x: -15, y: 15, z: 0}
   spawnPoint2: {x: -15, y: -15, z: 0}
@@ -3150,6 +3152,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scytheState: {fileID: 7611345650532316863}
+  self: {fileID: 8605046572679765878}
 --- !u!1 &6661543215657779471
 GameObject:
   m_ObjectHideFlags: 0

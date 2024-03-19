@@ -90,7 +90,7 @@ public class ToolsItems : NetworkBehaviour
 
     void Update()
     {
-        if (hp.Dead) { return; }
+        
         cornTextVal.text = ""+corn.Value;
         goldTextVal.text = "" + gold.Value;
         //Visual Updates
@@ -130,6 +130,7 @@ public class ToolsItems : NetworkBehaviour
         {
             scytheObj.SetActive(false);
         }
+        if (hp.Dead) { return; }
         //-----------------------------------
         if (!IsOwner)
         {
@@ -668,6 +669,7 @@ public class ToolsItems : NetworkBehaviour
     public int Gold
     {
         get { return gold.Value; }
+        set { gold.Value = value; }
     }
     public void AddCornSeed()
     {
@@ -736,10 +738,17 @@ public class ToolsItems : NetworkBehaviour
             turret++;
         }
     }
-    [ClientRpc(RequireOwnership = false)]
-    public void CornAddClientRpc(int val, int val2)
+    [ServerRpc(RequireOwnership = false)]
+    public void CornGoldAddServerRpc(int val, int val2)
     {
-        corn.Value += val;
-        gold.Value += val2;
+        CornGoldAddClientRpc(val, val2);
     }
+    [ClientRpc(RequireOwnership = false)]
+    public void CornGoldAddClientRpc(int val, int val2)
+    {
+        Corn += val;
+        Gold += val2;
+    }
+    
+    
 }

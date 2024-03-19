@@ -10,6 +10,9 @@ public class Health : NetworkBehaviour
     private bool dead = false;
     [SerializeField] private float respawnTimer;
     private float timer;
+    [SerializeField] private ToolsItems cornGold;
+    private Health lastHitPlayer;
+    private int killCorn, killGold;
 
     [SerializeField] private Vector3 spawnPoint0, spawnPoint1, spawnPoint2, spawnPoint3, voidZone;
     void Start()
@@ -48,7 +51,14 @@ public class Health : NetworkBehaviour
             Destroy(this.gameObject);
         }
         if (!IsOwner) { return; }
-
+        if (killGold != 0)
+        {
+            cornGold.Gold += killGold;
+        }
+        if (killCorn != 0)
+        {
+            cornGold.Corn += killCorn;
+        }
         //krill your shelf button
         if (Input.GetKeyDown(KeyCode.H))
         {
@@ -59,6 +69,13 @@ public class Health : NetworkBehaviour
             dead = true;
             timer = respawnTimer;
             transform.position = voidZone;
+            if (lastHitPlayer != null)
+            {
+                lastHitPlayer.KillGold = cornGold.Gold;
+                lastHitPlayer.KillCorn = cornGold.Corn;
+            }
+            cornGold.Corn = 0;
+            cornGold.Gold = 0;
         }
         if (dead && timer <= 0)
         {
@@ -107,4 +124,20 @@ public class Health : NetworkBehaviour
     {
         get { return dead; }
     }
+    public Health Player
+    {
+        get { return lastHitPlayer; }
+        set { lastHitPlayer = value; }
+    }
+    public int KillGold
+    {
+        get { return killGold; }
+        set { killGold = value; }
+    }
+    public int KillCorn
+    {
+        get { return killCorn; }
+        set { killCorn=value; }
+    }
+    
 }
