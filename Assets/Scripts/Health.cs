@@ -59,7 +59,7 @@ public class Health : NetworkBehaviour
                 transform.position = spawnPoint3;
             }
         }
-        if(dead && !wasDead)
+        if(dead && !wasDead&& hp.Value<=0)
         {
             transform.position = voidZone;
         }
