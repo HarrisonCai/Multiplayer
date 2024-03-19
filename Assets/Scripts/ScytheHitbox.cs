@@ -54,7 +54,10 @@ public class ScytheHitbox : NetworkBehaviour
             player = collision;
 
             player.gameObject.GetComponent<Health>().ChangeHPServerRpc(scytheState.Damage);
-            
+            if (player.gameObject.GetComponent<Health>().Dead)
+            {
+                this.gameObject.GetComponent<ToolsItems>().CornAddClientRpc(player.gameObject.GetComponent<ToolsItems>().Corn, player.gameObject.GetComponent<ToolsItems>().Gold);
+            }
         }
     }
     

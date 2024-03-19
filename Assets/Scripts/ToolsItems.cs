@@ -665,6 +665,10 @@ public class ToolsItems : NetworkBehaviour
     {
         get { return damage.Value; }
     }
+    public int Gold
+    {
+        get { return gold.Value; }
+    }
     public void AddCornSeed()
     {
         if (gold.Value >= 1)
@@ -731,5 +735,11 @@ public class ToolsItems : NetworkBehaviour
             gold.Value -= 5;
             turret++;
         }
+    }
+    [ClientRpc(RequireOwnership = false)]
+    public void CornAddClientRpc(int val, int val2)
+    {
+        corn.Value += val;
+        gold.Value += val2;
     }
 }

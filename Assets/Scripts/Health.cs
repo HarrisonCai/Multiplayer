@@ -10,13 +10,29 @@ public class Health : NetworkBehaviour
     private bool dead = false;
     [SerializeField] private float respawnTimer;
     private float timer;
-    private bool wasDead;
+
     [SerializeField] private Vector3 spawnPoint0, spawnPoint1, spawnPoint2, spawnPoint3, voidZone;
     void Start()
     {
         hp.Value = maxhp;
+        if (OwnerClientId == 0)
+        {
+            transform.position = spawnPoint0;
+        }
+        if (OwnerClientId == 1)
+        {
+            transform.position = spawnPoint1;
+        }
+        if (OwnerClientId == 2)
+        {
+            transform.position = spawnPoint2;
+        }
+        if (OwnerClientId == 3)
+        {
+            transform.position = spawnPoint3;
+        }
     }
-
+    
     // Update is called once per frame
     void Update()
     {
@@ -42,6 +58,7 @@ public class Health : NetworkBehaviour
         {
             dead = true;
             timer = respawnTimer;
+            transform.position = voidZone;
         }
         if (dead && timer <= 0)
         {
@@ -65,11 +82,7 @@ public class Health : NetworkBehaviour
                 transform.position = spawnPoint3;
             }
         }
-        if(dead && !wasDead&& hp.Value<=0)
-        {
-            transform.position = voidZone;
-        }
-        wasDead = dead;
+        
     }
     [ServerRpc(RequireOwnership =false)]
     public void ChangeHPServerRpc(float val)
