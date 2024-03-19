@@ -5,7 +5,9 @@ using Unity.Netcode;
 public class Health : NetworkBehaviour
 {
     [SerializeField] private float maxhp;
-    private NetworkVariable<float> hp=new NetworkVariable<float>(0,NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+    private NetworkVariable<float> hp=new NetworkVariable<float>(0.1f,NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+    [SerializeField] private bool IsTurret;
+    private bool dead = false;
     void Start()
     {
         hp.Value = maxhp;
@@ -17,6 +19,10 @@ public class Health : NetworkBehaviour
         if(hp.Value > 100)
         {
             ChangeHPServerRpc(hp.Value - 100);
+        }
+        if(IsTurret && hp.Value <= 0)
+        {
+            Destroy(this.gameObject);
         }
     }
     [ServerRpc(RequireOwnership =false)]
@@ -37,5 +43,9 @@ public class Health : NetworkBehaviour
     public float MaxHP
     {
         get { return maxhp; }
+    }
+    public bool Dead
+    {
+        get { return dead; }
     }
 }
