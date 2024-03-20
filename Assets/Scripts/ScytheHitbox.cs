@@ -54,14 +54,10 @@ public class ScytheHitbox : NetworkBehaviour
             player = collision;
 
             player.gameObject.GetComponent<Health>().ChangeHPServerRpc(scytheState.Damage);
-
-            SetFinalHitClientRpc();
-           
+            
+            player.gameObject.GetComponent<Health>().SetFinalHitServerRpc(OwnerClientId);
+            Debug.Log(OwnerClientId);
         }
     }
-    [ClientRpc(RequireOwnership = false)]
-    public void SetFinalHitClientRpc()
-    {
-        player.gameObject.GetComponent<Health>().Player = self;
-    }
+    
 }

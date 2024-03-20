@@ -30,6 +30,7 @@ public class TomatoBulletDetect : NetworkBehaviour
             player = collision;
             
             player.gameObject.GetComponent<Health>().ChangeHPServerRpc(damage);
+            player.gameObject.GetComponent<Health>().SetFinalHitServerRpc(OwnerClientId);
             Destroy(this.gameObject);
         }
         

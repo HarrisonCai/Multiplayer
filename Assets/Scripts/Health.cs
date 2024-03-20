@@ -11,8 +11,8 @@ public class Health : NetworkBehaviour
     [SerializeField] private float respawnTimer;
     private float timer;
     [SerializeField] private ToolsItems cornGold;
-    private Health lastHitPlayer;
-    private int killCorn, killGold;
+    private NetworkVariable<ulong> lastHitPlayer= new NetworkVariable<ulong>(666,NetworkVariableReadPermission.Everyone,NetworkVariableWritePermission.Server);
+
 
     [SerializeField] private Vector3 spawnPoint0, spawnPoint1, spawnPoint2, spawnPoint3, voidZone;
     void Start()
@@ -50,15 +50,9 @@ public class Health : NetworkBehaviour
         {
             Destroy(this.gameObject);
         }
+        Debug.Log(lastHitPlayer.Value);
         if (!IsOwner) { return; }
-        if (killGold != 0)
-        {
-            cornGold.Gold += killGold;
-        }
-        if (killCorn != 0)
-        {
-            cornGold.Corn += killCorn;
-        }
+        
         //krill your shelf button
         if (Input.GetKeyDown(KeyCode.H))
         {
@@ -69,10 +63,9 @@ public class Health : NetworkBehaviour
             dead = true;
             timer = respawnTimer;
             transform.position = voidZone;
-            if (lastHitPlayer != null)
+            if (lastHitPlayer.Value != 666)
             {
-                lastHitPlayer.KillGold = cornGold.Gold;
-                lastHitPlayer.KillCorn = cornGold.Corn;
+                PlayerStorage.CalculateDeath(lastHitPlayer.Value, cornGold.Corn, cornGold.Gold);
             }
             cornGold.Corn = 0;
             cornGold.Gold = 0;
@@ -81,7 +74,7 @@ public class Health : NetworkBehaviour
         {
             dead = false;
             hp.Value = maxhp;
-            
+            lastHitPlayer.Value = 666;
             if (OwnerClientId == 0)
             {
                 transform.position = spawnPoint0;
@@ -124,20 +117,10 @@ public class Health : NetworkBehaviour
     {
         get { return dead; }
     }
-    public Health Player
+    [ServerRpc(RequireOwnership = false)]
+    public void SetFinalHitServerRpc(ulong playerVal)
     {
-        get { return lastHitPlayer; }
-        set { lastHitPlayer = value; }
+        lastHitPlayer.Value = playerVal;
     }
-    public int KillGold
-    {
-        get { return killGold; }
-        set { killGold = value; }
-    }
-    public int KillCorn
-    {
-        get { return killCorn; }
-        set { killCorn=value; }
-    }
-    
+
 }
