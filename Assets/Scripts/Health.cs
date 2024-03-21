@@ -5,19 +5,20 @@ using Unity.Netcode;
 public class Health : NetworkBehaviour
 {
     [SerializeField] private float maxhp;
-    private NetworkVariable<float> hp=new NetworkVariable<float>(0.1f,NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+    private NetworkVariable<float> hp=new NetworkVariable<float>(1f,NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
     [SerializeField] private bool IsTurret;
     private bool dead = false;
     [SerializeField] private float respawnTimer;
     private float timer;
     [SerializeField] private ToolsItems cornGold;
     private NetworkVariable<ulong> lastHitPlayer= new NetworkVariable<ulong>(666,NetworkVariableReadPermission.Everyone,NetworkVariableWritePermission.Server);
-
+    private PlayerStorage stor;
 
     [SerializeField] private Vector3 spawnPoint0, spawnPoint1, spawnPoint2, spawnPoint3, voidZone;
     void Start()
     {
-        hp.Value = maxhp;
+        stor = GameObject.Find("PlayerStorageData").GetComponent<PlayerStorage>();
+        ChangeHPServerRpc(1 - maxhp);
         if (OwnerClientId == 0)
         {
             transform.position = spawnPoint0;
@@ -40,7 +41,7 @@ public class Health : NetworkBehaviour
     void Update()
     {
         
-        timer -= Time.deltaTime;
+        
         if(hp.Value > 100)
         {
             ChangeHPServerRpc(hp.Value - 100);
@@ -52,20 +53,22 @@ public class Health : NetworkBehaviour
         }
         Debug.Log(lastHitPlayer.Value);
         if (!IsOwner) { return; }
-        
+        timer -= Time.deltaTime;
         //krill your shelf button
         if (Input.GetKeyDown(KeyCode.H))
         {
-            hp.Value -= 10;
+            ChangeHPServerRpc(10);
         }
         if (!IsTurret && hp.Value <= 0 && !dead)
         {
             dead = true;
             timer = respawnTimer;
-            transform.position = voidZone;
+            
             if (lastHitPlayer.Value != 666)
             {
-                PlayerStorage.CalculateDeath(lastHitPlayer.Value, cornGold.Corn, cornGold.Gold);
+                Debug.Log("sent id");
+                Debug.Log("Corn/Gold : " + cornGold.Corn + "/" + cornGold.Gold);
+                stor.CalculateDeath(lastHitPlayer.Value, cornGold.Corn, cornGold.Gold);
             }
             cornGold.Corn = 0;
             cornGold.Gold = 0;
@@ -73,8 +76,8 @@ public class Health : NetworkBehaviour
         if (dead && timer <= 0)
         {
             dead = false;
-            hp.Value = maxhp;
-            lastHitPlayer.Value = 666;
+            ChangeHPServerRpc(-maxhp);
+            SetFinalHitServerRpc(666);
             if (OwnerClientId == 0)
             {
                 transform.position = spawnPoint0;
@@ -97,13 +100,9 @@ public class Health : NetworkBehaviour
     [ServerRpc(RequireOwnership =false)]
     public void ChangeHPServerRpc(float val)
     {
-        ChangeHPClientRpc(val);
-    }
-    [ClientRpc(RequireOwnership =false)]
-    public void ChangeHPClientRpc(float val)
-    {
         hp.Value -= val;
     }
+    
     public float HP
     {
         get { return hp.Value; }

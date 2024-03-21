@@ -4,9 +4,9 @@ using UnityEngine;
 using Unity.Netcode;
 public class PlayerStorage : NetworkBehaviour
 {
-    public static ToolsItems player0, player1, player2, player3;
+    public ToolsItems player0, player1, player2, player3;
 
-    private static void OnTriggerStay2D(Collider2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
@@ -28,10 +28,12 @@ public class PlayerStorage : NetworkBehaviour
             }
         }
     }
-    public static void CalculateDeath(ulong playerVal, int corn, int gold)
+    public void CalculateDeath(ulong playerVal, int corn, int gold)
     {
+        Debug.Log("kill received");
         if (playerVal == 0)
         {
+            Debug.Log("player 0 sent corn and gold");
             player0.CornGoldAddServerRpc(corn, gold);
         }
         if (playerVal == 1)
