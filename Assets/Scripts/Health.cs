@@ -7,7 +7,7 @@ public class Health : NetworkBehaviour
     [SerializeField] private float maxhp;
     private NetworkVariable<float> hp=new NetworkVariable<float>(1f,NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
     [SerializeField] private bool IsTurret;
-    private bool dead = false;
+    private NetworkVariable<bool> dead = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone,NetworkVariableWritePermission.Server);
     [SerializeField] private float respawnTimer;
     private float timer;
     [SerializeField] private ToolsItems cornGold;
@@ -59,9 +59,9 @@ public class Health : NetworkBehaviour
         {
             ChangeHPServerRpc(10);
         }
-        if (!IsTurret && hp.Value <= 0 && !dead)
+        if (!IsTurret && hp.Value <= 0 && !dead.Value)
         {
-            dead = true;
+            SetDeadServerRpc(true);
             timer = respawnTimer;
             
             if (lastHitPlayer.Value != 666)
@@ -73,10 +73,10 @@ public class Health : NetworkBehaviour
             cornGold.Corn = 0;
             cornGold.Gold = 0;
         }
-        if (dead && timer <= 0)
+        if (dead.Value && timer <= 0)
         {
-            dead = false;
-            ChangeHPServerRpc(-maxhp);
+            SetDeadServerRpc(false);
+            ChangeHPServerRpc(hp.Value-maxhp);
             SetFinalHitServerRpc(666);
             if (OwnerClientId == 0)
             {
@@ -114,7 +114,12 @@ public class Health : NetworkBehaviour
     }
     public bool Dead
     {
-        get { return dead; }
+        get { return dead.Value; }
+    }
+    [ServerRpc(RequireOwnership =false)]
+    public void SetDeadServerRpc(bool ded)
+    {
+        dead.Value = ded;
     }
     [ServerRpc(RequireOwnership = false)]
     public void SetFinalHitServerRpc(ulong playerVal)
