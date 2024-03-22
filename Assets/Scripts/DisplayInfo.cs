@@ -13,12 +13,12 @@ public class DisplayInfo : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     public void OnPointerEnter(PointerEventData eventData)
     {
         display = true;
-        throw new System.NotImplementedException();
+        //throw new System.NotImplementedException();
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
         display = false;
-        throw new System.NotImplementedException();
+        //throw new System.NotImplementedException();
     }
 }
