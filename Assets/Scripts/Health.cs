@@ -18,23 +18,27 @@ public class Health : NetworkBehaviour
     
     void Start()
     {
-        stor = GameObject.Find("PlayerStorageData").GetComponent<PlayerStorage>();
+        
         SetHPFullServerRpc();
-        if (OwnerClientId == 0)
+        if (!IsTurret)
         {
-            transform.position = spawnPoint0;
-        }
-        if (OwnerClientId == 1)
-        {
-            transform.position = spawnPoint1;
-        }
-        if (OwnerClientId == 2)
-        {
-            transform.position = spawnPoint2;
-        }
-        if (OwnerClientId == 3)
-        {
-            transform.position = spawnPoint3;
+            stor = GameObject.Find("PlayerStorageData").GetComponent<PlayerStorage>();
+            if (OwnerClientId == 0)
+            {
+                transform.position = spawnPoint0;
+            }
+            if (OwnerClientId == 1)
+            {
+                transform.position = spawnPoint1;
+            }
+            if (OwnerClientId == 2)
+            {
+                transform.position = spawnPoint2;
+            }
+            if (OwnerClientId == 3)
+            {
+                transform.position = spawnPoint3;
+            }
         }
     }
     
@@ -50,7 +54,7 @@ public class Health : NetworkBehaviour
             Destroy(this.gameObject);
         }
         Debug.Log(lastHitPlayer.Value);
-        if (!IsOwner) { return; }
+        if (!IsOwner||IsTurret) { return; }
         timer -= Time.deltaTime;
        
         //krill your shelf button
