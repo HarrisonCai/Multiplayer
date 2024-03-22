@@ -194,7 +194,7 @@ public class ToolsItems : NetworkBehaviour
             ChangePlantStateServerRpc(true);
         }
 
-        else if (!unitPlanted && goldSeed.Value && goldSeeds > 0 && planting && Input.GetKeyDown(KeyCode.X))
+        else if (!unitPlanted && goldSeed.Value && goldSeeds > 0 && planting && Input.GetKey(KeyCode.X))
         {
             plantingTimer -= Time.deltaTime;
 
