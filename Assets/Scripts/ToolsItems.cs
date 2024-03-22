@@ -19,7 +19,7 @@ public class ToolsItems : NetworkBehaviour
     private int goldSeeds=0;
     
     //private int lighter=0;
-    private int turret = 1;
+    private int turret = 0;
     private bool hasTomatoGun = false;
     private NetworkVariable<float> damage = new NetworkVariable<float>(20, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
 
