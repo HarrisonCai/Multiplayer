@@ -2899,7 +2899,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 250134906
+  GlobalObjectIdHash: 3352964296
   InScenePlacedSourceGlobalObjectIdHash: 3352964296
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
@@ -3067,7 +3067,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxhp: 100
   IsTurret: 0
-  respawnTimer: 10
+  respawnTimer: 2
   cornGold: {fileID: 7611345650532316863}
   spawnPoint0: {x: 14.5, y: 14.5, z: 0}
   spawnPoint1: {x: -14.5, y: 14.5, z: 0}

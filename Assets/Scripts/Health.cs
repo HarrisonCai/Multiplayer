@@ -15,10 +15,11 @@ public class Health : NetworkBehaviour
     private PlayerStorage stor;
 
     [SerializeField] private Vector3 spawnPoint0, spawnPoint1, spawnPoint2, spawnPoint3, voidZone;
+    
     void Start()
     {
         stor = GameObject.Find("PlayerStorageData").GetComponent<PlayerStorage>();
-        ChangeHPServerRpc(1 - maxhp);
+        SetHPFullServerRpc();
         if (OwnerClientId == 0)
         {
             transform.position = spawnPoint0;
@@ -42,10 +43,7 @@ public class Health : NetworkBehaviour
     {
         
         
-        if(hp.Value > 100)
-        {
-            ChangeHPServerRpc(hp.Value - 100);
-        }
+        
         
         if(IsTurret && hp.Value <= 0)
         {
@@ -54,10 +52,15 @@ public class Health : NetworkBehaviour
         Debug.Log(lastHitPlayer.Value);
         if (!IsOwner) { return; }
         timer -= Time.deltaTime;
+       
         //krill your shelf button
         if (Input.GetKeyDown(KeyCode.H))
         {
             ChangeHPServerRpc(10);
+        }
+        if (hp.Value > maxhp)
+        {
+            SetHPFullServerRpc();
         }
         if (!IsTurret && hp.Value <= 0 && !dead.Value)
         {
@@ -73,10 +76,17 @@ public class Health : NetworkBehaviour
             cornGold.Corn = 0;
             cornGold.Gold = 0;
         }
-        if (dead.Value && timer <= 0)
+        if(dead.Value && hp.Value>0)
         {
+            timer = 0.1f;
+        }
+        if ((dead.Value && timer <= 0))
+        {
+
+            SetHPFullServerRpc();
             SetDeadServerRpc(false);
-            ChangeHPServerRpc(hp.Value-maxhp);
+            Debug.Log("Failed");
+            Debug.Log(dead.Value);
             SetFinalHitServerRpc(666);
             if (OwnerClientId == 0)
             {
@@ -126,5 +136,9 @@ public class Health : NetworkBehaviour
     {
         lastHitPlayer.Value = playerVal;
     }
-
+    [ServerRpc(RequireOwnership = false)]
+    public void SetHPFullServerRpc()
+    {
+        hp.Value = maxhp;
+    }
 }
