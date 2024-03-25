@@ -42,7 +42,7 @@ public class ChatManager : NetworkBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Return))
         {
-            SendChatMessage(chatInput.text, playerName);
+            SendChatMessage(chatInput.text, PlayerPrefs.GetString("Name"));
             chatInput.text = "";
         }
     }
