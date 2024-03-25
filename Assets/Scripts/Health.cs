@@ -2,8 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Unity.Netcode;
+using Unity.UI;
+using TMPro;
 public class Health : NetworkBehaviour
 {
+    [SerializeField] private GameObject deathTimer;
+    [SerializeField] private TextMeshProUGUI deathText;
     [SerializeField] private float maxhp;
     private NetworkVariable<float> hp=new NetworkVariable<float>(1f,NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
     [SerializeField] private bool IsTurret;
@@ -56,12 +60,17 @@ public class Health : NetworkBehaviour
         Debug.Log(lastHitPlayer.Value);
         if (!IsOwner||IsTurret) { return; }
         timer -= Time.deltaTime;
-       
-        //krill your shelf button
-        if (Input.GetKeyDown(KeyCode.H))
+        
+        if (dead.Value)
         {
-            ChangeHPServerRpc(10);
+            deathTimer.SetActive(true);
+            deathText.text = timer.ToString("#.0");
         }
+        else
+        {
+            deathTimer.SetActive(false);
+        }
+        
         if (hp.Value > maxhp)
         {
             SetHPFullServerRpc();

@@ -6,8 +6,9 @@ using TMPro;
 using Unity.Netcode;
 public class ToolsItems : NetworkBehaviour
 {
-
-    [SerializeField] private GameObject TomatoGunButton, SharpeningButton, GoldenCornBagButton,CornBagImage,GoldenCornbagImage;
+    
+    [SerializeField] private GameObject plantGuide, goldGuide, shopGuide, storeGuide;
+    [SerializeField] private GameObject TomatoGunButton, SharpeningButton, GoldenCornBagButton,CornBagImage,GoldenCornbagImage, TomatoGunImage;
     [SerializeField] private GameObject shopCan;
     [SerializeField] private TextMeshProUGUI cornTextVal, goldTextVal, seedText, goldSeedText, tomatoText, healthPotText, goldCornBagText, turretText;
     [SerializeField] private Health hp;
@@ -137,6 +138,7 @@ public class ToolsItems : NetworkBehaviour
             
             return;
         }
+        TomatoGunImage.SetActive(hasTomatoGun);
         if (corn.Value > maxCorn)
         {
             corn.Value = maxCorn;
@@ -163,9 +165,20 @@ public class ToolsItems : NetworkBehaviour
             shoppingState = false;
         }
         shopCan.SetActive(shoppingState);
-
+        if (!shoppingState)
+        {
+            shopGuide.SetActive(shop);
+        }
+        else
+        {
+            shopGuide.SetActive(false);
+        }
         if (shoppingState) { return; }
         SwitchTool();
+        plantGuide.SetActive(planting);
+        goldGuide.SetActive(mining);
+        storeGuide.SetActive(storageHouse);
+        
         //Scythe Code
         
         swingTimer -= Time.deltaTime;
@@ -289,11 +302,7 @@ public class ToolsItems : NetworkBehaviour
             hp.ChangeHPServerRpc(-20);
         }
         
-        //DEVKEY TESTING REMOVE LATER U BOZO
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            gold.Value++;
-        }
+  
     }
 
     //=======================================================================================================================]
@@ -456,7 +465,7 @@ public class ToolsItems : NetworkBehaviour
             seed.Value = false;
             goldSeed.Value = true;
         }
-        float pos = -100 + (hotbarLocation-1 )* 50;
+        float pos = -98 + (hotbarLocation-1 )* 49;
 
         hotBarIndex.localPosition = new Vector3(pos, hotBarIndex.localPosition.y, hotBarIndex.localPosition.z);
         if (hotbarLocation == 1)
@@ -749,6 +758,6 @@ public class ToolsItems : NetworkBehaviour
         Corn += val;
         Gold += val2;
     }
-    
+
     
 }

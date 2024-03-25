@@ -2,10 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Unity.Netcode;
+using UnityEngine.UI;
+using TMPro;
+using UnityEngine.SceneManagement;
 public class PlayerStorage : NetworkBehaviour
 {
-    public ToolsItems player0, player1, player2, player3;
-
+    [SerializeField] private GameObject textObj;
+    [SerializeField] private TextMeshProUGUI text;
+    private ToolsItems player0, player1, player2, player3;
+    private NetworkVariable<bool> gameOver = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
     private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
@@ -48,5 +53,39 @@ public class PlayerStorage : NetworkBehaviour
         {
             player3.CornGoldAddServerRpc(corn, gold);
         }
+    }
+    public void Win(string name)
+    {
+        setGameOverServerRpc(true);
+        textObj.SetActive(true);
+        text.text = name + " won!";
+        Invoke(nameof(DisconnectClientRpc), 8);
+    }
+    [ClientRpc(RequireOwnership =false)]
+    private void DisconnectClientRpc()
+    {
+        Disconnect();
+        Cleanup();
+        SceneManager.LoadScene(0);
+    }
+    public void Disconnect()
+    {
+        NetworkManager.Singleton.Shutdown();
+    }
+    public void Cleanup()
+    {
+        if (NetworkManager.Singleton != null)
+        {
+            Destroy(NetworkManager.Singleton.gameObject);
+        }
+    }
+    [ServerRpc(RequireOwnership =false)]
+    private void setGameOverServerRpc(bool val)
+    {
+        gameOver.Value = val;
+    }
+    public bool GameOver
+    {
+        get { return gameOver.Value; }
     }
 }

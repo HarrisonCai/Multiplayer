@@ -6,6 +6,7 @@ using TMPro;
 using UnityEngine.UI;
 public class StorageHouse : NetworkBehaviour
 {
+    [SerializeField] PlayerStorage stor;
     [SerializeField] private ulong clientID;
     private Collider2D player;
     private ToolsItems tools;
@@ -20,6 +21,12 @@ public class StorageHouse : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
+        
+        if(corn.Value >= 750&& !stor.GameOver && OwnerClientId==clientID)
+        {
+            
+            stor.Win(PlayerPrefs.GetString("Name"));
+        }
         cornText.text = "" + corn.Value;
         if (!IsServer) { return; }
         
