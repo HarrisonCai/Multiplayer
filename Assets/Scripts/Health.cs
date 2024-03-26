@@ -57,7 +57,7 @@ public class Health : NetworkBehaviour
         {
             Destroy(this.gameObject);
         }
-        Debug.Log(lastHitPlayer.Value);
+        
         if (!IsOwner||IsTurret) { return; }
         timer -= Time.deltaTime;
         

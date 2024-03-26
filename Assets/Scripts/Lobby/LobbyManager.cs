@@ -8,7 +8,7 @@ using UnityEngine.UI;
 using Unity.Services.Lobbies;
 using Unity.Services.Lobbies.Models;
 using UnityEngine.SceneManagement;
-
+using Unity.Netcode;
 
 public class LobbyManager : MonoBehaviour
 {
@@ -413,7 +413,7 @@ public class LobbyManager : MonoBehaviour
                 };
 
                 currentLobby = await LobbyService.Instance.UpdateLobbyAsync(currentLobby.Id, updateoptions);
-
+                
                 EnterGame();
 
             }
@@ -443,7 +443,17 @@ public class LobbyManager : MonoBehaviour
 
     private void EnterGame()
     {
+        if (IsHost())
+        {
+
+            HostStore.isHost = true;
+        }
+        else
+        {
+            HostStore.isHost = false;
+        }
         SceneManager.LoadScene("MainGame");
+        
     }
 
 
