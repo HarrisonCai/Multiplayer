@@ -45,3 +45,12 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: under
+    uniqueID: 960702551
+    locked: 0
+  - name: Player
+    uniqueID: 629646587
+    locked: 0
+  - name: above
+    uniqueID: 525480801
+    locked: 0

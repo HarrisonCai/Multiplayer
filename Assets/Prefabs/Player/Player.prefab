@@ -3730,6 +3730,7 @@ GameObject:
   - component: {fileID: 6051345664503196537}
   - component: {fileID: 2786782932114832570}
   - component: {fileID: 7633594900830255885}
+  - component: {fileID: 314923533154832112}
   m_Layer: 3
   m_Name: Camera
   m_TagString: Untagged
@@ -3845,6 +3846,26 @@ MonoBehaviour:
   m_CameraActivatedEvent:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &314923533154832112
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6027247408963734439}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a160d838ff8b4b4693ac20007e008c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AssetsPPU: 20
+  m_RefResolutionX: 320
+  m_RefResolutionY: 180
+  m_UpscaleRT: 0
+  m_PixelSnapping: 0
+  m_CropFrameX: 0
+  m_CropFrameY: 0
+  m_StretchFill: 0
 --- !u!1 &6044360353771718822
 GameObject:
   m_ObjectHideFlags: 0
@@ -3866,6 +3887,7 @@ GameObject:
   - component: {fileID: 8605046572679765878}
   - component: {fileID: 6578241966987337098}
   - component: {fileID: 6082057527932461441}
+  - component: {fileID: 310233753991852775}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -3937,7 +3959,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 10
-  m_Sprite: {fileID: 21300000, guid: a86cf2781c3bd48439db259e0dcc64ed, type: 3}
+  m_Sprite: {fileID: 21300000, guid: bf51234c19d8fc94f8a6f351df20d1da, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -4232,6 +4254,27 @@ MonoBehaviour:
   counter: {fileID: 5691114907854156294}
   text: {fileID: 40606151776494150}
   winCorn: 750
+--- !u!95 &310233753991852775
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6044360353771718822}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 43655fffeb18d6e41b6290e99b8efef4, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &6181732413847336017
 GameObject:
   m_ObjectHideFlags: 0
