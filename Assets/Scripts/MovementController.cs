@@ -12,7 +12,7 @@ public class MovementController : NetworkBehaviour
     private float sin, cos;
     [SerializeField] private ToolsItems tools;
     [SerializeField] private GameObject playerUI;
-    private bool move=true;
+    [SerializeField] private Animator animator;
     // Start is called before the first frame update
     void Start()
     {
@@ -31,7 +31,7 @@ public class MovementController : NetworkBehaviour
             rb.velocity = speed;
         }
         //DO NOT TOUCH THIS
-        if (!IsOwner || !move || hp.Dead)
+        if (!IsOwner || hp.Dead)
         {
             return;
         }
@@ -48,6 +48,7 @@ public class MovementController : NetworkBehaviour
             cos = Mathf.Abs(h / (Mathf.Sqrt(Mathf.Pow(v, 2) + Mathf.Pow(h, 2))));
 
             speed = new Vector2(h * cos, v * sin);
+            
         }
         else
         {
@@ -61,17 +62,19 @@ public class MovementController : NetworkBehaviour
         {
             speed = Vector2.zero;
         }
+        animator.SetFloat("v", speed.y);
+        animator.SetFloat("h", speed.x);
+        if (Mathf.Abs(speed.x) > Mathf.Abs(speed.y))
+        {
+            animator.SetFloat("v", 0);
 
+        }else if (Mathf.Abs(speed.y) > Mathf.Abs(speed.x))
+        {
+            animator.SetFloat("h", 0);
+        }
         rb.velocity = speed * multiplier;
         
         
     }
-    public void Chat()
-    {
-        move = false;
-    }
-    public void unChat()
-    {
-        move = true;
-    }
+    
 }
