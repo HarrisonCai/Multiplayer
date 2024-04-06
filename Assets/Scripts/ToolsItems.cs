@@ -690,9 +690,9 @@ public class ToolsItems : NetworkBehaviour
     }
     public void AddGoldCornSeed()
     {
-        if (gold.Value >= 10)
+        if (gold.Value >= 5)
         {
-            gold.Value-=10;
+            gold.Value -= 5;
             goldSeeds++;
         }
     }
@@ -745,6 +745,14 @@ public class ToolsItems : NetworkBehaviour
         {
             gold.Value -= 5;
             turret++;
+        }
+    }
+    public void SellCorn()
+    {
+        if (corn.Value >= 15)
+        {
+            corn.Value -= 15;
+            gold.Value += 1;
         }
     }
     [ServerRpc(RequireOwnership = false)]
