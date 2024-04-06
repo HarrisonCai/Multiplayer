@@ -5269,6 +5269,7 @@ GameObject:
   - component: {fileID: 7607986519479919485}
   - component: {fileID: 8807348875807476734}
   - component: {fileID: 1867834602284164115}
+  - component: {fileID: 1339175279262210566}
   m_Layer: 3
   m_Name: Player Sprite
   m_TagString: Untagged
@@ -5364,6 +5365,20 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1339175279262210566
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6589769314660331827}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4cd06dd6bcca8e341868361c9b72f66b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TransitionStateInfoList: []
+  m_Animator: {fileID: 1867834602284164115}
 --- !u!1 &6661543215657779471
 GameObject:
   m_ObjectHideFlags: 0
