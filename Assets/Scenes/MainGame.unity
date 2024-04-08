@@ -1155,7 +1155,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &55278051
 Transform:
   m_ObjectHideFlags: 0
@@ -6885,7 +6885,7 @@ MonoBehaviour:
   m_MaxConnectAttempts: 60
   m_DisconnectTimeoutMS: 30000
   ConnectionData:
-    Address: 192.168.75.181
+    Address: 192.168.1.47
     Port: 7777
     ServerListenAddress: 127.0.0.1
   DebugSimulator:
@@ -17721,7 +17721,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &899747096
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29440,7 +29440,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1681897759}
   m_HandleRect: {fileID: 1681897758}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
