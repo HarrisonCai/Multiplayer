@@ -269,7 +269,7 @@ public class ToolsItems : NetworkBehaviour
 
         }
         //TURRET PLACING CODE
-        if (turretItem.Value && turret>0 && Input.GetKeyDown(KeyCode.Z))
+        if (turret>0 && Input.GetKeyDown(KeyCode.Z))
         {
             turret--;
             
