@@ -11,6 +11,7 @@ public class CornadeActive : NetworkBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (!IsServer) return;
         Invoke(nameof(TimedDestroy), timer);
         //something
     }
@@ -28,6 +29,7 @@ public class CornadeActive : NetworkBehaviour
         {
             networkObjPlaceholder = Instantiate(shrapnel, transform.position, Quaternion.Euler(0,0,Random.Range(0,360))).GetComponent<NetworkObject>();
             networkObjPlaceholder.SpawnWithOwnership(OwnerClientId);
+            networkObjPlaceholder.gameObject.GetComponent<Rigidbody2D>().velocity += this.gameObject.GetComponent<Rigidbody2D>().velocity*1;
         }
         this.NetworkObject.Despawn();
     }

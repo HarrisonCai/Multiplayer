@@ -9,16 +9,17 @@ public class SharpnelHitbox : NetworkBehaviour
     private float rot = 0;
     private Collider2D player;
     [SerializeField] private float damage, bullspeed;
-
+    
     // Start is called before the first frame update
     void Start()
     {
-        GetComponent<Rigidbody2D>().velocity = transform.right * bullspeed;
+        GetComponent<Rigidbody2D>().velocity += (Vector2)transform.right * bullspeed;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (!IsServer) return;
         rot += rotspeed;
         transform.rotation = Quaternion.Euler(0, 0, rot);
     }

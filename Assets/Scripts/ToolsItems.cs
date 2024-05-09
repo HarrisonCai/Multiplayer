@@ -344,6 +344,7 @@ public class ToolsItems : NetworkBehaviour
     {
         cornadeInstance = Instantiate(cornadePrefab, transform.position, this.transform.rotation).GetComponent<NetworkObject>();
         cornadeInstance.SpawnWithOwnership(OwnerClientId);
+        
     }
     
     [ServerRpc(RequireOwnership =false)]

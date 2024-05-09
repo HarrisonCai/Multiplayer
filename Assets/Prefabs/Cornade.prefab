@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 1032237774450763250}
   - component: {fileID: 5299288290693560681}
   - component: {fileID: -6907043402996873726}
+  - component: {fileID: 159468997718260969}
   m_Layer: 0
   m_Name: Cornade
   m_TagString: Untagged
@@ -182,3 +183,15 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &159468997718260969
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 11713074037935854}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80d7c879794dfda4687da0e400131852, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
