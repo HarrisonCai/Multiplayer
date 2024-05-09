@@ -21,6 +21,9 @@ public class ToolsItems : NetworkBehaviour
     
     //private int lighter=0;
     private int turret = 0;
+    private int cornade = 0;
+    private float cornadeTimer = 0;
+    private NetworkObject cornadeInstance = null;
     private bool hasTomatoGun = false;
     private NetworkVariable<float> damage = new NetworkVariable<float>(20, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
 
@@ -50,7 +53,7 @@ public class ToolsItems : NetworkBehaviour
     private NetworkVariable<bool> pickaxe = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
     private NetworkVariable<bool> shovel = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
     private NetworkVariable<bool> tomatoGun = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone,NetworkVariableWritePermission.Owner);
-    private NetworkVariable<bool> turretItem = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+    private NetworkVariable<bool> CornadeItem = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
     private NetworkVariable<bool> seed = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
     private NetworkVariable<bool> goldSeed = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
     private int typeSeed = 0;
@@ -78,7 +81,7 @@ public class ToolsItems : NetworkBehaviour
 
     private bool move;
 
-    [SerializeField] private GameObject turretPrefab;
+    [SerializeField] private GameObject turretPrefab, cornadePrefab;
     private NetworkObject instanceNetworkObject;
     
     void Start()
@@ -276,6 +279,19 @@ public class ToolsItems : NetworkBehaviour
             PlaceTurretServerRpc();
             
         }
+        //CORN GRENADE CODE
+        cornadeTimer -= Time.deltaTime;
+        if (cornadeTimer <= 0 && CornadeItem.Value /*&& cornade>0*/ && Input.GetMouseButtonDown(0) && cornadeInstance==null)
+        {
+            //cornade--;
+            ThrowCornadeServerRpc();
+            cornadeTimer = 0.3f;
+            //intialize grenade instaance and track position
+        }
+        if(Input.GetMouseButtonUp(0) && cornadeInstance != null)
+        {
+            cornadeInstance = null;
+        }
         //STORAGE
         if (storageHouse && corn.Value > 0 && Input.GetMouseButton(0))
         {
@@ -321,13 +337,15 @@ public class ToolsItems : NetworkBehaviour
     {
         instanceNetworkObject = Instantiate(turretPrefab, transform.position, this.transform.rotation).GetComponent<NetworkObject>();
         instanceNetworkObject.SpawnWithOwnership(OwnerClientId);
-        PlaceTurretClientRpc();
+        
     }
-    [ClientRpc(RequireOwnership =false)]
-    private void PlaceTurretClientRpc()
+    [ServerRpc(RequireOwnership =false)]
+    private void ThrowCornadeServerRpc()
     {
-        //instanceNetworkObject.gameObject.GetComponent<TurretFiring>().Owner = this.gameObject.GetComponent<ToolsItems>();
+        cornadeInstance = Instantiate(cornadePrefab, transform.position, this.transform.rotation).GetComponent<NetworkObject>();
+        cornadeInstance.SpawnWithOwnership(OwnerClientId);
     }
+    
     [ServerRpc(RequireOwnership =false)]
     private void ChangePlantStateServerRpc(bool state)
     {
@@ -474,7 +492,7 @@ public class ToolsItems : NetworkBehaviour
             pickaxe.Value = false;
             shovel.Value = false;
             SetTomatoGunServerRpc(false);
-            turretItem.Value = false;
+            CornadeItem.Value = false;
         }
         if (hotbarLocation == 2)
         {
@@ -482,7 +500,7 @@ public class ToolsItems : NetworkBehaviour
             pickaxe.Value = true;
             shovel.Value = false;
             SetTomatoGunServerRpc(false);
-            turretItem.Value = false;
+            CornadeItem.Value = false;
         }
         if (hotbarLocation == 3)
         {
@@ -490,7 +508,7 @@ public class ToolsItems : NetworkBehaviour
             pickaxe.Value = false;
             shovel.Value = true;
             SetTomatoGunServerRpc(false);
-            turretItem.Value = false;
+            CornadeItem.Value = false;
         }
         if (hotbarLocation == 4)
         {
@@ -501,7 +519,7 @@ public class ToolsItems : NetworkBehaviour
             {
                 SetTomatoGunServerRpc(true);
             }
-            turretItem.Value = false;
+            CornadeItem.Value = false;
         }
         if (hotbarLocation == 5)
         {
@@ -509,7 +527,7 @@ public class ToolsItems : NetworkBehaviour
             pickaxe.Value = false;
             shovel.Value = false;
             SetTomatoGunServerRpc(false);
-            turretItem.Value = true;
+            CornadeItem.Value = true;
         }
 
     }
@@ -573,9 +591,9 @@ public class ToolsItems : NetworkBehaviour
     {
         get { return tomatoGun.Value; }
     }
-    public bool Turret
+    public bool Cornade
     {
-        get { return turretItem.Value; }
+        get { return CornadeItem.Value; }
     }
     public bool Planting
     {
@@ -680,6 +698,7 @@ public class ToolsItems : NetworkBehaviour
         get { return gold.Value; }
         set { gold.Value = value; }
     }
+    
     public void AddCornSeed()
     {
         if (gold.Value >= 1)

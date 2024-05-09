@@ -33,8 +33,12 @@ public class PlayerStorage : NetworkBehaviour
             }
         }
     }
-    public void CalculateDeath(ulong playerVal, int corn, int gold)
+    public void CalculateDeath(ulong origin, ulong playerVal, int corn, int gold)
     {
+        if (origin == playerVal)
+        {
+            return;
+        }
         Debug.Log("kill received");
         if (playerVal == 0)
         {

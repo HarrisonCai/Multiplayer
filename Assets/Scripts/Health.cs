@@ -84,7 +84,7 @@ public class Health : NetworkBehaviour
             {
                 Debug.Log("sent id");
                 Debug.Log("Corn/Gold : " + cornGold.Corn + "/" + cornGold.Gold);
-                stor.CalculateDeath(lastHitPlayer.Value, cornGold.Corn, cornGold.Gold);
+                stor.CalculateDeath(OwnerClientId, lastHitPlayer.Value, cornGold.Corn, cornGold.Gold);
             }
             cornGold.Corn = 0;
             cornGold.Gold = 0;
