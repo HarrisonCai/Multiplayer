@@ -203,8 +203,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 448650888676fff48afd9b55ab6c5084, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotspeed: 0.01
-  damage: 5
+  rotspeed: 1
+  damage: 20
   bullspeed: 12
 --- !u!50 &-6303327784874884642
 Rigidbody2D:

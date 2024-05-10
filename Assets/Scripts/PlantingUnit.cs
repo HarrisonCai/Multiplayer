@@ -55,7 +55,7 @@ public class PlantingUnit : NetworkBehaviour
         }
         if (collision.gameObject.CompareTag("PlantingUnit"))
         {
-            Debug.Log("enter");
+
             
             plantState.Planting = true;
                 
@@ -91,7 +91,7 @@ public class PlantingUnit : NetworkBehaviour
         if (!IsOwner) { return; }
         if (collision.gameObject.CompareTag("PlantingUnit"))
         {
-            Debug.Log("leave");
+       
             Unit = null;
             plantState.Planting = false;
             plantState.UnitPlanted = false;

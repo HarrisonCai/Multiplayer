@@ -13,7 +13,7 @@ public class SharpnelHitbox : NetworkBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        GetComponent<Rigidbody2D>().velocity += (Vector2)transform.right * bullspeed;
+        GetComponent<Rigidbody2D>().velocity += Random.Range(0.2f,1.4f)*(Vector2)transform.right * bullspeed;
     }
 
     // Update is called once per frame

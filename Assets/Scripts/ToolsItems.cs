@@ -6,7 +6,7 @@ using TMPro;
 using Unity.Netcode;
 public class ToolsItems : NetworkBehaviour
 {
-    
+    [SerializeField] private Camera cam;
     [SerializeField] private GameObject plantGuide, goldGuide, shopGuide, storeGuide;
     [SerializeField] private GameObject TomatoGunButton, SharpeningButton, GoldenCornBagButton,CornBagImage,GoldenCornbagImage, TomatoGunImage;
     [SerializeField] private GameObject shopCan;
@@ -23,7 +23,7 @@ public class ToolsItems : NetworkBehaviour
     private int turret = 0;
     private int cornade = 0;
     private float cornadeTimer = 0;
-    private NetworkObject cornadeInstance = null;
+    public NetworkObject cornadeInstance = null;
     private bool hasTomatoGun = false;
     private NetworkVariable<float> damage = new NetworkVariable<float>(20, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
 
@@ -290,6 +290,9 @@ public class ToolsItems : NetworkBehaviour
         }
         if(Input.GetMouseButtonUp(0) && cornadeInstance != null)
         {
+            cornadeInstance.gameObject.GetComponent<CornadeActive>().LaunchedServerRpc(true);
+            Vector2 distance = transform.position - cam.ScreenToWorldPoint(Input.mousePosition);
+            cornadeInstance.gameObject.GetComponent<CornadeActive>().Dist = distance;
             cornadeInstance = null;
         }
         //STORAGE
@@ -344,7 +347,8 @@ public class ToolsItems : NetworkBehaviour
     {
         cornadeInstance = Instantiate(cornadePrefab, transform.position, this.transform.rotation).GetComponent<NetworkObject>();
         cornadeInstance.SpawnWithOwnership(OwnerClientId);
-        
+        cornadeInstance.gameObject.GetComponent<CornadeActive>().Player = this.gameObject;
+        //cornadeInstance.gameObject.GetComponent<Rigidbody2D>().velocity += (Vector2)transform.right * 2;
     }
     
     [ServerRpc(RequireOwnership =false)]

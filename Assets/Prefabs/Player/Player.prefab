@@ -4642,6 +4642,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c42fcb23979d3644099fed95d54e3a6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cam: {fileID: 6051345664503196537}
   plantGuide: {fileID: 6471281837061351840}
   goldGuide: {fileID: 3320118665737283996}
   shopGuide: {fileID: 6332463288312155892}
@@ -4665,6 +4666,7 @@ MonoBehaviour:
   hotBarIndex: {fileID: 9035870416806910266}
   seedArrowIndex: {fileID: 1848544006307197043}
   swapButton: {fileID: 6349006214172127018}
+  cornadeInstance: {fileID: 0}
   resetPlanting: 0.1
   resetMiningTime: 3
   Progress: {fileID: 2360380139885828908}
