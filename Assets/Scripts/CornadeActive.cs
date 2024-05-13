@@ -6,6 +6,7 @@ using Unity.Services.Lobbies.Models;
 using UnityEngine.UIElements;
 public class CornadeActive : NetworkBehaviour
 {
+    [SerializeField] private int fragCount;
     [SerializeField] private float timer;
     [SerializeField] private GameObject explosion, shrapnel, player;
     [SerializeField] private float accel;
@@ -57,11 +58,11 @@ public class CornadeActive : NetworkBehaviour
         
         networkObjPlaceholder = Instantiate(explosion, transform.position, this.transform.rotation).GetComponent<NetworkObject>();
         networkObjPlaceholder.SpawnWithOwnership(OwnerClientId);
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < fragCount; i++)
         {
             networkObjPlaceholder = Instantiate(shrapnel, transform.position, Quaternion.Euler(0,0,Random.Range(0,360))).GetComponent<NetworkObject>();
             networkObjPlaceholder.SpawnWithOwnership(OwnerClientId);
-            networkObjPlaceholder.gameObject.GetComponent<Rigidbody2D>().velocity += Random.Range(0,1)*this.gameObject.GetComponent<Rigidbody2D>().velocity*10;
+            networkObjPlaceholder.gameObject.GetComponent<Rigidbody2D>().velocity += Random.Range(0,1)*this.gameObject.GetComponent<Rigidbody2D>().velocity*100;
         }
         this.NetworkObject.Despawn();
     }

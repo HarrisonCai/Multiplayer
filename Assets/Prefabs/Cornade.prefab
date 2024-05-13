@@ -122,11 +122,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16a657964c9618c41aa5cc7c6218e636, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fragCount: 8
   timer: 5
   explosion: {fileID: 7983977383644513248, guid: eb65744d8860368429dc51735e9fe15d, type: 3}
   shrapnel: {fileID: 4851539988518858034, guid: 60cddbb448592d543b4e233a74b7fd82, type: 3}
   player: {fileID: 0}
-  accel: 10
+  accel: 8
 --- !u!114 &5299288290693560681
 MonoBehaviour:
   m_ObjectHideFlags: 0
