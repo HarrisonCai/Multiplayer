@@ -80,7 +80,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 5
-  m_Sprite: {fileID: 21300000, guid: b3de220b9a7e0424888663d23d3cda85, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 9a50a30573021cd42b15324db24a0385, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -103,7 +103,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 2656043130
+  GlobalObjectIdHash: 2943659655
   InScenePlacedSourceGlobalObjectIdHash: 2656043130
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1

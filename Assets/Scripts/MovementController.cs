@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Unity.Netcode;
+using JetBrains.Annotations;
 
 public class MovementController : NetworkBehaviour
 {
@@ -13,6 +14,7 @@ public class MovementController : NetworkBehaviour
     [SerializeField] private ToolsItems tools;
     [SerializeField] private GameObject playerUI;
     [SerializeField] private Animator animator;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -61,6 +63,10 @@ public class MovementController : NetworkBehaviour
         if (tools.PlantingState || tools.ShovelingState || tools.ShoppingState)
         {
             speed = Vector2.zero;
+        }
+        if (tools.CornPot)
+        {
+            speed *= 1.2f;
         }
         animator.SetFloat("v", speed.y);
         animator.SetFloat("h", speed.x);
