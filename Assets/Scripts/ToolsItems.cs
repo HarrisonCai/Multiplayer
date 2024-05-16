@@ -11,7 +11,7 @@ public class ToolsItems : NetworkBehaviour
     [SerializeField] private GameObject plantGuide, goldGuide, shopGuide, storeGuide;
     [SerializeField] private GameObject TomatoGunButton, SharpeningButton, GoldenCornBagButton,CornBagImage,GoldenCornbagImage, TomatoGunImage;
     [SerializeField] private GameObject shopCan;
-    [SerializeField] private TextMeshProUGUI cornTextVal, goldTextVal, seedText, goldSeedText, tomatoText, healthPotText, goldCornBagText, turretText;
+    [SerializeField] private TextMeshProUGUI cornTextVal, goldTextVal, seedText, goldSeedText, tomatoText, healthPotText, goldCornBagText, turretText, cornadeText;
     [SerializeField] private Health hp;
     [SerializeField] private RectTransform hotBarIndex, seedArrowIndex, swapButton;
     private NetworkVariable<int> corn= new NetworkVariable<int>(0,NetworkVariableReadPermission.Everyone,NetworkVariableWritePermission.Owner);
@@ -159,6 +159,7 @@ public class ToolsItems : NetworkBehaviour
         healthPotText.text = "" + healthPot;
         goldCornBagText.text = "" + corn.Value + "/" + maxCorn;
         turretText.text = "" + turret;
+        cornadeText.text = "" + cornade;
         //SHOPPING
         if (shop && !shoppingState && Input.GetKeyDown(KeyCode.E))
         {
@@ -321,7 +322,11 @@ public class ToolsItems : NetworkBehaviour
             healthPot--;
             hp.ChangeHPServerRpc(-20);
         }
-        
+        //DEV CHEATS DELETE LATER U BOZO
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            gold.Value++;
+        }
   
     }
 
@@ -811,5 +816,6 @@ public class ToolsItems : NetworkBehaviour
     public bool CornPot
     {
         get { return cornPot; }
+        set { cornPot = value; }
     }
 }

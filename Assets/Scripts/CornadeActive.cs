@@ -13,7 +13,7 @@ public class CornadeActive : NetworkBehaviour
     private float velocity;
     private NetworkObject networkObjPlaceholder;
     private bool no = false;
-    private float angle;
+    private float angle,rot;
     private Vector2 distance;
     private NetworkVariable<bool> launched = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
     // Start is called before the first frame update
@@ -27,6 +27,7 @@ public class CornadeActive : NetworkBehaviour
     {
         Debug.Log(Dist +"/" + velocity);
         if (!IsServer) return;
+        
         if (!launched.Value)
         {
             transform.position = player.transform.position;
@@ -37,6 +38,7 @@ public class CornadeActive : NetworkBehaviour
             velocity = Mathf.Sqrt(accel * distance.magnitude * 2);
             angle= Mathf.Atan2(distance.y, distance.x) * Mathf.Rad2Deg + 180;
             
+            
         }
         if (velocity < 0)
         {
@@ -45,6 +47,8 @@ public class CornadeActive : NetworkBehaviour
         if (launched.Value && velocity >= 0) {
             this.gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(velocity * Mathf.Cos(angle*Mathf.Deg2Rad), velocity * Mathf.Sin(angle*Mathf.Deg2Rad));
             velocity -= accel*Time.deltaTime;
+            rot += velocity * 0.5f;
+            transform.rotation = Quaternion.Euler(0, 0, rot);
         }
     }
     private void TimedDestroy()
