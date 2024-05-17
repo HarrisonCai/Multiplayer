@@ -47,7 +47,7 @@ public class CornadeActive : NetworkBehaviour
         if (launched.Value && velocity >= 0) {
             this.gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(velocity * Mathf.Cos(angle*Mathf.Deg2Rad), velocity * Mathf.Sin(angle*Mathf.Deg2Rad));
             velocity -= accel*Time.deltaTime;
-            rot += velocity * 0.5f;
+            rot += velocity * 1.5f;
             transform.rotation = Quaternion.Euler(0, 0, rot);
         }
     }

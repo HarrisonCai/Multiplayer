@@ -82,7 +82,8 @@ public class ToolsItems : NetworkBehaviour
     private bool cornPot;
     private bool move;
 
-    [SerializeField] private GameObject turretPrefab, cornadePrefab;
+    [SerializeField] private GameObject turretPrefab, cornadePrefab, bearTrapPrefab;
+    private float bearTrap = 0;
     private NetworkObject instanceNetworkObject;
     
     void Start()
@@ -322,6 +323,11 @@ public class ToolsItems : NetworkBehaviour
             healthPot--;
             hp.ChangeHPServerRpc(-20);
         }
+        //BEAR TRAP CODE
+        if ( /* bearTrap>0 && */Input.GetKeyDown(KeyCode.R)){
+            PlaceBearTrapServerRpc();
+            //bearTrap--;
+        }
         //DEV CHEATS DELETE LATER U BOZO
         if (Input.GetKeyDown(KeyCode.F))
         {
@@ -356,7 +362,13 @@ public class ToolsItems : NetworkBehaviour
         cornadeInstance.gameObject.GetComponent<CornadeActive>().Player = this.gameObject;
         //cornadeInstance.gameObject.GetComponent<Rigidbody2D>().velocity += (Vector2)transform.right * 2;
     }
-    
+    [ServerRpc(RequireOwnership = false)]
+    private void PlaceBearTrapServerRpc()
+    {
+        instanceNetworkObject = Instantiate(bearTrapPrefab, transform.position, this.transform.rotation).GetComponent<NetworkObject>();
+        instanceNetworkObject.SpawnWithOwnership(OwnerClientId);
+
+    }
     [ServerRpc(RequireOwnership =false)]
     private void ChangePlantStateServerRpc(bool state)
     {
