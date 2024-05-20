@@ -162,7 +162,7 @@ public class LobbyManager : MonoBehaviour
                 }
             }
             if (currentLobby.Data[KEY_START_GAME].Value != "0"){
-                if(!isHost()){
+                if(!IsHost()){
                     TestRelay.Instance.JoinRelay(currentLobby.Data[KEY_START_GAME].Value);
                 }
             }

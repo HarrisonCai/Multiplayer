@@ -9,7 +9,7 @@ using Unity.Services.Relay.Models;
 using System.Threading.Tasks;
 using Unity.Netcode.Transports.UTP;
 using Unity.Networking.Transport.Relay;
-
+using System.Threading.Tasks;
 public class TestRelay : MonoBehaviour
 {
     private async void Start(){
@@ -28,7 +28,7 @@ public class TestRelay : MonoBehaviour
             string joinCode = await RelayService.Instance.GetJoinCodeAsync(allocation.AllocationId);
 
             RelayServerData relayServerData = new RelayServerData(allocation, "dtls");
-            NetworkManager.Singleton.GetComponent<UnityTransport>().SetHostRelayData(relayServerData    );
+            NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(relayServerData    );
 
             NetworkManager.Singleton.StartHost();
             return joinCode;
