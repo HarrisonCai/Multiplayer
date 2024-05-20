@@ -50,6 +50,7 @@ public class LobbyManager : MonoBehaviour
 
 
     private Lobby currentLobby;
+    public const string KEY_START_GAME = "Start";
 
 
     private string playerId;
@@ -101,7 +102,8 @@ public class LobbyManager : MonoBehaviour
                         Player = GetPlayer(),
                         Data = new Dictionary<string, DataObject>
                          {
-                             {"IsGameStarted", new DataObject(DataObject.VisibilityOptions.Member,"false") }
+                             {"IsGameStarted", new DataObject(DataObject.VisibilityOptions.Member,"false") },
+                             {KEY_START_GAME, new DataObject(DataObject.VisibilityOptions.Member, "0")}
                          }
                     };
                     currentLobby = await LobbyService.Instance.CreateLobbyAsync(lobbyName, maxPlayers, options);
@@ -157,6 +159,11 @@ public class LobbyManager : MonoBehaviour
                         currentLobby = null;
                         ExitRoom();
                     }
+                }
+            }
+            if (currentLobby.Data[KEY_START_GAME].Value != "0"){
+                if(!isHost()){
+                    TestRelay.Instance.JoinRelay(currentLobby.Data[KEY_START_GAME].Value);
                 }
             }
         }
@@ -404,11 +411,13 @@ public class LobbyManager : MonoBehaviour
         {
             try
             {
+                string relayCode = await TestRelay.Instance.CreateRelay();
                 UpdateLobbyOptions updateoptions = new UpdateLobbyOptions
                 {
                     Data = new Dictionary<string, DataObject>
                          {
-                              {"IsGameStarted", new DataObject(DataObject.VisibilityOptions.Member,"true") }
+                              {"IsGameStarted", new DataObject(DataObject.VisibilityOptions.Member,"true") },
+                              {KEY_START_GAME, new DataObject(DataObject.VisibilityOptions.Member, relayCode)}
                          }
                 };
 
