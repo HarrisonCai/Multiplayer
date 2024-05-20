@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.Netcode;
 using Unity.Services.Authentication;
 using Unity.Services.Core;
 using Unity.Services.Relay;
 using Unity.Services.Relay.Models;
 using System.Threading.Tasks;
+using Unity.Netcode.Transports.UTP;
+using Unity.Networking.Transport.Relay;
 
 public class TestRelay : MonoBehaviour
 {
@@ -25,7 +28,7 @@ public class TestRelay : MonoBehaviour
             string joinCode = await RelayService.Instance.GetJoinCodeAsync(allocation.AllocationId);
 
             RelayServerData relayServerData = new RelayServerData(allocation, "dtls");
-            NetworkManager.Singleton.GetComponent<UnityTransport>().SetHostRelayData(relayServerData);
+            NetworkManager.Singleton.GetComponent<UnityTransport>().SetHostRelayData(relayServerData    );
 
             NetworkManager.Singleton.StartHost();
             return joinCode;
@@ -41,7 +44,7 @@ public class TestRelay : MonoBehaviour
 
         NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(relayServerData);
         
-        NetworkManager.Singleton.StartCilent();
+        NetworkManager.Singleton.StartClient();
         }catch(RelayServiceException e){
             Debug.Log(e);
         }

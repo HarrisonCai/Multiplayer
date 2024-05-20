@@ -67,6 +67,9 @@ public class StorageHouse : NetworkBehaviour
     public void ChangeCornValServerRpc(int val)
     {
         corn.Value += val;
+        if (corn.Value < 0) {
+            corn.Value = 0;
+        }
     }
     public ulong ClientID
     {

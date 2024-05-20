@@ -58,6 +58,11 @@ public class ScytheHitbox : NetworkBehaviour
             player.gameObject.GetComponent<Health>().SetFinalHitServerRpc(OwnerClientId);
             Debug.Log(OwnerClientId);
         }
+        if(!Objs.Contains(collision) && collision.gameObject.CompareTag("Storage") && collision.gameObject.GetComponent<StorageHouse>().ClientID != OwnerClientId)
+        {
+            Objs.Add(collision);
+            collision.gameObject.GetComponent<StorageHouse>().ChangeCornValServerRpc(-5);
+        }
     }
     
 }
