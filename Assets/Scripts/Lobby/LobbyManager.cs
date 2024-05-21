@@ -9,6 +9,7 @@ using Unity.Services.Lobbies;
 using Unity.Services.Lobbies.Models;
 using UnityEngine.SceneManagement;
 using Unity.Netcode;
+using System;
 
 public class LobbyManager : MonoBehaviour
 {
@@ -51,7 +52,8 @@ public class LobbyManager : MonoBehaviour
 
     private Lobby currentLobby;
     public const string KEY_START_GAME = "Start";
-
+    
+    public event EventHandler<EventArgs> OnGameStarted;
 
     private string playerId;
     // Start is called before the first frame update

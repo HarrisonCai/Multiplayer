@@ -12,6 +12,11 @@ using Unity.Networking.Transport.Relay;
 using System.Threading.Tasks;
 public class TestRelay : MonoBehaviour
 {
+    public static TestRelay Instance { get; private set; }
+    private void Awake()
+    {
+        Instance = this;
+    }
     private async void Start(){
         await UnityServices.InitializeAsync();
         AuthenticationService.Instance.SignedIn += () =>
@@ -21,7 +26,7 @@ public class TestRelay : MonoBehaviour
         await AuthenticationService.Instance.SignInAnonymouslyAsync();
     }
 
-    private async Task<string> CreateRelay(){
+    public async Task<string> CreateRelay(){
         try{
             Allocation allocation = await RelayService.Instance.CreateAllocationAsync(3);
 
@@ -37,7 +42,7 @@ public class TestRelay : MonoBehaviour
             return null;
         }
     }
-    private async void JoinRelay(string joinCode){
+    public async void JoinRelay(string joinCode){
         try{
         JoinAllocation joinAllocation = await RelayService.Instance.JoinAllocationAsync(joinCode);
         RelayServerData relayServerData = new RelayServerData(joinAllocation, "dtls");

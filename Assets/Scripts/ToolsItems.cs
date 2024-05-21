@@ -11,7 +11,7 @@ public class ToolsItems : NetworkBehaviour
     [SerializeField] private GameObject plantGuide, goldGuide, shopGuide, storeGuide;
     [SerializeField] private GameObject TomatoGunButton, SharpeningButton, GoldenCornBagButton,CornBagImage,GoldenCornbagImage, TomatoGunImage;
     [SerializeField] private GameObject shopCan;
-    [SerializeField] private TextMeshProUGUI cornTextVal, goldTextVal, seedText, goldSeedText, tomatoText, healthPotText, goldCornBagText, turretText, cornadeText;
+    [SerializeField] private TextMeshProUGUI cornTextVal, goldTextVal, seedText, goldSeedText, tomatoText, healthPotText, goldCornBagText, turretText, cornadeText, bearText;
     [SerializeField] private Health hp;
     [SerializeField] private RectTransform hotBarIndex, seedArrowIndex, swapButton;
     private NetworkVariable<int> corn= new NetworkVariable<int>(0,NetworkVariableReadPermission.Everyone,NetworkVariableWritePermission.Owner);
@@ -161,6 +161,7 @@ public class ToolsItems : NetworkBehaviour
         goldCornBagText.text = "" + corn.Value + "/" + maxCorn;
         turretText.text = "" + turret;
         cornadeText.text = "" + cornade;
+        bearText.text = "" + bearTrap;
         //SHOPPING
         if (shop && !shoppingState && Input.GetKeyDown(KeyCode.E))
         {
@@ -324,9 +325,9 @@ public class ToolsItems : NetworkBehaviour
             hp.ChangeHPServerRpc(-20);
         }
         //BEAR TRAP CODE
-        if ( /* bearTrap>0 && */Input.GetKeyDown(KeyCode.R)){
+        if (  bearTrap>0 && Input.GetKeyDown(KeyCode.R)){
             PlaceBearTrapServerRpc();
-            //bearTrap--;
+            bearTrap--;
         }
         //DEV CHEATS DELETE LATER U BOZO
         if (Input.GetKeyDown(KeyCode.F))
@@ -829,5 +830,13 @@ public class ToolsItems : NetworkBehaviour
     {
         get { return cornPot; }
         set { cornPot = value; }
+    }
+    public void AddBearTrap()
+    {
+        if (gold.Value >= 3)
+        {
+            gold.Value -= 3;
+            bearTrap++;
+        }
     }
 }
