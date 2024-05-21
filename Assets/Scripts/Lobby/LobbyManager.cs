@@ -454,7 +454,7 @@ public class LobbyManager : MonoBehaviour
 
     private void EnterGame()
     {
-        if (IsHost())
+        /*if (IsHost())
         {
 
             HostStore.isHost = true;
@@ -462,7 +462,7 @@ public class LobbyManager : MonoBehaviour
         else
         {
             HostStore.isHost = false;
-        }
+        }*/
         SceneManager.LoadScene("MainGame");
         
     }

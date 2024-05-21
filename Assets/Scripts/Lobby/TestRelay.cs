@@ -9,7 +9,7 @@ using Unity.Services.Relay.Models;
 using System.Threading.Tasks;
 using Unity.Netcode.Transports.UTP;
 using Unity.Networking.Transport.Relay;
-using System.Threading.Tasks;
+
 public class TestRelay : MonoBehaviour
 {
     public static TestRelay Instance { get; private set; }
