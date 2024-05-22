@@ -9,6 +9,7 @@ using Unity.Services.Relay.Models;
 using System.Threading.Tasks;
 using Unity.Netcode.Transports.UTP;
 using Unity.Networking.Transport.Relay;
+using UnityEngine.SceneManagement;
 
 public class TestRelay : MonoBehaviour
 {
@@ -17,14 +18,14 @@ public class TestRelay : MonoBehaviour
     {
         Instance = this;
     }
-    private async void Start(){
+    /*private async void Start(){
         await UnityServices.InitializeAsync();
         AuthenticationService.Instance.SignedIn += () =>
         {
             Debug.Log("Signed in " + AuthenticationService.Instance.PlayerId);
         };
         await AuthenticationService.Instance.SignInAnonymouslyAsync();
-    }
+    }*/
 
     public async Task<string> CreateRelay(){
         try{
@@ -34,7 +35,7 @@ public class TestRelay : MonoBehaviour
 
             RelayServerData relayServerData = new RelayServerData(allocation, "dtls");
             NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(relayServerData    );
-
+            
             NetworkManager.Singleton.StartHost();
             return joinCode;
         }catch (RelayServiceException e){
