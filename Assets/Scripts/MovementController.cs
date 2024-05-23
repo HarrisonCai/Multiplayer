@@ -45,6 +45,7 @@ public class MovementController : NetworkBehaviour
         if (Input.GetKeyDown(KeyCode.P))
         {
             Debug.Log(OwnerClientId);
+            //this comment debugs my code
         }
 
         float v = Input.GetAxis("Vertical");

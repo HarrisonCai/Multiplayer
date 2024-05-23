@@ -52,7 +52,9 @@ public class EditPlayerName : MonoBehaviour {
     }
 
     private void EditPlayerName_OnNameChanged(object sender, EventArgs e) {
-        LobbyManager.Instance.UpdatePlayerName(GetPlayerName());
+        playerName = GetPlayerName().Replace(" ","_");
+        
+        LobbyManager.Instance.UpdatePlayerName(playerName);
     }
 
     public string GetPlayerName() {
