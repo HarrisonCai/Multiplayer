@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Unity.Netcode;
+using JetBrains.Annotations;
+using UnityEditor;
+using TMPro;
 
 public class MovementController : NetworkBehaviour
 {
@@ -13,6 +16,8 @@ public class MovementController : NetworkBehaviour
     [SerializeField] private ToolsItems tools;
     [SerializeField] private GameObject playerUI;
     [SerializeField] private Animator animator;
+    private bool placeholder = true;
+    private NetworkVariable<bool> trapped = new NetworkVariable<bool>(false,NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
     // Start is called before the first frame update
     void Start()
     {
@@ -25,6 +30,7 @@ public class MovementController : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
+
         if (IsOwner && hp.Dead)
         {
             speed = Vector2.zero;
@@ -36,7 +42,11 @@ public class MovementController : NetworkBehaviour
             return;
         }
         //----------------------------
-
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            Debug.Log(OwnerClientId);
+            //this comment debugs my code
+        }
 
         float v = Input.GetAxis("Vertical");
         float h = Input.GetAxis("Horizontal");
@@ -58,9 +68,13 @@ public class MovementController : NetworkBehaviour
         {
             speed *= 0.33f;
         }
-        if (tools.PlantingState || tools.ShovelingState || tools.ShoppingState)
+        if (tools.PlantingState || tools.ShovelingState || tools.ShoppingState || trapped.Value)
         {
             speed = Vector2.zero;
+        }
+        if (tools.CornPot)
+        {
+            speed *= 1.2f;
         }
         animator.SetFloat("v", speed.y);
         animator.SetFloat("h", speed.x);
@@ -73,8 +87,22 @@ public class MovementController : NetworkBehaviour
             animator.SetFloat("h", 0);
         }
         rb.velocity = speed * multiplier;
-        
-        
+
+        if (trapped.Value && placeholder)
+        {
+            placeholder = false;
+            Invoke(nameof(unTrap), 10);
+        }
     }
     
+    private void unTrap()
+    {
+        trapStateServerRpc(false);
+        placeholder = true;
+    }
+    [ServerRpc (RequireOwnership=false)]
+    public void trapStateServerRpc(bool val)
+    {
+        trapped.Value = val;
+    }
 }

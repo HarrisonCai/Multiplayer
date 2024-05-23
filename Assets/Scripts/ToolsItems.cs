@@ -4,13 +4,14 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using Unity.Netcode;
+using UnityEditor;
 public class ToolsItems : NetworkBehaviour
 {
     [SerializeField] private Camera cam;
     [SerializeField] private GameObject plantGuide, goldGuide, shopGuide, storeGuide;
     [SerializeField] private GameObject TomatoGunButton, SharpeningButton, GoldenCornBagButton,CornBagImage,GoldenCornbagImage, TomatoGunImage;
     [SerializeField] private GameObject shopCan;
-    [SerializeField] private TextMeshProUGUI cornTextVal, goldTextVal, seedText, goldSeedText, tomatoText, healthPotText, goldCornBagText, turretText;
+    [SerializeField] private TextMeshProUGUI cornTextVal, goldTextVal, seedText, goldSeedText, tomatoText, healthPotText, goldCornBagText, turretText, cornadeText, bearText;
     [SerializeField] private Health hp;
     [SerializeField] private RectTransform hotBarIndex, seedArrowIndex, swapButton;
     private NetworkVariable<int> corn= new NetworkVariable<int>(0,NetworkVariableReadPermission.Everyone,NetworkVariableWritePermission.Owner);
@@ -78,10 +79,11 @@ public class ToolsItems : NetworkBehaviour
 
     private bool shoppingState;
     private bool shop;
-
+    private bool cornPot;
     private bool move;
 
-    [SerializeField] private GameObject turretPrefab, cornadePrefab;
+    [SerializeField] private GameObject turretPrefab, cornadePrefab, bearTrapPrefab;
+    private float bearTrap = 0;
     private NetworkObject instanceNetworkObject;
     
     void Start()
@@ -158,6 +160,8 @@ public class ToolsItems : NetworkBehaviour
         healthPotText.text = "" + healthPot;
         goldCornBagText.text = "" + corn.Value + "/" + maxCorn;
         turretText.text = "" + turret;
+        cornadeText.text = "" + cornade;
+        bearText.text = "" + bearTrap;
         //SHOPPING
         if (shop && !shoppingState && Input.GetKeyDown(KeyCode.E))
         {
@@ -281,9 +285,9 @@ public class ToolsItems : NetworkBehaviour
         }
         //CORN GRENADE CODE
         cornadeTimer -= Time.deltaTime;
-        if (cornadeTimer <= 0 && CornadeItem.Value /*&& cornade>0*/ && Input.GetMouseButtonDown(0) && cornadeInstance==null)
+        if (cornadeTimer <= 0 && CornadeItem.Value && cornade>0 && Input.GetMouseButtonDown(0) && cornadeInstance==null)
         {
-            //cornade--;
+            cornade--;
             ThrowCornadeServerRpc();
             cornadeTimer = 0.3f;
             //intialize grenade instaance and track position
@@ -320,7 +324,16 @@ public class ToolsItems : NetworkBehaviour
             healthPot--;
             hp.ChangeHPServerRpc(-20);
         }
-        
+        //BEAR TRAP CODE
+        if (  bearTrap>0 && Input.GetKeyDown(KeyCode.R)){
+            PlaceBearTrapServerRpc();
+            bearTrap--;
+        }
+        //DEV CHEATS DELETE LATER U BOZO
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            gold.Value++;
+        }
   
     }
 
@@ -350,7 +363,13 @@ public class ToolsItems : NetworkBehaviour
         cornadeInstance.gameObject.GetComponent<CornadeActive>().Player = this.gameObject;
         //cornadeInstance.gameObject.GetComponent<Rigidbody2D>().velocity += (Vector2)transform.right * 2;
     }
-    
+    [ServerRpc(RequireOwnership = false)]
+    private void PlaceBearTrapServerRpc()
+    {
+        instanceNetworkObject = Instantiate(bearTrapPrefab, transform.position, this.transform.rotation).GetComponent<NetworkObject>();
+        instanceNetworkObject.SpawnWithOwnership(OwnerClientId);
+
+    }
     [ServerRpc(RequireOwnership =false)]
     private void ChangePlantStateServerRpc(bool state)
     {
@@ -779,6 +798,15 @@ public class ToolsItems : NetworkBehaviour
             gold.Value += 1;
         }
     }
+    public void AddCornade()
+    {
+        if(corn.Value >= 3 && gold.Value>=3)
+        {
+            corn.Value -= 3;
+            gold.Value -= 3;
+            cornade++;
+        }
+    }
     [ServerRpc(RequireOwnership = false)]
     public void CornGoldAddServerRpc(int val, int val2)
     {
@@ -790,6 +818,25 @@ public class ToolsItems : NetworkBehaviour
         Corn += val;
         Gold += val2;
     }
-
-    
+    public void OneWithTheCorn()
+    {
+        if (gold.Value >= 4)
+        {
+           gold.Value -= 4;
+            cornPot = true;
+        }
+    }
+    public bool CornPot
+    {
+        get { return cornPot; }
+        set { cornPot = value; }
+    }
+    public void AddBearTrap()
+    {
+        if (gold.Value >= 3)
+        {
+            gold.Value -= 3;
+            bearTrap++;
+        }
+    }
 }

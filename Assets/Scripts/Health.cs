@@ -79,7 +79,7 @@ public class Health : NetworkBehaviour
         {
             SetDeadServerRpc(true);
             timer = respawnTimer;
-            
+            cornGold.CornPot = false;
             if (lastHitPlayer.Value != 666)
             {
                 Debug.Log("sent id");
