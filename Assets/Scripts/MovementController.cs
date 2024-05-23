@@ -16,6 +16,7 @@ public class MovementController : NetworkBehaviour
     [SerializeField] private ToolsItems tools;
     [SerializeField] private GameObject playerUI;
     [SerializeField] private Animator animator;
+    [SerializeField] private TextMeshProUGUI clienttext;
     private bool placeholder = true;
     private NetworkVariable<bool> trapped = new NetworkVariable<bool>(false,NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
     // Start is called before the first frame update
@@ -42,11 +43,7 @@ public class MovementController : NetworkBehaviour
             return;
         }
         //----------------------------
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            Debug.Log(OwnerClientId);
-            //this comment debugs my code
-        }
+        clienttext.text = ""+OwnerClientId;
 
         float v = Input.GetAxis("Vertical");
         float h = Input.GetAxis("Horizontal");

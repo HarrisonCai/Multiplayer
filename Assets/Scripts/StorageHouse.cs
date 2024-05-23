@@ -49,9 +49,9 @@ public class StorageHouse : NetworkBehaviour
         if (!IsServer) { return; }
         if (collision.gameObject.CompareTag("Player")&& collision.gameObject.GetComponent<NetworkObject>().OwnerClientId==clientID)
         {
-            
+            Debug.Log("PlayerStorage");
             player = collision;
-            collision.gameObject.GetComponent<ToolsItems>().StoragHouse=true;
+            collision.gameObject.GetComponent<ToolsItems>().SetStorageHouseServerRpc(true);
         }
     }
     private void OnTriggerExit2D(Collider2D collision)
@@ -60,7 +60,7 @@ public class StorageHouse : NetworkBehaviour
         if (collision.gameObject.CompareTag("Player") && collision.gameObject.GetComponent<NetworkObject>().OwnerClientId == clientID)
         {
             player = collision;
-            collision.gameObject.GetComponent<ToolsItems>().StoragHouse = false;
+            collision.gameObject.GetComponent<ToolsItems>().SetStorageHouseServerRpc(false);
         }
     }
     [ServerRpc(RequireOwnership =false)]

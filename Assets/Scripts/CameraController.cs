@@ -6,7 +6,7 @@ using Cinemachine;
 public class CameraController : NetworkBehaviour
 {
     [SerializeField] private CinemachineVirtualCamera vc;
-    [SerializeField] private AudioListener listener;
+    [SerializeField] private GameObject listener;
     [SerializeField] private Health hp;
     [SerializeField] private Vector3 deathPosition;
     [SerializeField] private GameObject cameraHolder;
@@ -19,7 +19,7 @@ public class CameraController : NetworkBehaviour
     {
         if (IsOwner)
         {
-            listener.enabled = true;
+            listener.SetActive(true);
             
                 vc.Priority = 1;
             
@@ -28,7 +28,7 @@ public class CameraController : NetworkBehaviour
         else
         {
             vc.Priority = 0;
-            listener.enabled = false;
+            listener.SetActive(false);
         }
     }
     

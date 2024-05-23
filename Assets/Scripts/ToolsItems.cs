@@ -71,7 +71,7 @@ public class ToolsItems : NetworkBehaviour
     private float shovelTimer;
     private NetworkVariable<bool> shovelingState = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
 
-    private bool storageHouse;
+    private NetworkVariable<bool> storageHouse = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
     private NetworkVariable<bool> storageState = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
     [SerializeField] private float resetStorage;
     private float storageTimer;
@@ -184,7 +184,7 @@ public class ToolsItems : NetworkBehaviour
         SwitchTool();
         plantGuide.SetActive(planting);
         goldGuide.SetActive(mining);
-        storeGuide.SetActive(storageHouse);
+        storeGuide.SetActive(storageHouse.Value);
         
         //Scythe Code
         
@@ -300,7 +300,7 @@ public class ToolsItems : NetworkBehaviour
             cornadeInstance = null;
         }
         //STORAGE
-        if (storageHouse && corn.Value > 0 && Input.GetMouseButton(0))
+        if (storageHouse.Value && corn.Value > 0 && Input.GetMouseButton(0))
         {
             storageTimer -= Time.deltaTime;
             
@@ -686,10 +686,14 @@ public class ToolsItems : NetworkBehaviour
         get { return shovelingState.Value; }
     }
     
+    [ServerRpc(RequireOwnership =false)]
+    public void SetStorageHouseServerRpc(bool val)
+    {
+        storageHouse.Value = val;
+    }
     public bool StoragHouse
     {
-        get { return storageHouse; }
-        set { storageHouse = value; }
+        get { return storageHouse.Value; }
     }
     public bool Stored
     {

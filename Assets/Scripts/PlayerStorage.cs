@@ -9,7 +9,7 @@ public class PlayerStorage : NetworkBehaviour
 {
     [SerializeField] private GameObject textObj;
     [SerializeField] private TextMeshProUGUI text;
-    private ToolsItems player0, player1, player2, player3;
+    [SerializeField]private ToolsItems player0, player1, player2, player3;
     private NetworkVariable<bool> gameOver = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
     private void OnTriggerStay2D(Collider2D collision)
     {
