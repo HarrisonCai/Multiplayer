@@ -30,6 +30,7 @@ public class MovementController : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
+
         if (IsOwner && hp.Dead)
         {
             speed = Vector2.zero;
@@ -41,7 +42,10 @@ public class MovementController : NetworkBehaviour
             return;
         }
         //----------------------------
-
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            Debug.Log(OwnerClientId);
+        }
 
         float v = Input.GetAxis("Vertical");
         float h = Input.GetAxis("Horizontal");

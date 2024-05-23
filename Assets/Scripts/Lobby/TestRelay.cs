@@ -18,6 +18,7 @@ public class TestRelay : MonoBehaviour
     {
         Instance = this;
     }
+    [SerializeField] private GameObject canvas;
     /*private async void Start(){
         await UnityServices.InitializeAsync();
         AuthenticationService.Instance.SignedIn += () =>
@@ -35,7 +36,7 @@ public class TestRelay : MonoBehaviour
 
             RelayServerData relayServerData = new RelayServerData(allocation, "dtls");
             NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(relayServerData    );
-            
+            canvas.SetActive(false);
             NetworkManager.Singleton.StartHost();
             return joinCode;
         }catch (RelayServiceException e){
@@ -49,7 +50,7 @@ public class TestRelay : MonoBehaviour
         RelayServerData relayServerData = new RelayServerData(joinAllocation, "dtls");
 
         NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(relayServerData);
-        
+            canvas.SetActive(false);
         NetworkManager.Singleton.StartClient();
         }catch(RelayServiceException e){
             Debug.Log(e);

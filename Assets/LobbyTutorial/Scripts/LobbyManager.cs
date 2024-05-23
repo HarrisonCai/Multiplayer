@@ -284,7 +284,7 @@ public class LobbyManager : MonoBehaviour {
 
     public async void UpdatePlayerName(string playerName) {
         this.playerName = playerName;
-
+        PlayerPrefs.SetString("Name", playerName);
         if (joinedLobby != null) {
             try {
                 UpdatePlayerOptions options = new UpdatePlayerOptions();
