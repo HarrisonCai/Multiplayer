@@ -17,7 +17,7 @@ public class Health : NetworkBehaviour
     [SerializeField] private ToolsItems cornGold;
     private NetworkVariable<ulong> lastHitPlayer= new NetworkVariable<ulong>(666,NetworkVariableReadPermission.Everyone,NetworkVariableWritePermission.Server);
     private PlayerStorage stor;
-
+    [SerializeField] private float invincibilityFrames;
     [SerializeField] private Vector3 spawnPoint0, spawnPoint1, spawnPoint2, spawnPoint3, voidZone;
     
     void Start()
