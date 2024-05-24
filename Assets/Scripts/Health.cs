@@ -18,6 +18,7 @@ public class Health : NetworkBehaviour
     private NetworkVariable<ulong> lastHitPlayer= new NetworkVariable<ulong>(666,NetworkVariableReadPermission.Everyone,NetworkVariableWritePermission.Server);
     private PlayerStorage stor;
     [SerializeField] private float invincibilityFrames;
+    private NetworkVariable<float> invincibiltiyTimer = new NetworkVariable<float>(0,NetworkVariableReadPermission.Everyone,NetworkVariableWritePermission.Owner);
     [SerializeField] private Vector3 spawnPoint0, spawnPoint1, spawnPoint2, spawnPoint3, voidZone;
     
     void Start()
@@ -60,6 +61,7 @@ public class Health : NetworkBehaviour
         
         if (!IsOwner||IsTurret) { return; }
         timer -= Time.deltaTime;
+        invincibiltiyTimer.Value-= Time.deltaTime;
         
         if (dead.Value)
         {
@@ -98,6 +100,7 @@ public class Health : NetworkBehaviour
 
             SetHPFullServerRpc();
             SetDeadServerRpc(false);
+            invincibiltiyTimer.Value = invincibilityFrames;
             Debug.Log("Failed");
             Debug.Log(dead.Value);
             SetFinalHitServerRpc(666);
@@ -123,7 +126,10 @@ public class Health : NetworkBehaviour
     [ServerRpc(RequireOwnership =false)]
     public void ChangeHPServerRpc(float val)
     {
-        hp.Value -= val;
+        if (invincibiltiyTimer.Value <= 0)
+        {
+            hp.Value -= val;
+        }
     }
     
     public float HP
