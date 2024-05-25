@@ -15,7 +15,7 @@ public class ToolsItems : NetworkBehaviour
     [SerializeField] private Health hp;
     [SerializeField] private RectTransform hotBarIndex, seedArrowIndex, swapButton;
     private NetworkVariable<int> corn= new NetworkVariable<int>(0,NetworkVariableReadPermission.Everyone,NetworkVariableWritePermission.Owner);
-    private int maxCorn = 30;
+    private int maxCorn = 60;
     private NetworkVariable<int> gold= new NetworkVariable<int>(0,NetworkVariableReadPermission.Everyone,NetworkVariableWritePermission.Owner);
     private int seeds=5;
     private int goldSeeds=0;
@@ -26,7 +26,7 @@ public class ToolsItems : NetworkBehaviour
     private float cornadeTimer = 0;
     public NetworkObject cornadeInstance = null;
     private bool hasTomatoGun = false;
-    private NetworkVariable<float> damage = new NetworkVariable<float>(20, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+    private NetworkVariable<float> damage = new NetworkVariable<float>(10, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
 
 
     private int tomato = 0;
@@ -85,7 +85,24 @@ public class ToolsItems : NetworkBehaviour
     [SerializeField] private GameObject turretPrefab, cornadePrefab, bearTrapPrefab;
     private float bearTrap = 0;
     private NetworkObject instanceNetworkObject;
-    
+
+    private bool AntiCCP;
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (!IsOwner) { return; }
+        if (collision.gameObject.CompareTag("Anti-CCP"))
+        {
+            AntiCCP = true;
+        }
+    }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (!IsOwner) { return; }
+        if (collision.gameObject.CompareTag("Anti-CCP"))
+        {
+            AntiCCP = false;
+        }
+    }
     void Start()
     {
         miningTimer = resetMiningTime;
@@ -148,11 +165,11 @@ public class ToolsItems : NetworkBehaviour
         {
             corn.Value = maxCorn;
         }
-        if (maxCorn == 30 && cornBag)
+        if (maxCorn == 60 && cornBag)
         {
             GoldenCornbagImage.SetActive(true);
             CornBagImage.SetActive(false);
-            maxCorn = 60;
+            maxCorn = 120;
         }
         seedText.text = ""+seeds;
         goldSeedText.text = "" + goldSeeds;
@@ -194,8 +211,8 @@ public class ToolsItems : NetworkBehaviour
         {
             swinging.Value = true;
             canSwing = false;
-            swingTimer = 0.3f;
-            resetswingTimer = 1.1f;
+            swingTimer = 0.1f;
+            resetswingTimer = 0.5f;
         }
         if (swingTimer <= 0)
         {
@@ -276,7 +293,7 @@ public class ToolsItems : NetworkBehaviour
 
         }
         //TURRET PLACING CODE
-        if (turret>0 && Input.GetKeyDown(KeyCode.Z))
+        if (!AntiCCP && turret>0 && Input.GetKeyDown(KeyCode.Z))
         {
             turret--;
             
@@ -325,7 +342,7 @@ public class ToolsItems : NetworkBehaviour
             hp.ChangeHPServerRpc(-20);
         }
         //BEAR TRAP CODE
-        if (  bearTrap>0 && Input.GetKeyDown(KeyCode.R)){
+        if (  !AntiCCP && bearTrap>0 && Input.GetKeyDown(KeyCode.R)){
             PlaceBearTrapServerRpc();
             bearTrap--;
         }
@@ -757,7 +774,7 @@ public class ToolsItems : NetworkBehaviour
         if (gold.Value >= 20)
         {
             gold.Value -= 20;
-            damage.Value=32;
+            damage.Value=20;
             SharpeningButton.SetActive(false);
         }
     }

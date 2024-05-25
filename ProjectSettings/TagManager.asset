@@ -8,6 +8,7 @@ TagManager:
   - PlantingUnit
   - Villager
   - Storage
+  - Anti-CCP
   layers:
   - Default
   - TransparentFX

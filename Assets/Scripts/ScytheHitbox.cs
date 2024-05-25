@@ -41,7 +41,11 @@ public class ScytheHitbox : NetworkBehaviour
             {
                 scytheState.Corn += 15;
                 scytheState.GoldenSeeds++;
-
+                float randomNum = Random.Range(0, 1);
+                if (randomNum < 0.05)
+                {
+                    scytheState.Gold++;
+                }
                 
             }
             
