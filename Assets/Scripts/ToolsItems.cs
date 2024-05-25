@@ -296,7 +296,7 @@ public class ToolsItems : NetworkBehaviour
         {
             cornadeInstance.gameObject.GetComponent<CornadeActive>().LaunchedServerRpc(true);
             Vector2 distance = transform.position - cam.ScreenToWorldPoint(Input.mousePosition);
-            cornadeInstance.gameObject.GetComponent<CornadeActive>().Dist = distance;
+            cornadeInstance.gameObject.GetComponent<CornadeActive>().setDistanceClientRpc(distance.x,distance.y);
             cornadeInstance = null;
         }
         //STORAGE

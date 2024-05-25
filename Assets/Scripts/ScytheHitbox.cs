@@ -61,7 +61,7 @@ public class ScytheHitbox : NetworkBehaviour
         if(!Objs.Contains(collision) && collision.gameObject.CompareTag("Storage") && collision.gameObject.GetComponent<StorageHouse>().ClientID != OwnerClientId)
         {
             Objs.Add(collision);
-            collision.gameObject.GetComponent<StorageHouse>().ChangeCornValServerRpc(-5);
+            collision.gameObject.GetComponent<StorageHouse>().ChangeCornValServerRpc(-3);
         }
     }
     
