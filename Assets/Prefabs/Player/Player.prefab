@@ -6461,7 +6461,7 @@ MonoBehaviour:
     m_NumAlphaKeys: 2
   scytheObj: {fileID: 810671849106159920}
   tomatoGunObj: {fileID: 4860580188546178022}
-  resetShovelTimer: 2
+  resetShovelTimer: 1
   resetStorage: 4
   turretPrefab: {fileID: 2248011381813155976, guid: 13a62f3e7530a3842a5e8d7303b80815, type: 3}
   cornadePrefab: {fileID: 11713074037935854, guid: 5d97258b260b0ed43a24fa2d7baee513, type: 3}
