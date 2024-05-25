@@ -83,6 +83,11 @@ public class CornadeActive : NetworkBehaviour
     public Vector2 Dist
     {
         get { return distance; }
-        set { distance = value; }
+        set { distance = value;}
+    }
+    [ClientRpc(RequireOwnership =false)]
+    public void setDistanceClientRpc(float x, float y)
+    {
+        distance = new Vector2(x, y);
     }
 }
