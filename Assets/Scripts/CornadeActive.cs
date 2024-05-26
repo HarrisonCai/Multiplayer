@@ -10,6 +10,7 @@ public class CornadeActive : NetworkBehaviour
     [SerializeField] private float timer;
     [SerializeField] private GameObject explosion, shrapnel, player;
     [SerializeField] private float accel;
+    
     private float velocity;
     private NetworkObject networkObjPlaceholder;
     private bool no = false;
@@ -19,13 +20,14 @@ public class CornadeActive : NetworkBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        player = GameObject.Find("PlayerStorageData").GetComponent<PlayerStorage>().playerIdentify(OwnerClientId).gameObject;
         if (!IsOwner) return;
         Invoke(nameof(TimedDestroy), timer);
         //something
     }
     private void Update()
     {
-        Debug.Log(Dist +"/" + velocity);
+        
         if (!IsOwner) return;
         
         if (!launched.Value)

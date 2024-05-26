@@ -92,4 +92,24 @@ public class PlayerStorage : NetworkBehaviour
     {
         get { return gameOver.Value; }
     }
+    public ToolsItems playerIdentify(ulong id)
+    {
+        if (id == 0)
+        {
+            return player0;
+        }
+        if (id == 1)
+        {
+            return player1;
+        }
+        if (id == 2)
+        {
+            return player2;
+        }
+        if (id == 3)
+        {
+            return player3;
+        }
+        return null;
+    }
 }

@@ -7,6 +7,7 @@ using Unity.Netcode;
 using UnityEditor;
 public class ToolsItems : NetworkBehaviour
 {
+    [SerializeField] private GameObject ItemCounts;
     [SerializeField] private Camera cam;
     [SerializeField] private GameObject plantGuide, goldGuide, shopGuide, storeGuide;
     [SerializeField] private GameObject TomatoGunButton, SharpeningButton, GoldenCornBagButton,CornBagImage,GoldenCornbagImage, TomatoGunImage;
@@ -199,6 +200,7 @@ public class ToolsItems : NetworkBehaviour
         }
         if (shoppingState) { return; }
         SwitchTool();
+        ItemCounts.SetActive(Input.GetKey(KeyCode.Tab));
         plantGuide.SetActive(planting);
         goldGuide.SetActive(mining);
         storeGuide.SetActive(storageHouse.Value);
@@ -224,33 +226,17 @@ public class ToolsItems : NetworkBehaviour
         }
         //PLANTING CODE
         
-        if (!unitPlanted && seed.Value && seeds > 0 && planting && Input.GetKey(KeyCode.X))
-        {
-            plantingTimer -= Time.deltaTime;
-
-            ChangePlantStateServerRpc(true);
-        }
-
-        else if (!unitPlanted && goldSeed.Value && goldSeeds > 0 && planting && Input.GetKey(KeyCode.X))
-        {
-            plantingTimer -= Time.deltaTime;
-
-            ChangePlantStateServerRpc(true);
-
-        }
-        else
-        {
-            plantingTimer = resetPlanting;
-
-            ChangePlantStateServerRpc(false);
-        }
-        
-        if (plantingTimer <= 0)
+        if (!unitPlanted && seed.Value && seeds > 0 && planting && Input.GetKeyDown(KeyCode.X))
         {
             donePlanting = true;
-            plantingTimer = resetPlanting;
-            
         }
+
+        else if (!unitPlanted && goldSeed.Value && goldSeeds > 0 && planting && Input.GetKeyDown(KeyCode.X))
+        {
+            donePlanting = true;
+
+        }
+        
 
         //PICKAXE CODE
 
@@ -302,11 +288,13 @@ public class ToolsItems : NetworkBehaviour
         }
         //CORN GRENADE CODE
         cornadeTimer -= Time.deltaTime;
+        Debug.Log(cornadeInstance);
         if (cornadeTimer <= 0 && CornadeItem.Value && cornade>0 && Input.GetMouseButtonDown(0) && cornadeInstance==null)
         {
             cornade--;
             ThrowCornadeServerRpc();
             cornadeTimer = 0.3f;
+            
             //intialize grenade instaance and track position
         }
         if(Input.GetMouseButtonUp(0) && cornadeInstance != null)
@@ -314,6 +302,7 @@ public class ToolsItems : NetworkBehaviour
             cornadeInstance.gameObject.GetComponent<CornadeActive>().LaunchedServerRpc(true);
             Vector2 distance = transform.position - cam.ScreenToWorldPoint(Input.mousePosition);
             cornadeInstance.gameObject.GetComponent<CornadeActive>().setDistanceClientRpc(distance.x,distance.y);
+            Debug.Log(distance);
             cornadeInstance = null;
         }
         //STORAGE
@@ -350,6 +339,7 @@ public class ToolsItems : NetworkBehaviour
         if (Input.GetKeyDown(KeyCode.F))
         {
             gold.Value++;
+            corn.Value++;
         }
   
     }
@@ -377,7 +367,8 @@ public class ToolsItems : NetworkBehaviour
     {
         cornadeInstance = Instantiate(cornadePrefab, transform.position, this.transform.rotation).GetComponent<NetworkObject>();
         cornadeInstance.SpawnWithOwnership(OwnerClientId);
-        cornadeInstance.gameObject.GetComponent<CornadeActive>().Player = this.gameObject;
+        cornadeInstance.gameObject.GetComponent<CornadeActive>().LaunchedServerRpc(true);
+        //cornadeInstance.gameObject.GetComponent<CornadeActive>().Player = this.gameObject;
         //cornadeInstance.gameObject.GetComponent<Rigidbody2D>().velocity += (Vector2)transform.right * 2;
     }
     [ServerRpc(RequireOwnership = false)]
