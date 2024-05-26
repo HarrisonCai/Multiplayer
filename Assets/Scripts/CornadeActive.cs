@@ -19,14 +19,14 @@ public class CornadeActive : NetworkBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (!IsServer) return;
+        if (!IsOwner) return;
         Invoke(nameof(TimedDestroy), timer);
         //something
     }
     private void Update()
     {
         Debug.Log(Dist +"/" + velocity);
-        if (!IsServer) return;
+        if (!IsOwner) return;
         
         if (!launched.Value)
         {
