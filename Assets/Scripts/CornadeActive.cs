@@ -82,6 +82,10 @@ public class CornadeActive : NetworkBehaviour
     {
         launched.Value = val;
     }
+    public bool Launched
+    {
+        get { return launched.Value; }
+    }
     public Vector2 Dist
     {
         get { return distance; }

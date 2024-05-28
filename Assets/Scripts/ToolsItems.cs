@@ -288,7 +288,7 @@ public class ToolsItems : NetworkBehaviour
         }
         //CORN GRENADE CODE
         cornadeTimer -= Time.deltaTime;
-        Debug.Log(cornadeInstance);
+        
         if (cornadeTimer <= 0 && CornadeItem.Value && cornade>0 && Input.GetMouseButtonDown(0) && cornadeInstance==null)
         {
             cornade--;
@@ -299,12 +299,9 @@ public class ToolsItems : NetworkBehaviour
         }
         if(Input.GetMouseButtonUp(0) && cornadeInstance != null)
         {
-            cornadeInstance.gameObject.GetComponent<CornadeActive>().LaunchedServerRpc(true);
-            Vector2 distance = transform.position - cam.ScreenToWorldPoint(Input.mousePosition);
-            cornadeInstance.gameObject.GetComponent<CornadeActive>().setDistanceClientRpc(distance.x,distance.y);
-            Debug.Log(distance);
-            cornadeInstance = null;
+            LaunchGrenadeServerRpc();
         }
+        
         //STORAGE
         if (storageHouse.Value && corn.Value > 0 && Input.GetMouseButton(0))
         {
@@ -345,6 +342,16 @@ public class ToolsItems : NetworkBehaviour
     }
 
     //=======================================================================================================================]
+    [ServerRpc(RequireOwnership =false)]
+    public void LaunchGrenadeServerRpc()
+    {
+        Debug.Log("yeet");
+        Vector2 distance = transform.position - cam.ScreenToWorldPoint(Input.mousePosition);
+        cornadeInstance.gameObject.GetComponent<CornadeActive>().setDistanceClientRpc(distance.x, distance.y);
+        cornadeInstance.gameObject.GetComponent<CornadeActive>().LaunchedServerRpc(true);
+        cornadeInstance = null;
+    }
+    
     [ServerRpc(RequireOwnership=false)]
     public void ChangeStoredStateServerRpc(bool state)
     {
@@ -362,12 +369,16 @@ public class ToolsItems : NetworkBehaviour
         instanceNetworkObject.SpawnWithOwnership(OwnerClientId);
         
     }
+    private void VeryUseless()
+    {
+        cornadeInstance = null;
+    }
     [ServerRpc(RequireOwnership =false)]
     private void ThrowCornadeServerRpc()
     {
         cornadeInstance = Instantiate(cornadePrefab, transform.position, this.transform.rotation).GetComponent<NetworkObject>();
         cornadeInstance.SpawnWithOwnership(OwnerClientId);
-        cornadeInstance.gameObject.GetComponent<CornadeActive>().LaunchedServerRpc(true);
+        //cornadeInstance.gameObject.GetComponent<CornadeActive>().LaunchedServerRpc(true);
         //cornadeInstance.gameObject.GetComponent<CornadeActive>().Player = this.gameObject;
         //cornadeInstance.gameObject.GetComponent<Rigidbody2D>().velocity += (Vector2)transform.right * 2;
     }
