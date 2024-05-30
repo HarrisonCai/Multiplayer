@@ -123,7 +123,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fragCount: 8
-  timer: 5
+  timer: 2
   explosion: {fileID: 7983977383644513248, guid: eb65744d8860368429dc51735e9fe15d, type: 3}
   shrapnel: {fileID: 4851539988518858034, guid: 60cddbb448592d543b4e233a74b7fd82, type: 3}
   player: {fileID: 0}
