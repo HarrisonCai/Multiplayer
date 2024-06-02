@@ -20,11 +20,13 @@ public class BearTrap : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (timer < 0&&!IsOwner){
-            active.SetActive(false);
-        }
+        
         if (!IsServer) { return; }
-        timer-=Time.deltaTime; 
+        timer-=Time.deltaTime;
+        if (timer <= 0)
+        {
+            hideBearClientRpc();
+        }
         if (triggered.Value)
         {
             activateAnimationClientRpc();
@@ -61,6 +63,14 @@ public class BearTrap : NetworkBehaviour
     private void DestroyServerRpc()
     {
         this.NetworkObject.Despawn();
+    }
+    [ClientRpc(RequireOwnership = false)]
+    private void hideBearClientRpc()
+    {
+        if (!IsOwner)
+        {
+            active.SetActive(false);
+        }
     }
     [ClientRpc(RequireOwnership =false)]
     private void activateAnimationClientRpc()

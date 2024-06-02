@@ -4,6 +4,7 @@ using UnityEngine;
 using Unity.Netcode;
 using TMPro;
 using UnityEngine.UI;
+using Unity.VisualScripting;
 public class StorageHouse : NetworkBehaviour
 {
     [SerializeField] PlayerStorage stor;
@@ -21,11 +22,14 @@ public class StorageHouse : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
+
+
+
         
-        if(corn.Value >= 750&& !stor.GameOver && OwnerClientId==clientID)
+        if(corn.Value >= 750&& !stor.GameOver)
         {
+            stor.WinClientRpc("Player " + (clientID + 1));
             
-            stor.Win(PlayerPrefs.GetString("Name"));
         }
         cornText.text = "" + corn.Value;
         if (!IsServer) { return; }
@@ -79,4 +83,5 @@ public class StorageHouse : NetworkBehaviour
     {
         get { return corn.Value; }
     }
+    
 }

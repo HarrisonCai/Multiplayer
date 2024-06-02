@@ -58,7 +58,8 @@ public class PlayerStorage : NetworkBehaviour
             player3.CornGoldAddServerRpc(corn, gold);
         }
     }
-    public void Win(string name)
+    [ClientRpc(RequireOwnership =false)]
+    public void WinClientRpc(string name)
     {
         setGameOverServerRpc(true);
         textObj.SetActive(true);

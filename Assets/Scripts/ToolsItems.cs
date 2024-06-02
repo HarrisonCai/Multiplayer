@@ -5,8 +5,10 @@ using UnityEngine.UI;
 using TMPro;
 using Unity.Netcode;
 using UnityEditor;
+using Unity.Collections;
 public class ToolsItems : NetworkBehaviour
 {
+    [SerializeField] private PlayerStorage stor;
     [SerializeField] private GameObject ItemCounts;
     [SerializeField] private Camera cam;
     [SerializeField] private GameObject plantGuide, goldGuide, shopGuide, storeGuide;
@@ -89,7 +91,8 @@ public class ToolsItems : NetworkBehaviour
 
     private Vector2 distance;
     private bool AntiCCP;
-    
+
+   
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (!IsOwner) { return; }
@@ -108,9 +111,12 @@ public class ToolsItems : NetworkBehaviour
     }
     void Start()
     {
+        
         miningTimer = resetMiningTime;
         shovelTimer = resetShovelTimer;
         Progress.fillAmount = 0;
+        stor = GameObject.Find("PlayerStorageData").GetComponent<PlayerStorage>();
+        
     }
     
 
@@ -333,11 +339,11 @@ public class ToolsItems : NetworkBehaviour
             bearTrap--;
         }
         //DEV CHEATS DELETE LATER U BOZO
-        if (Input.GetKeyDown(KeyCode.F))
+        /*if (Input.GetKeyDown(KeyCode.F))
         {
             gold.Value++;
-            corn.Value++;
-        }
+            corn.Value+=750;
+        }*/
   
     }
 
@@ -854,4 +860,6 @@ public class ToolsItems : NetworkBehaviour
             bearTrap++;
         }
     }
+    
+
 }
