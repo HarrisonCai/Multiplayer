@@ -204,7 +204,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotspeed: 1
-  damage: 20
+  damage: 25
   bullspeed: 12
 --- !u!50 &-6303327784874884642
 Rigidbody2D:

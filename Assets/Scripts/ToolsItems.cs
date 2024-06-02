@@ -805,9 +805,9 @@ public class ToolsItems : NetworkBehaviour
     }
     public void AddTurret()
     {
-        if(gold.Value >= 5)
+        if(gold.Value >= 8)
         {
-            gold.Value -= 5;
+            gold.Value -= 8;
             turret++;
         }
     }

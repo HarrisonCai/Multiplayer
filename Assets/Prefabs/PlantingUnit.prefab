@@ -642,7 +642,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cornTimeToGrow: 10
-  goldenCornTimeToGrow: 20
+  goldenCornTimeToGrow: 10
   cornStage1: {fileID: 2576739824548456543}
   cornStage2: {fileID: 5777611274517839316}
   cornStage3: {fileID: 7408068154333654726}

@@ -6359,7 +6359,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 250134906
+  GlobalObjectIdHash: 3352964296
   InScenePlacedSourceGlobalObjectIdHash: 3352964296
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
@@ -6399,6 +6399,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c42fcb23979d3644099fed95d54e3a6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stor: {fileID: 0}
   ItemCounts: {fileID: 7139342997028303340}
   cam: {fileID: 6051345664503196537}
   plantGuide: {fileID: 6471281837061351840}
@@ -6428,7 +6429,7 @@ MonoBehaviour:
   swapButton: {fileID: 6349006214172127018}
   cornadeInstance: {fileID: 0}
   resetPlanting: 0.1
-  resetMiningTime: 3
+  resetMiningTime: 1.5
   Progress: {fileID: 2360380139885828908}
   ProgressGrad:
     serializedVersion: 2
@@ -6463,7 +6464,7 @@ MonoBehaviour:
   scytheObj: {fileID: 810671849106159920}
   tomatoGunObj: {fileID: 4860580188546178022}
   resetShovelTimer: 1
-  resetStorage: 4
+  resetStorage: 3
   turretPrefab: {fileID: 2248011381813155976, guid: 13a62f3e7530a3842a5e8d7303b80815, type: 3}
   cornadePrefab: {fileID: 11713074037935854, guid: 5d97258b260b0ed43a24fa2d7baee513, type: 3}
   bearTrapPrefab: {fileID: 2387263060099435000, guid: 54e34ce375a6bde4596b6142f81aeb28, type: 3}
@@ -6545,7 +6546,7 @@ MonoBehaviour:
   IsTurret: 0
   respawnTimer: 10
   cornGold: {fileID: 7611345650532316863}
-  invincibilityFrames: 0
+  invincibilityFrames: 4
   spawnPoint0: {x: 14.5, y: 14.5, z: 0}
   spawnPoint1: {x: -14.5, y: 14.5, z: 0}
   spawnPoint2: {x: -14.5, y: -14.5, z: 0}
@@ -10843,11 +10844,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1161603595967829800, guid: eb565c636541cc84e9c3cf579987d130, type: 3}
       propertyPath: m_Size
-      value: 0.4260079
+      value: 0.42600796
       objectReference: {fileID: 0}
     - target: {fileID: 1161603595967829800, guid: eb565c636541cc84e9c3cf579987d130, type: 3}
       propertyPath: m_Value
-      value: 0.9999999
+      value: 1.0000001
       objectReference: {fileID: 0}
     - target: {fileID: 1604727631234467358, guid: eb565c636541cc84e9c3cf579987d130, type: 3}
       propertyPath: m_AnchorMax.y
@@ -11109,6 +11110,10 @@ PrefabInstance:
     - target: {fileID: 7778608098856845911, guid: eb565c636541cc84e9c3cf579987d130, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7822551882713734297, guid: eb565c636541cc84e9c3cf579987d130, type: 3}
+      propertyPath: m_text
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 7842880534530952774, guid: eb565c636541cc84e9c3cf579987d130, type: 3}
       propertyPath: m_AnchorMax.x
